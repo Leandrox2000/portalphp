@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+       id: sprint14.US174.DDL
+       author: join
+       sqlFile:
+         path: ../scripts/sprint14/US174/DDL.sql
+         relativeToChangelogFile: true
+         encoding: UTF-8
+  - changeSet:
+       id: sprint14.US175.DDL
+       author: join
+       sqlFile:
+         path: ../scripts/sprint14/US175/DDL.sql
+         relativeToChangelogFile: true
+         encoding: UTF-8

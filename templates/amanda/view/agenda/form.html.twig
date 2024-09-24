@@ -1,0 +1,75 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+
+<div class="centercontent">
+                
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="agenda/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                                               forms.date("dataInicial", evento.getDataInicial() ? evento.getDataInicial().format('d/m/Y') : data.format('d/m/Y') , "Data Inicial", "date periodo"), 
+                                               forms.time("horaInicial", evento.getDataInicial() ? evento.getDataInicial().format('H:i') : hora.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+                <input type="hidden" id="comp" name="comp" value="5">
+                {{ forms.field("Data e Hora Despublicação:", [
+                                              forms.date("dataFinal", evento.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                                              forms.time("horaFinal", evento.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+                
+                {{ forms.field("Título", forms.text("titulo", evento.getTitulo(), "Título") ) }}
+                {{ forms.field("Periodo do Evento:", [
+                                              forms.date("dataPeriodoInicial", evento.getPeriodoInicial().format('d/m/Y') , "Data inical do Evento", "date periodo"), 
+                                              forms.time("horaPeriodoInicial", evento.getPeriodoInicial().format('H:i') , "Hora inical do Evento", "hora smallinput periodo"),
+                                              "<br/>",
+                                              "à",
+                                              "<br/>",
+                                              forms.date("dataPeriodoFinal", evento.getPeriodoFinal().format('d/m/Y') , "Data Final do Evento", "date periodo"), 
+                                              forms.time("horaPeriodoFinal", evento.getPeriodoFinal().format('H:i') , "Hora Final do Evento", "hora smallinput periodo"),
+                                            ]|join 
+                              )
+                }}
+                
+                {{ forms.field("Inscrição/ingresso", forms.text("ingresso", evento.getIngresso(), "Inscrição/ingresso") ) }}
+                {{ forms.field("Local", forms.text("local", evento.getLocal(), "Local do Evento") ) }}
+                {{ forms.field("CEP", [
+                                            forms.text("cep", evento.getCep(), "CEP", "cep"), 
+                                            "<img src=\"templates/amanda/assets/images/loaders/loader9.gif\" id=\"ceploading\" alt=\"\" style=\"display:none;\">"]|join ) 
+                }}
+                {{ forms.field("Estado", forms.select('estado', estados, estado, "Selecione") )  }}
+                {{ forms.field("Cidade", forms.text("cidade", evento.getCidade(), "Cidade do Evento") ) }}
+                {{ forms.field("Bairro", forms.text("bairro", evento.getBairro(), "Bairro") ) }}
+                {{ forms.field("Endereço", forms.text("endereco", evento.getEndereco(), "Endereço") ) }}
+                {{ forms.field("Número", forms.text("numero", evento.getNumero(), "Número") ) }}
+                {{ forms.field("Complemento", forms.text("complemento", evento.getComplemento(), "Complemento") ) }}
+                {{ forms.field("Telefone", forms.fone("telefone", evento.getTelefone(), "Telefone") ) }}
+                {{ forms.field("Celular", forms.fone("celular", evento.getCelular(), "Celular") ) }}
+                {{ forms.field("Email", forms.text("email", evento.getEmail(), "E-mail") ) }}
+                {{ forms.field("Site", forms.text("site", evento.getSite(), "Site") ) }}
+
+                {{ (compartilhado == 1 or evento.getId() is empty) ? forms.field("Descrição", forms.richText("descricao", evento.getDescricao()) ) : forms.field("Descrição", forms.no_ckeditor("descricao", evento.getDescricao(), "disabled")) }}
+
+                {{ forms.field("Sites", forms.selectMultiple("sites", sites, evento.getSites.toArray, "Sites", 10) ) }}
+                {{ forms.hidden("id", evento.getId()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

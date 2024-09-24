@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration xmlns="http://logging.apache.org/log4php/">
+     
+    <appender name="myConsoleAppender" class="LoggerAppenderConsole" />
+    <appender name="myFileAppender" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%date [%level] %message%newline" />
+        </layout>
+        <param name="file" value="logs/service.log" />
+    </appender>
+    <appender name="execucaoLog" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%date [%logger] %message%newline" />
+        </layout>
+        <param name="file" value="logs/execucao.log" />
+    </appender>
+    <appender name="Sql" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%date [%logger] %message%newline" />
+        </layout>
+        <param name="file" value="logs/sql.log" />
+    </appender>
+    <appender name="errorLog" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="%date [%logger] %message%newline" />
+        </layout>
+        <param name="file" value="logs/error.log" />
+    </appender>
+     
+    <logger name="Service">
+        <appender_ref ref="myFileAppender" />
+    </logger>
+    <logger name="Execucao">
+        <appender_ref ref="execucaoLog" />
+    </logger>
+    <logger name="Sql">
+        <appender_ref ref="Sql" />
+    </logger>
+    <logger name="Error">
+        <appender_ref ref="errorLog" />
+    </logger>
+    <root>
+        <level value="DEBUG" />
+        <appender_ref ref="myConsoleAppender" />
+    </root>
+</configuration>

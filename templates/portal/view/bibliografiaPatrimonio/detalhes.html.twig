@@ -1,0 +1,30 @@
+
+        <section id="master" role="main">
+            <article class="master-content">
+
+                <!-- Breadcrumb -->
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#">Página inicial</a></li>
+                        <li class="active">Bibliografia Geral do Patrimônio</li>
+                    </ol>
+                </div>
+
+                <!-- Conteúdo -->
+                <div class="row">
+                    <a href="{{ base_link }}bibliografiaPatrimonio">Voltar</a><br>
+                    <br>
+                    {{ result.getTitulo() }}<br>
+                    <br>
+                    
+                    <img src="{{ base_link ~ imgCompletePath(result.getImagem()) }}" alt="{{ result.getImagem().getLegenda() }}" title="{{ result.getImagem().getCredito() }}"><br>
+                    <br>
+                    <strong>Descrição</strong><br>
+                    <div>{{ result.getConteudo() | raw }}</div>
+                    <br>
+
+                </div>
+
+            </article>
+
+        </section>

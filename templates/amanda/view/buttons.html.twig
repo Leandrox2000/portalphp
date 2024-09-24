@@ -1,0 +1,35 @@
+{% import _self as buttons %}
+{% macro submit(label) %}
+        <button class=\"submit radius3\">{{ label|default('Salvar') }}</button>
+        <img style="display:none;" alt="" id="submitloading" src="templates/amanda/assets/images/loaders/loader9.gif">
+{% endmacro %}
+
+{% macro compartilhar(label) %}
+        <button class="submit compartilhar radius3">{{ label|default('Compartilhar nos sites selecionados') }}</button>
+        <img style="display:none;" alt="" id="submitloading" src="templates/amanda/assets/images/loaders/loader9.gif">
+{% endmacro %}
+
+{% macro iconButton(label, link, icon, cor, radius) %}
+        <a class="btn btn_{{ cor }} btn_{{ icon|default('no_icon') }} radius{{ radius|default(2) }}" href="{{ link }}"><span>{{ label }}</span></a>
+{% endmacro %}
+
+{% macro icon(icon, link, cor, radius) %}
+        <a class="btn btn3 btn_{{ cor }} btn_{{ icon }} radius{{ radius|default(2) }}" href="{{ link }}"></a>
+{% endmacro %}
+
+
+{% if icon %}
+    {{ buttons.icon(icon.icon, icon.link, icon.cor, icon.radius) }}
+{% endif %}
+
+{% if iconButton %}
+    {{ buttons.iconButton(iconButton.label, iconButton.link, iconButton.icon, icon.cor, icon.radius) }}
+{% endif %}
+
+{% if submit %}
+    {{ buttons.submit(submit.label) }}
+{% endif %}
+
+{% if compartilhar %}
+    {{ buttons.compartilhar(compartilhar.label) }}
+{% endif %}

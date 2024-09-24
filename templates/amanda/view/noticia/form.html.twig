@@ -1,0 +1,69 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+ 
+
+<div class="centercontent">
+                
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="noticia/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                                               forms.date("dataInicial", noticia.getDataInicial() ? noticia.getDataInicial().format('d/m/Y') : data.format('d/m/Y') , "Data Inicial", "date periodo"), 
+                                               forms.time("horaInicial", noticia.getDataInicial() ? noticia.getDataInicial().format('H:i') : hora.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+                {{ forms.field("Data e Hora Despublicação:", [
+                                              forms.date("dataFinal", noticia.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                                              forms.time("horaFinal", noticia.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+                {{ forms.field("Título", forms.text("titulo", noticia.getTitulo(), "Nome", "", "", "", "100") ) }}
+                {{ forms.field("Imagem", [
+                    buttons.iconButton("Selecionar", "javascript:abrirImagemRadio(0)", "no_icon"),
+                    '<div class="imgSelecionadas" id="imgSelecionadas">', imagem ,'</div>'
+                ] | join ) }}
+                {{ forms.hidden("imagemBanco", idImg) }}
+
+                {{ (compartilhado == 1 or noticia.getId() is empty) ? forms.field("Conteúdo", forms.richText("conteudo", noticia.getConteudo()) ) :  forms.field("Conteúdo", forms.no_ckeditor("conteudo", noticia.getConteudo(), "disabled") ) }}
+                
+                {{ 
+                forms.field(
+                    "Palavras-chave",
+                    forms.textarea("palavrasChave", noticia.getPalavrasChave(), "Palavras-chave", "biginput", 5, null, 200) ~
+                    "<br>Insira as palavras-chave separadas por ponto e vírgula."
+                )
+                }}
+                
+                {{ forms.field("Sites", forms.selectMultiple("sites", sites, noticia.getSites.toArray, "Sites", 10) ) }}
+
+                {{ forms.field("Galerias *", [
+                    buttons.iconButton("Galerias", "javascript:abrirGaleriaCheckbox('noticia')", "no_icon"),
+                    '<div class="galSelecionadas" id="galSelecionadas">',htmlGalerias,'</div>'
+                ] | join ) }}
+
+
+                {{ forms.hidden("id", noticia.getId()) }}
+
+                {{ forms.hidden("galeriaBanco", idsGalerias) }}
+
+                {{ forms.hidden("galeriaOrdem") }}
+                
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+            *ATENÇÃO: todo o layout da notícia poderá ser deslocado para cima ou para baixo na inserção de uma ou mais galerias.
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

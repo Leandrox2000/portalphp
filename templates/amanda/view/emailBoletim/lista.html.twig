@@ -1,0 +1,34 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {{ tables.table(
+                            [
+                            tables.head([
+                                            tables.columnHeader(fields.checkboxHeader()),
+                                            tables.columnHeader([
+                                                                    permissoes['BANCO_EXPORTA'] ? buttons.iconButton("Exportar", "javascript:exportar()", "no_icon") : "",
+                                                                    permissoes['BANCO_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:void(0)" , "no_icon deletebutton") : "",
+                                                                ]|join,
+                                                    
+                                                    "90%")
+                                        ])
+                            ]|join,
+                    "emailboletim") }}
+                                
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

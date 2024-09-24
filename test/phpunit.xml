@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="bootstrap.php"
+    colors="true"
+    backupGlobals="false"
+>
+    <testsuites>
+        <testsuite name="CMS">
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../</directory>
+            <exclude>
+                <directory>../cache</directory>
+                <directory>../config</directory>
+                <directory>../console</directory>
+                <directory>../lib</directory>
+                <directory>../logs</directory>
+                <directory>../test</directory>
+                <directory>../templates</directory>
+                <directory>../test_</directory>
+                <directory>../vendor</directory>
+                <directory>../src/Entity/Repository</directory>
+                <directory>../src/CMS/StaticMethods</directory>
+                <directory>../src/CMS/Controller</directory>
+                <directory>../src/CMS/Service/ServiceExcel</directory>
+                <directory>../src/CMS/Service/ServiceUpload</directory>
+                <directory>../src/CMS/Service</directory>
+                <directory>../src/Portal</directory>
+                <file>../src/Entity/AbstractEntity.php</file>
+                <file>../src/Entity/EntityInterface.php</file>
+                <file>../cli-config.php</file>
+                <file>../index.php</file>
+                <file>../image.php</file>
+                <file>../info.php</file>
+                <file>../Sql.php</file>
+                <file>../web.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="_reports/coverage" title="CMS" charset="UTF-8" yui="true" highlight="true" lowUpperBound="35" highUpperBound="95" />
+    </logging>
+</phpunit>

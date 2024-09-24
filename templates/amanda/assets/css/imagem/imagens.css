@@ -1,0 +1,41 @@
+.imgImagem {
+    float: left;
+    margin: 20px;
+
+}
+.photo {
+    margin: 0;
+    float: left;
+}
+.linksImagem {
+    float: left;
+    margin-left: 15px;
+    padding: 5px 0;
+}
+#filtro-categorias-pastas,
+#filtro-categorias-pastas ul {
+    list-style-position: inside;
+    list-style-type: none;
+}
+#filtro-categorias-pastas .valor-pasta,
+#filtro-categorias-pastas span.cat {
+    cursor: pointer;
+}
+#filtro-categorias-pastas ul {
+    margin-left: 20px;
+}
+#filtro-categorias-pastas .active {
+    font-weight: bold;
+}
+#filtro-categorias-pastas .hidden {
+    display: none;
+}
+#filtros-pastinhas {
+    float: left;
+    width: 25%;
+    margin-top: 20px;
+}
+#contentwrapper.imagens {
+    float: left;
+    width: 70%;
+}

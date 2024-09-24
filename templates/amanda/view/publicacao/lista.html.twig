@@ -1,0 +1,46 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{titlePage}}</h1>
+        {{ permissoes['PUBLI_INSERIR'] ? buttons.iconButton("Inserir novo", "publicacao/form", "no_icon", "green") : "" }}
+        {{ permissoes['PUBLI_INSERIR'] ? buttons.iconButton("Inserir introdução", "publicacaoIntroducao/form", "no_icon", "green first") : "" }}
+        <br>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {{ tables.table(
+                            [
+                            tables.head([
+                                            tables.columnHeader(fields.checkboxHeader()),
+                                            tables.columnHeader([
+                                                                permissoes['PUBLI_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon") : "",
+                                                                permissoes['PUBLI_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon") : "",
+                                                                permissoes['PUBLI_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon") : "",
+                                                                permissoes['PUBLI_ALTPOS'] ? buttons.iconButton("Salvar posicionamento", "javascript:salvarPosicionamentoPublicacao()", "no_icon") : "",
+                                                                "&nbsp;&nbsp;&nbsp;&nbsp; Data ", 
+                                                                fields.date("dataInicial", "", "", ""),
+                                                                "&nbsp;&nbsp;", 
+                                                                fields.date("dataFinal", "", "", ""), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                                                                fields.select("categoriasFiltro", categorias, "", "Todas as Categorias"),
+
+                                            ]|join, "90%"),
+                                            tables.columnHeader([
+                                                            fields.select("status", status, "", "Todos os Status")
+                                            ]|join, "10%")
+                                        ])
+                            ]|join,
+                    "publicacoes") }}
+
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

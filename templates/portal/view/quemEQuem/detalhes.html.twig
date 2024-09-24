@@ -1,0 +1,98 @@
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if site != null and site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('quemEQuem') }}">{{ bread.getTitulo }}</a></li>
+                {% else %}
+                    <li><a href="{{ route('quemEQuem') }}">Quem é quem</a></li>
+                {% endif %}
+                <li class="active">{{ result.getNome() }}</li>
+            </ol>
+        </div>
+        <div class="row">
+            <h2 class="pull-left">Quem é quem</h2>
+            <a class="voltar pull-right mt15 btn btn-yellow" href="{{ base_link }}quemEQuem">voltar</a>
+        </div>
+        <div class="row">
+            <h3 class="m0 fs24" style="font-size:20px;"><b>{{ result.getNome() }}</b></h3>
+            <h4 class="m0 font-weight-normal">{{ result.getCargo().getLabel() }}</h4>
+        </div>
+        <div class="row" style="padding-bottom:0px;padding-top:15px;">
+            {% if result.getImagem() is not empty %}
+                <img 
+                    class="box-img"
+                    src="{{ base_link }}image.php?w=250&h=166&src={{ base_link }}uploads/funcionario/{{ result.getImagem() }}" 
+                    class="imagem-detalhe-noticia"
+                    alt="{{ result.getImagem().getNome() }}" 
+                    {% if result.getImagem().getCredito() is not empty %}
+                        title="{{ [result.getImagem().getLegenda(), result.getImagem().getCredito()] | join(' Foto: ') }}"
+                    {% else %}
+                        title="{{ result.getImagem().getLegenda() }}"
+                    {% endif %}
+                    data-content="{{ result.getImagem().getLegenda() }}"
+                >
+            {% endif %}
+            {{ result.getCurriculo() | raw }}
+        </div>
+        <div class="row">
+            <table class="tableUnidade" style="margin-bottom: 0px;">
+                <tr>
+                    <td colspan="2" class="tableUnidadeNome" style="padding-top: 16px;">{{ result.getUnidade().nome }}</td>
+                </tr>
+                <tr>
+                    <td style="width: 350px;">{{ result.getUnidade().endereco }}, {{ result.getUnidade().numero }} {{ result.getUnidade().complemento }}</td>
+                    <td> {{ result.getUnidade().telefone }}</td>
+                </tr>
+                <tr>
+                    <td> {{ result.getUnidade().bairro }}</td>
+                    <td> {{ result.getUnidade().celular }}</td>
+                </tr>
+                <tr>
+                    <td> {{ result.getUnidade().cep }}</td>
+                    <td> {{ result.getUnidade().email }}</td>
+                </tr>
+                <tr>
+                    <td>{{ result.getUnidade().cidade }}, {{ result.getUnidade().estado }}</td>
+                    <td> {{ result.getUnidade().site }}</td>
+                </tr>
+            </table>
+        </div>
+    </article>
+</section>

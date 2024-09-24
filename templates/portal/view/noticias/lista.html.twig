@@ -1,0 +1,138 @@
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %} 
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %} 
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>                    
+
+    </div>
+    <div class="titulo-menu-subsite" >
+        <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+        {{ redes | raw}}
+    </div> 
+</div> 
+{% endif %}
+
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Notícias") }}
+        </div>
+        <div class="row">
+            <h2>Notícias</h2>
+        </div>
+        <div class="row">
+            {% if featuredResults | length > 0 and paramPagina <= 1 %}
+                <ul class="noticias">
+                    {% for result in featuredResults %}
+                        <li>
+                            {% if result.getImagem() is not empty %}
+                                    <a href="{{ route('noticias/detalhes/' ~ result.getId() ~ '/' ~ result.getSlug()) }}">
+                                        <img 
+                                            class="box-img"
+                                            src="{{ base_link }}image.php?w=324&h=216&src={{ imgCompletePath(result.getImagem()) }}" 
+                                            alt="{{ result.getImagem().getNome() }}" 
+                                            {% if result.getImagem().getCredito() is not empty %}
+                                                title="{{ [result.getImagem().getLegenda(), result.getImagem().getCredito()] | join(' Foto: ') }}"
+                                            {% else %}
+                                                title="{{ result.getImagem().getLegenda() }}"
+                                            {% endif %}
+                                            data-content="{{ result.getImagem().getLegenda() }}" 
+                                        >
+                                    </a>
+                            {% endif %}
+                            <span class="data">{{ result.getDataInicial().format('d/m/Y') }}</span>
+                            <span class="titulo"><a href="{{ route('noticias/detalhes/' ~ result.getId() ~ '/' ~ result.getSlug()) }}">{{ result.getLabel() }}</a></span>
+                            <span class="texto justificado">{{ result.getConteudo() | striptags | truncatetext(250) | raw }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+{#            {% else %}#}
+{#            <p>Nenhum registro encontrado.</p>#}
+            {% endif %}
+        </div>
+        {% if results | length > 0 %}                    
+            <div class="row">
+                <h3 class="mais-noticias">Mais notícias</h3>
+                <ul class="mais-noticias">
+                    {% for result in results %}
+                        <li>
+                            <span class="data">{{ result.getDataInicial().format('d/m/Y') }}</span>
+                            <span class="titulo">
+                                <a href="{{ route('noticias/detalhes/' ~ result.getId() ~ '/' ~ result.getSlug()) }}">{{ result.getLabel() }}</a>
+                            </span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if results | length == 0 and featuredResults | length == 0 %}
+            <p>Nenhum registro encontrado.</p>
+        {% endif %}
+            
+        {% if results | length > 0 %}
+        <div class="row">
+            <div class="paginacao noticias">
+                {{ pagination | raw }}
+                <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() + featuredResults | length }}</p>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="row" style="margin-bottom: 18px">
+            <div class="addthis_toolbox">
+                <div class="custom_images">
+                    <div id="custom_span">
+                        <span>Compartilhar</span>
+                    </div>
+                <a class="addthis_button_facebook"><img src="{{ base_link }}/templates/portal/assets/img/facebook_.png" border="0" alt="Facebook" title="Facebook" /></a>
+                <a class="addthis_button_twitter"><img src="{{ base_link }}/templates/portal/assets/img/twitter_.png" border="0" alt="Twitter" title="Twitter" /></a>
+                <a class="addthis_button_email"><img src="{{ base_link }}/templates/portal/assets/img/email_.png" border="0" style="height: 30px;" alt="Email" title="Email" /></a>
+                <a class="addthis_button_linkedin"><img src="{{ base_link }}/templates/portal/assets/img/linkedin_.png" style="height: 34px;" border="0" alt="Linkedin" title="Linkedin" /></a>
+
+                </div>
+            </div>
+        </div>
+               
+        <div class="row">
+            <form action="{{ base_link }}noticias" method="get">
+                <ul class="pesquisa-geral clearfix">
+                    <li class="pesquisa-geral-data">
+                        <input value="{{ paramData }}" type="text" name="data" id="data" class="datepicker" placeholder="Data" />
+                    </li>
+                    <li class="pesquisa-geral-palavraChave">
+                        <input value="{{ paramPalavraChave }}" type="text" name="palavraChave" id="palavraChave" placeholder="Palavra-chave" />
+                    </li>
+                    <li class="pesquisa-noticias-btBuscar">
+                        <input type="submit" value="enviar" class="btn-btBusca">
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+    </article>
+
+
+
+
+</section>

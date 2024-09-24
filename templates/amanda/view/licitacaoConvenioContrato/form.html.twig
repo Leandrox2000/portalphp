@@ -1,0 +1,138 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="licitacaoConvenioContrato/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                                               forms.date("data_inicial", lcc.getDataInicial() ? lcc.getDataInicial().format('d/m/Y') : data.format('d/m/Y') , "Data Inicial", "date periodo"), 
+                                               forms.time("hora_inicial", lcc.getDataInicial() ? lcc.getDataInicial().format('H:i') : data.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+                {{ forms.field("Data e Hora Despublicação:", [
+                                              forms.date("data_final", lcc.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                                              forms.time("hora_final", lcc.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+
+                {{ forms.field("Ambito de execução", [
+                                                forms.select('ambitoExecucao', ambitos, lcc.getAmbito(), "Selecione"), 
+                                                permissoes['CADAS_CONSULT'] ? buttons.iconButton("Ambitos de execução", "javascript:abrirAmbitos()", "no_icon") : ""
+                                            ]|join 
+                              )
+                }}
+
+                {{ forms.field("Categoria", [
+                                                forms.select('categoria', categorias, lcc.getCategoria(), "Selecione"), 
+                                                permissoes['CADAS_CONSULT'] ? buttons.iconButton("Categoria", "javascript:abrirCategorias()", "no_icon") : ""
+                                            ]|join 
+                              )
+                }}
+                
+                <div id="divTipo" style="display: none;">
+                    {{ forms.field("Tipo", [
+                                                    forms.select('tipo', tipos, lcc.getTipo(), "Selecione"), 
+                                                    permissoes['CADAS_CONSULT'] ? buttons.iconButton("Tipo", "javascript:abrirTipos()", "no_icon") : ""
+                                                ]|join 
+                                  )
+                    }}
+                </div>
+                
+                <div id="divStatus" style="display: none;">
+                    {{ forms.field("Status", [
+                                                    forms.select('status', status, lcc.getStatus(), "Selecione"), 
+                                                    permissoes['CADAS_CONSULT'] ? buttons.iconButton("Status", "javascript:abrirStatus()", "no_icon") : ""
+                                                ]|join 
+                                  )
+                    }}
+                </div>
+                
+                <div id="divDataPublicacaoDou" style="display: none;">
+                    {{ forms.field("Data Publicação DOU", forms.date("dataPublicacaoDou", lcc.getDataPublicacaoDou().format('d/m/Y') , "Data Inicial", "date", "disabled")) }}
+                </div>
+
+                <div id="divPeriodoAberturaProposta" style="display: none;">
+                    {{ forms.field("Data e Hora Abertura Proposta:", [
+                                                   forms.date("dataAberturaProposta", lcc.getDataAberturaProposta().format('d/m/Y'), "Data Inicial", "date", "disabled"), 
+                                                   forms.time("horaAberturaProposta", lcc.getDataAberturaProposta().format('H:i'), "Hora inicial", "hora smallinput", "disabled")
+                                                ]|join 
+                                  )
+                    }}
+                </div>
+
+                <div id="divPrazoVigencia" style="display: none;">
+                    {{ forms.field("Prazo de vigencia de:", [
+                                                   forms.date("prazoVigenciaInicial", lcc.getDataInicial().format('d/m/Y')  , "Prazo de vigência inicial", "date", "disabled"), 
+                                                   forms.date("prazoVigenciaFinal",   lcc.getDataInicial().format('d/m/Y')  , "Prazo de vigência final", "date", "disabled"), 
+                                                ]|join 
+                                  )
+                    }}
+                </div>    
+
+                <div id="divContratada" style="display: none;">
+                    {{ forms.field("Contratada", forms.text("contratada", lcc.getContratada(), "Contratada", "", "", "disabled") ) }}
+                </div>  
+
+                <div id="divObjeto" style="display: none;">
+                    {{ forms.field("Objeto", forms.text("objeto", lcc.getObjeto(), "Objeto", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divEdital" style="display: none;">
+                    {{ forms.field("Nº Edital", forms.text("edital", lcc.getEdital(), "Edital", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divValorEstimado" style="display: none;">
+                    {{ forms.field("Valor Estimado", forms.text("valorEstimado", lcc.getValorEstimado(), "Valor estimado", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divUasg" style="display: none;">
+                    {{ forms.field("UASG", forms.text("uasg", lcc.getUasg(), "UASG", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divAno" style="display: none;">
+                    {{ forms.field("Ano", forms.text("ano", lcc.getAno(), "ano", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divProcesso" style="display: none;">
+                    {{ forms.field("Nº Processo", forms.text("processo", lcc.getProcesso(), "processo", "", "", "disabled") ) }}
+                </div> 
+
+                <div id="divObservacoes" style="display: none;">
+                    {{ forms.field("Observações", forms.richText("observacao", lcc.getObservacoes()) ) }}
+                </div>
+
+                <div id="divArquivosAnexos" style="display: none;">
+                    {{ forms.field("Arquivos anexos", 
+                            [
+                                "<div id='divArquivos'>", htmlArquivos ,"</div>", forms.upload("arquivo", false, "Arquivo" )
+                            ]|join
+                           ) 
+                    }}
+
+                    {{ forms.hidden("arquivos", arquivosNovos) }}
+                    {{ forms.hidden("arquivosExcluidos", '') }}
+                    {{ forms.hidden("arquivosAntigos", arquivosAntigos)  }}
+                </div>
+                
+                {{ forms.hidden("id", lcc.getId()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

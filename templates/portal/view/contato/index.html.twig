@@ -1,0 +1,106 @@
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread) }}
+        </div>
+        <div class="row">
+            <h2 style="font-size: 40px;">Fale Conosco</h2>
+        </div>
+        <div class="row">
+            <p>
+                Envie sua mensagem ao IPHAN
+            </p>
+        </div>
+        <div class="row">
+            <form action={{ base_link ~ 'contato/enviar' }}#" id="formContato">
+                <div class="nox">
+                    <label for="nox">Preencha este campo *</label>
+                    <input type="text" name="obrigatorio" value=""/>
+                </div>
+                    <input type="hidden" name="u" id="u" value="{{ oque.u }}"/>
+                    <input type="hidden" name="d" id="d" value="{{ oque.d }}"/>
+                <ul class="form-contato clearfix">
+                    <li class="form-contato-nome">
+                        <label for="assunto">Selecione um assunto que deseja falar conosco</label>
+                        <select name="assunto" id="assunto" style="width: 315px;">
+                            <option value="">Selecione um Assunto</option>
+                            <option value="Informação">Informação</option>
+                            <option value="Denúncia">Denúncia</option>
+                            <option value="Reclamação">Reclamação</option>
+                            <option value="Sugestão">Sugestão</option>
+                            <option value="Elogio">Elogio</option>
+                        </select>
+                    </li>
+                    <li class="form-contato-nome">
+                        <label for="nome">Nome *</label>
+                        <input name="nome" type="text" id="nome" />
+                    </li>
+                    <li class="form-contato-mensagem">
+                        <label for="mensagem">Digite aqui a sua mensagem *</label>
+                        <textarea name="mensagem" id="mensagem" cols="" rows="5" style="border-color: #CCC;"></textarea>
+                    </li>
+                    <li class="form-contato-email">
+                        <label for="email">Email *</label>
+                        <input name="email" type="text" id="email" />
+                    </li>
+                    <li class="form-contato-telefone">
+                        <label for="telefone">Telefone</label>
+                        <input name="telefone" type="text" id="telefone" />
+                    </li>
+                    <li class="fale-conosco form-contato-estado">
+                        <label for="estado">Estado</label>
+                        <select name="estado" id="estado">
+                            <option value="" >Selecione um estado</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espirito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraiba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantis</option>
+                        </select>
+                    </li>
+                    <li class="fale-conosco form-contato-cidade">
+                        <label for="cidade">Cidade</label>
+                        <input name="cidade" type="text" id="cidade" />
+                    </li>
+                    <li class="form-contato-email">
+                        <label for="m">{{ oque.m }} *</label>
+                        <input name="m" type="text" id="m"  class="required"/>
+                    </li>
+                    <li class="form-recaptcha">
+                        <div class="g-recaptcha" data-sitekey="6LcIKEUUAAAAAGNq0hYaHBX7ErDB36s_Xm_XsH7i" data-callback="recaptchaCallback"></div>
+                        <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
+                    </li>
+                    <li class="form-contato-btEnviar">
+                        <input style="margin-right: 800px;" type="submit" value="Enviar" class="btn btn-contato btnSubmit" />
+                    </li>
+                </ul>
+                <div class="message">&nbsp;</div>
+            </form>
+        </div>
+    </article>
+</section>
+
+<script src='https://www.google.com/recaptcha/api.js'></script>

@@ -1,0 +1,249 @@
+{% if preVisualizacao == true %}
+<script>
+    alert("ATENÇÃO - Você está visualizando uma versão de testes. Para que seja visualizado no Portal é necessário publicar a página no CMS.");
+</script>
+{% endif %}
+{{ galeria }}
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %}
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %}
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>
+
+    </div>
+    <div class="titulo-menu-subsite" >
+        <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }}
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+               {{ redes | raw}}
+            </div>
+</div>
+{% endif %}
+
+<section id="master" role="main">
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if site != null and site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('noticias') }}">{{ bread.getTitulo }}</a></li>
+                {% else %}
+                    <li><a href="{{ route('noticias') }}">Notícias</a></li>
+                {% endif %}
+                <li class="active">{{ result.getTitulo() }}</li>
+            </ol>
+        </div>
+        <div class="row">
+            <h2 style="margin-bottom:0px;">{{ result.getTitulo() }}</h2>
+            <label style="margin-top:8px; margin-bottom:30px;color: #A9A9A9;">{{ result.getDataPublicacaoFormatado  }}</label>
+            <!--<label style="margin-bottom:30px;">{{ result.getDataCadastro |date("d/m/Y") }}</label>-->
+            <!--<a class="voltar pull-right mt15" href="{{ route('noticias') }}">voltar</a>-->
+        </div>
+
+
+        {% for galeria in galerias %}
+        {% set tmp_galeria = galeria.getGaleria() %}
+        {% if galeria.getPosicaoPagina() == 1 %}
+        <h3 style="clearfix">{{ tmp_galeria.getLabel() }}</h3>
+        <div>{{ tmp_galeria.getDescricao() | raw }}</div>
+
+        <div class="row">
+            <div class="content-galeria content-galeria-fototeca">
+                <ul class="bxslider">
+                    {% if tmp_galeria.getImagens()|length > 0 %}
+                        {% for imagem in tmp_galeria.getImagensOrdenadas(ordemImagensGalerias[tmp_galeria.getId()]) %}
+                                <li>
+                                    {#<img src="{{ base_link }}{{ imgCompletePath(imagem) }}"
+                                         title="{{ imagem.getCredito() }}"
+                                         data-trigger="hover"
+                                         data-toggle="popover" data-container="body"
+                                         data-content="{{ imagem.getLegenda() }}"
+                                         alt="{{ imagem.getNome() }}" />
+                                        <div class="lengenda-banner">{{ imagem.getLegenda() }}</div>#}
+
+                                    <img
+                                        src="{{ base_link }}{{ imgCompletePath(imagem) }}"
+                                        class="title-creditos"
+                                        {% if imagem.getCredito() is not empty %}
+                                            title="{{ ["", imagem.getCredito()] | join(' Foto: ') }}"
+                                        {% endif %}
+                                        alt="{{ imagem.getNome() }}"
+                                    >
+                                    <div class="lengenda-banner">
+                                        {{ imagem.getLegenda() }}
+                                    </div>
+                                </li>
+                        {% endfor %}
+                        {% endif %}
+                </ul>
+            </div>
+            <div class="row descricao-fototeca">
+            </div>
+            <script>
+                jQuery('.bxslider li img').popover('show');
+            </script>
+        </div>
+
+
+        {% endif %}
+        {% endfor %}
+
+        <div class="row image-ckeditor">
+            {{ result.getConteudo() | raw }}
+        </div>
+
+        <div class="row">
+
+
+
+        {% for galeria in galerias %}
+            {% set tmp_galeria = galeria.getGaleria() %}
+            {% set imagens = tmp_galeria.getImagens() %}
+
+            {% if galeria.getPosicaoPagina() == 2 %}
+                {% if galerias | length < 2 %}
+                        <h3 style="clearfix">{{ tmp_galeria.getLabel() }}</h3>
+                        <div>{{ tmp_galeria.getDescricao() | raw }}</div>
+                        <div class="content-galeria content-galeria-fototeca">
+                            <ul class="bxslider">
+                                {% if tmp_galeria.getImagens()|length > 0 %}
+                                    {% for imagem in tmp_galeria.getImagensOrdenadas(ordemImagensGalerias[tmp_galeria.getId()]) %}
+                                            <li>
+                                                {# <img src="{{ base_link }}image.php?w=660&h=587&src={{ imgCompletePath(imagem) }}" alt="{{ imagem.getLegenda() }}"> #}
+                                                {#<img src="{{ base_link }}{{ imgCompletePath(imagem) }}" title="{{ imagem.getCredito() }}"
+                                                     data-trigger="hover"
+                                                     data-toggle="popover" data-container="body"
+                                                     data-content="{{ imagem.getLegenda() }}"
+                                                     alt="{{ imagem.getNome() }}">
+                                                <div class="lengenda-banner">{{ imagem.getLegenda() }}</div>#}
+                                                <img
+                                                    src="{{ base_link }}{{ imgCompletePath(imagem) }}"
+                                                    class="title-creditos"
+                                                    {% if imagem.getCredito() is not empty %}
+                                                        title="{{ ["", imagem.getCredito()] | join(' Foto: ') }}"
+                                                    {% endif %}
+                                                    alt="{{ imagem.getNome() }}"
+                                                >
+                                                <div class="lengenda-banner">
+                                                    {{ imagem.getLegenda() }}
+                                                </div>
+                                            </li>
+                                    {% endfor %}
+                                    {% endif %}
+                            </ul>
+                        </div>
+                        <div class="row descricao-fototeca">
+                        </div>
+                {% elseif galerias | length > 1 %}
+                    <div class="fototeca-col fototeca-col-noticias">
+                        <a href="{{ route('galeria/detalhes/' ~ tmp_galeria.getId() ~ '/' ~ slugify( tmp_galeria.getLabel() )) }}" target="_blank">
+                            <img src="{{ base_link }}image.php?w=250&h=166&src={{ imgCompletePath(imagens[0]) }}" alt="{{ imagens[0].getCredito() }}" title="{{ imagens[0].getCredito() }}" />
+                            <div class="box-fototca">
+                                <div class="borda">
+                                    <h3>{{ tmp_galeria.getLabel() }}</h3>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+        {% endfor %}
+
+        </div>
+
+        {#<div class="row">
+            <div class="box-destaque-categoria">
+                <form action="{{ base_link }}noticias/enviaComentario" id="comentar" method="post">
+                    <ul class="form-comentario">
+                        <li class="form-comentario-nome">
+                            <label for="nome-comentario">Nome*</label>
+                            <input name="nome" type="text" id="nome-comentario" />
+                        </li>
+                        <li class="form-comentario-email">
+                            <label for="email-comentario">E-mail*</label>
+                            <input name="email" type="text" id="email-comentario" />
+                        </li>
+                        <li class="form-comentario-comentario">
+                            <label for="comentario-comentario">Comentário</label>
+                            <textarea name="comentario" id="comentario-comentario" cols="" rows=""></textarea>
+                        </li>
+                        <li class="form-comentario-bt">
+                            <input type="submit" value="enviar" class="btn btn-yellow">
+                        </li>
+                    </ul>
+                    <input class="form-control" type="hidden" name="noticia" value="{{ result.getid() }}">
+                    <div class="message"></div>
+                </form>
+            </div>
+        </div>#}
+        {#<div class="row">
+            <h3>COMENTÁRIOS <span id="num-comentarios">&nbsp;</span></h3>
+            <div id="lista-comentarios">&nbsp;</div>
+        </div>#}
+    </article>
+    <div class="row" style="margin-bottom: 18px; margin-left: 40px;">
+        <div class="addthis_toolbox">
+            <div class="custom_images">
+                <div id="custom_span">
+                    <span>Compartilhar</span>
+                </div>
+                <a class="addthis_buton_facebook"><img src="{{ base_link }}/templates/portal/assets/img/facebook_.png" border="0" alt="Facebook" title="Facebook" /></a>
+                <a class="addthis_button_twitter"><img src="{{ base_link }}/templates/portal/assets/img/twitter_.png" border="0" alt="Twitter" title="Twitter" /></a>
+                <a class="addthis_button_email"><img src="{{ base_link }}/templates/portal/assets/img/email_.png" border="0" style="height: 30px;" alt="Email" title="Email" /></a>
+                <a class="addthis_button_linkedin"><img src="{{ base_link }}/templates/portal/assets/img/linkedin_.png" style="height: 34px;" border="0" alt="Linkedin" title="Linkedin" /></a>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+    <head>
+
+        <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+        <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+        <!--[if IE 7]> <html lang="en" class="ie7"> <![endif]-->
+
+        <!--[if IE]> 
+            <script type="text/javascript">         
+                document.createElement("header");        
+                document.createElement("section");
+                document.createElement("article");
+                document.createElement("aside");
+                document.createElement("nav");        
+                document.createElement("figure");
+                document.createElement("legend");
+                document.createElement("footer");
+            </script> 
+        <![endif] -->
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta property="creator.productor"
+              content="http://estruturaorganizacional.dados.gov.br/id/unidade-organizacional/2045">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
+        <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700' rel='stylesheet' type='text/css' />
+
+{#        Barra de compartilhamento - ContentShare      #}
+
+        {% if controller == 'fototeca' or controller == 'agendaDirecao' or  controller == 'noticias' or controller == 'galeria' or controller == 'publicacoes' or controller == 'pagina' %}
+        
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-543bf5fb165b0c28" async="async"></script>
+        
+        
+        {% endif %}
+
+         <script src="{{ js_link }}/jquery.min.js" type="text/javascript"></script>
+
+        {% if controller == 'agendaEventos' and action == 'lista' or controller == 'agendaDirecao' and action == 'detalhes' %}
+        <link href="{{ css_link }}/calendario-agenda.css" type="text/css" rel="stylesheet" />
+        {% else %}
+        <link href="{{ css_link }}/jquery-ui/jquery-ui.min.css" type="text/css" rel="stylesheet" />
+        {% endif %}
+
+        {% for style in styles %}
+        <link href="{{ css_link }}{{ style }}" type="text/css" rel="stylesheet" />
+        {% endfor %}
+
+        <base href="{{ base_link }}" >
+
+        <title>{{ title }} - IPHAN - Instituto do Patrimônio Histórico e Artístico Nacional</title>
+
+        {% if debug == true %}
+        {{ debugbar_renderer.renderHead()|raw }}
+        {% endif %}
+
+        {% if background_home is not empty %}
+        <style>
+            body#home.background-home, body#subsites.background-home {
+                background-image: url('{{ base_link ~ imgCompletePath(background_home.getImagem()) }}');
+            }
+        </style>
+        {% endif %}
+
+        <script>var BASE_URL = "{{ base_link }}";</script>
+
+        <script>
+            jQuery(document).ready(function() {
+                //Gambinha XD
+                var value = jQuery('.breadcrumb li:nth-child(3)');
+                if(value.text() == 'Fototeca') {
+                    value.text('Fototecas').css('color', '#590108');
+                }
+                //COLOCA CRÉDITOS E IMAGENS PADRONIZADOS EM TODAS IMAGENS DO CKEDITOR
+                jQuery('p > img').each(function() {
+                    var credito = jQuery(this).attr('title');
+                    var legenda = jQuery(this).attr('alt');
+                    
+                    if (legenda.charAt(legenda.length-1) != "." && legenda != "") {
+                        legenda += '.';
+                    }
+                    
+                    if (credito != "") 
+                    {
+                        if (credito.charAt(credito.length-1) != ".") {
+                            credito += '.';
+                        }
+                        jQuery(this).attr('title', legenda+" Foto: "+credito);
+                    }
+                    else 
+                    {
+                        jQuery(this).attr('title', legenda);
+                    }
+                });
+                
+                // Adiciona ponto final em legendas e créditos
+                var title = jQuery('.box-img');
+                title.each(function() {
+                    if (jQuery(this).attr('title') != "") {
+                        if (jQuery(this).attr('title').charAt(jQuery(this).attr('title').length-1) != ".") {
+                            var novoTitle = jQuery(this).attr('title')+".";
+                            jQuery(this).attr('title', novoTitle);
+                        } 
+                        
+                        var posicao = jQuery(this).attr('title').search(" Foto") - 1;
+                        if (jQuery(this).attr('title')[posicao] != "." && posicao >= 0) {
+                            var novoTitle = jQuery(this).attr('title');
+                            var novo = novoTitle.substr(0,posicao+1)+"."+novoTitle.substr(posicao+1);
+                            jQuery(this).attr('title', novo);
+                        }
+                    }
+                });
+                
+                jQuery('.title-creditos').each(function() {
+                    if (jQuery(this).attr('title') != "") {
+                        if (jQuery(this).attr('title').charAt(jQuery(this).attr('title').length-1) != ".") {
+                            var novoTitle = jQuery(this).attr('title')+".";
+                            jQuery(this).attr('title', novoTitle);
+                        }
+                    }
+                });
+                
+            });
+        </script>
+    </head>
+
+

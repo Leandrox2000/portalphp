@@ -1,0 +1,41 @@
+<ul class="bts-social float-left" style="margin-top: 10px;margin-right: 35px;">
+    
+    {% if subsite is not empty%}
+        
+        {% if facebook is not empty%}
+            <li><a href="{{ facebook }}" class="facebook" target="_blank">facebook</a></li>
+        {% endif %}
+
+        {% if twitter is not empty%}
+            <li><a href="{{ twitter }}" class="twitter" target="_blank">twitter</a></li>
+        {% endif %}
+
+        {% if flickr is not empty%}
+            <li><a href="{{ flickr }}/" class="flickr" target="_blank">flickr</a></li>
+        {% endif %}
+
+        {% if youtube is not empty%}
+            <li><a href="{{ youtube }}" class="youtube" target="_blank">youtube</a></li>
+        {% endif %}
+    
+    {% else %}
+    
+        {% if facebook is not empty%}
+            <li><a href="https://www.facebook.com/{{ facebook }}" class="facebook" target="_blank">facebook</a></li>
+        {% endif %}
+
+        {% if twitter is not empty%}
+            <li><a href="https://twitter.com/{{ twitter }}" class="twitter" target="_blank">twitter</a></li>
+        {% endif %}
+
+        {% if flickr is not empty%}
+            <li><a href="https://www.flickr.com/photos/{{ flickr }}/" class="flickr" target="_blank">flickr</a></li>
+        {% endif %}
+
+        {% if youtube is not empty%}
+            <li><a href="https://www.youtube.com/user/{{ youtube }}" class="youtube" target="_blank">youtube</a></li>
+        {% endif %}
+        
+    {% endif %}
+    
+</ul>

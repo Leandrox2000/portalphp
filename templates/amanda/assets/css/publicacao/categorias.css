@@ -1,0 +1,10 @@
+#nomeCategoria, #descricaoCategoria {
+    width: 550px;
+}
+#descricaoCategoria {
+    height: 150px;
+}
+a.btn-salvar-cat {
+    margin-left: 0px;
+    margin-top: 15px;
+}

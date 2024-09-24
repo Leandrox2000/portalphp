@@ -1,0 +1,124 @@
+{% import "fields.html.twig" as forms %}
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %} 
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %} 
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>                    
+
+    </div>
+    <div class="titulo-menu-subsite" >
+         <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+               {{ redes | raw}}
+            </div> 
+</div> 
+{% endif %}
+
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content editais lista">
+
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Concursos, Seleções e Editais") }}
+        </div>
+
+        <div class="row">
+            <h2>Concursos, Seleções e Editais</h2>
+        </div>
+                
+        <div class="row">
+            <form action="{{ route('editais') }}" method="get" id="form-editais">
+                <ul>
+                    <li>
+                        {{ forms.select_id('categoria', categorias, selCategoria, 'Selecione a categoria') }}
+                    </li>
+                    <li>
+                        {{ forms.select_id('status', allStatus, selStatus, 'Selecione o status') }}
+                    </li>
+                </ul>
+            </form>
+        </div>       
+
+        <div class="row">
+            
+            {% if status is not empty %}
+                {% for row in status %}
+                    <div class="cabecalho-info lista" >
+                        <p>{{ row.getNome() }}</p>
+                    </div>
+                    
+                    <div class="info-lista" data-paginar="{{ row.getId() }}">
+                        Carregando...
+                    </div>                    
+                {% endfor %}
+            {% endif %}
+
+            {#% if results | length > 0 %}
+
+                {% set current_status = '' %}
+
+                {% for registro_status in status %}
+
+               		{% set index = 1 %}
+
+                    {% for result in results %}
+                		
+                        {% if result.getStatus() == registro_status.getNome() and index <= num  %}
+
+                            {% if current_status !=  registro_status.getNome() %}
+                                {% set current_status = registro_status.getNome() %}
+                                    <div class="cabecalho-info lista" >
+                                        <p>{{ registro_status.getNome() }}</p>
+                                    </div>
+                            {% endif%}
+               		
+                            <div class="info-lista">
+                                <p><a href="{{ route('editais/detalhes/' ~ result.getId() ~ '/' ~ slugify(result.getNome())) }}">
+                                    <b>{{ result.getNome() }}</b>
+                                </a></p>
+                            </div>
+
+               				{% set index = index + 1 %}
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>Nenhum registro encontrado.</p>
+
+            {% endif %#}
+
+        </div>
+    </article>
+
+    {#% if results | length > 0 and noFilter == true %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                </div>
+            </div>
+        </div>
+    {% endif %#}
+
+</section>

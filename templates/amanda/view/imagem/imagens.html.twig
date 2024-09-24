@@ -1,0 +1,56 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">Selecionar imagens</h1>
+</div><!--pageheader-->
+
+<div id="filtros-pastinhas" style="">
+    <input type="hidden" name="f_pasta" id="f_pasta" value="" />
+
+    <ul id="filtro-categorias-pastas">
+        {% for cat in categorias %}
+        <li>
+            <span class="cat">
+                <span class="glyphicon glyphicon-folder-close">&nbsp;</span>{{ cat.getNome() }}
+            </span>
+            <ul class="pasta-lista" style="display: none;">
+                {% for pasta in pastas %}
+                    {% if pasta.getCategoria().getId() == cat.getId() %}
+                        <li class="valor-pasta" data-categoria-id="{{ pasta.getCategoria().getId() }}" data-id="{{ pasta.getId() }}">
+                            <span class="glyphicon glyphicon-folder-close">&nbsp;</span>
+                            {{ pasta.getNome() }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<div id="contentwrapper" class="contentwrapper imagens">
+    <div class="subcontent">
+{#        categoria == 0 ? fields.select("categoriaSelect", categorias, "", "Todas Categorias") : "",#}
+        {{ tables.table([
+            tables.head([
+                tables.columnHeader(tipo == 'checkbox' ? fields.checkboxHeader() : "" ),
+                tables.columnHeader([
+                    buttons.iconButton("Nova imagem", "javascript:novaImagem()", "no_icon Nova imagem"),
+                    buttons.iconButton("Atualizar Lista", "javascript:atualizarImagens()", "no_icon Atualizar Lista"),
+                    
+                ] | join, "100%"),
+            ])
+        ] | join, "imagens") }}
+
+        <form id="frm" class="stdform stdform2"  >
+            {{  buttons.iconButton("Escolher e fechar", "javascript:escolherFecharImagens()", "no_icon")  }}
+            {{  buttons.iconButton("Fechar", "javascript:fecharImagens()", "no_icon")  }}
+        </form>
+        <input type="hidden" name="idsImagens" id="idsImagens" value="{{ imgSelecionadas }}"/>
+    </div>
+</div><!--contentwrapper-->
+{#    <br clear="all" />#}
+

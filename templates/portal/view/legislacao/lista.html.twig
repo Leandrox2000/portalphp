@@ -1,0 +1,105 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+    
+{% if subsite is not empty %}
+            <div class="menu-subsite">
+                <div class="menu-subsite-subsite">
+                    {% if menu.subsite is not empty %} 
+                        <a href="#">
+                    {% endif %}
+                        <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+                    {% if menu.subsite is not empty %} 
+                        </a>
+                    {% endif %}
+
+                    <div class="menu-expandido-subsite" >
+                        {{ menu.subsite | raw }}
+                    </div>                    
+
+                </div>
+                <div class="titulo-menu-subsite" >
+                    <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+                </div>
+                <div style="float:right; padding-right: 10px;" >
+                    {{ redes | raw}}
+                </div>
+            </div>  
+{% endif %}
+                <section id="master" role="main">				
+                    <article class="master-content">
+                            <div class="row">
+                                {{ breadCrumbs.breadCrumbs(bread, site, "Legislação") }}
+                            </div>
+                            <div class="row">
+                                <h2>Legislação</h2>							
+                            </div>
+                            <div class="row">
+                                <div class="box-destaque-legislacao">
+
+                                    <form action="{{ route('legislacao') }}">
+
+                                        <ul class="pesquisa-legislacao">
+                                            <li class="pesquisa-legislacao-categoria">
+                                                {{ forms.select_id('categoria', categorias, categoria, "Selecione") }}
+                                            </li>
+                                            <li class="pesquisa-legislacao-palavraChave">
+                                                {{ forms.text('busca', busca, 'Digite uma palavra chave', 'buscaLegislacao') }}
+                                            </li>
+                                            <li class="pesquisa-legislacao-btBuscar">
+                                                <input type="submit" value="buscar" class="btn-btBusca" style="margin-left: 0px;">
+                                            </li>
+                                        </ul>
+
+                                        <ul style="display: block; clear: both; margin-top: 15px; padding-bottom: 20px;" class="pesquisa-legislacao">
+                                            <li style="display: block;" class="pesquisa-legislacao-palavraChave">
+                                                <input type="text" style="display: block; float: left; width: 225px;" class="smallinput datepicker" title="" placeholder="De:" name="de_data" id="de_data" value="{{ deData }}" size="" smallinput="">
+                                            </li>
+                                            <li style="float: left;" class="pesquisa-legislacao-palavraChave">
+                                                <input type="text" style="width: 225px; float: left;" class="smallinput datepicker" title="" placeholder="Até:" name="ate_data" id="ate_data" value="{{ ateData }}" size="" smallinput="">
+                                            </li>
+
+                                        </ul>
+
+                                    </form>
+                                </div>							
+                            </div>
+                            <div class="row">
+{#                                <h3>ÚLTIMOS CADASTROS</h3>#}
+                                {% if legislacao|length > 0 %}
+                                <ul class="lista-cadastros">
+                                    {% for leg in legislacao %}
+                                    <li>
+                                    <div class="box-cinza p10">
+                                        {% if leg.getArquivo() is not empty %}
+                                            <a href="{{ base_link }}uploads/legislacao/{{ leg.getArquivo() }}" target="_blank">
+                                        {% else %}
+                                            <a href="{{ leg.getUrl() }}" target="_blank">
+                                        {% endif %}
+                                            <h4>{{ leg.getTitulo() }}</h4>
+                                        </a>
+                                    </div>
+                                    <div class="p10" style="text-align: justify;">{{ leg.getDescricao()|raw }}</div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                    <p>Nenhum registro encontrado.</p>
+                                {% endif %}
+                            </div>
+                    </article>
+                    {% if legislacao|length > 0 %}
+                    <div class="box-cinza">
+                        <div class="box-cinza-margem">
+                            <div class="paginacao">
+                                {{ pagination|raw }} 
+                                <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                                <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </section>

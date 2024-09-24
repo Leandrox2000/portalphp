@@ -1,0 +1,98 @@
+{% import "fields.html.twig" as forms %}
+
+{% set resultset = helpers.getResultSet(results) %}
+
+<section id="master" role="main" class="busca">				
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                <li class="active">Busca</li>
+            </ol>
+        </div>
+
+        <form action="" method="get">
+            <input title="Palavras-chave" name="search_query" type="text" class="campo-pesquisa tooltiped" id="search" placeholder="Palavras-chave" value="{{ search_query }}">
+            {{ forms.select_id('content_type', content_types, content_type, null, null, null, 'campo-pesquisa tooltiped', 'Tipos de conteúdo') }}
+            <input title="Data inicial" name="date_from" type="text" class="campo-pesquisa datepicker tooltiped" id="date_from" placeholder="Data incial" value="{{ date_from }}">
+            <input title="Data final" name="date_to" type="text" class="campo-pesquisa datepicker tooltiped" id="date_to" placeholder="Data final" value="{{ date_to }}">
+            <input type="hidden" name="do_search" value="y">
+            <input type="submit" value="Pesquisar" class="btn-pesquisa">
+        </form>
+
+        {% if error is not empty %}
+            <p class="pesquisa-msg-erro">{{ error }}</p>
+        {% endif %}
+
+        {% if results is not empty %}
+
+            <div class="row resultado-busca">
+                <h2>Resultado Busca</h2>							
+            </div>
+
+            <div class="row">
+                <p><strong>{{ helpers.resultsMessage(resultset) }} "{{ search_query }}"</strong></p>
+            </div>
+
+            {% if results | length > 0 %}
+                {% set highlighting = resultset.getHighlighting() %}
+            {% endif %}
+
+            <div class="row">
+                <ul class="lista-busca">
+
+                    {% for document in results %}
+                        {% set title = document.title %}
+                        {% set link = helpers.resolverUrl(document) %}
+                        {% set description = (document.description is not empty) ? helpers.getHightlightedField('description', document, highlighting) : null %}
+                        {% set publish_date = (document.publish_date is not empty) ? helpers.timestampToDate(document.publish_date) : null %}
+                        <li>
+                            <div class="box-cinza p10">
+                                {% if helpers.entityToDescription(document.entity_name) == "Legislação" %}
+                                    <h4><a href="{{ link }}">{{ title }}</a></h4>
+                                {% else %}
+                                    <h4><a href="{{ base_link ~ link }}">{{ title }}</a></h4>
+                                {% endif %}
+                                <span>
+                                    {% if description is not empty %}
+                                        {{ helpers.truncateText(description, 350) | raw }}...
+                                    {% endif %}
+
+                                    {% if publish_date is not empty %}
+                                        <br>{{ publish_date }}
+                                    {% endif %}
+
+                                    {% if document.entity_name is not empty %}
+                                        - <strong>{{ helpers.entityToDescription(document.entity_name) }}</strong>
+                                    {% endif %}
+                                </span>
+                            </div>								
+                        </li>
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+        {% endif %}
+
+        {% if debug == true %}
+            {% set sdebug = resultset.getDebug() %}
+
+            <h3>Debug</h3>
+            Querystring:<br>
+            <pre>{{ sdebug.getQueryString() }}</pre><br><br>
+            Parsed query:<br>
+            <pre>{{ sdebug.getParsedQuery() }}</pre><br/><br>
+            Query parser:<br>
+            <pre>{{ sdebug.getQueryParser() }}</pre><br/><br>
+        {% endif %}
+
+    </article>
+    {% if results | length > 0 %}
+        <div class="row">
+            <div class="paginacao">
+                {{ pagination | raw }}
+            </div>
+        </div>
+    {% endif %}
+</section>

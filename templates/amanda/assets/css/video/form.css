@@ -1,0 +1,7 @@
+#list-videos-relacionados li {
+    min-width: 60px;
+}
+
+#list-videos-relacionados li span {
+    text-align: center;
+}

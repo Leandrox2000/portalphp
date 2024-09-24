@@ -1,0 +1,33 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="" method="{{ method }}">
+                {{ forms.field("Nome", "<div class=\"margin1020\">#{video.getNome()}</div>" ) }}
+
+                {% if dados_video %}
+                    {{ forms.field("Título do vídeo", "<div class=\"margin1020\">#{dados_video['titulo']}</div>"   ) }}
+                    {{ forms.field("Conteúdo", "<div class=\"margin1020\">#{html_embed}</div>" ) }}
+                    {{ forms.field("Resumo", "<div class=\"margin1020\">#{dados_video['descricao'] != "" ? dados_video['descricao'] : '<i>Não informado</i>' } </div>"   ) }}
+                    {{ forms.field("Autor/créditos", "<div class=\"margin1020\">#{dados_video['autor'] != "" ? dados_video['autor'] : '<i>Não informado</i>' }</div>"   ) }}  
+                {% endif %}
+
+                {{ forms.break([buttons.iconButton("Editar", "video/form/#{video.getId()}", "no_icon", "orange"), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

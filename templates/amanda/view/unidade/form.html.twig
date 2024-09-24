@@ -1,0 +1,42 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="unidade/salvar" method="{{ method }}">
+                {{ forms.field("Nome da unidade", forms.text("nome", unidade.getNome(), "Nome") ) }}
+                {{ forms.field("CEP", [
+                    forms.text("cep", unidade.getCep(), "CEP", "cep"), 
+                    "<img src=\"templates/amanda/assets/images/loaders/loader9.gif\" id=\"ceploading\" alt=\"\" style=\"display:none;\">"]|join )
+                }}  
+                {{ forms.field("Cidade", forms.text("cidade", unidade.getCidade(), "Cidade da unidade") ) }}
+                {{ forms.field("Estado", forms.select('estado', estados, uf, "Selecione") )  }}
+                {{ forms.field("Endereço", forms.text("endereco", unidade.getEndereco(), "Endereço") ) }}
+                {{ forms.field("Número", forms.text("numero", unidade.getNumero(), "Número") ) }}
+                {{ forms.field("Complemento", forms.text("complemento", unidade.getComplemento(), "Complemento") ) }}
+                {{ forms.field("Bairro", forms.text("bairro", unidade.getBairro(), "Bairro") ) }}
+                {{ forms.field("Telefone", forms.fone("telefone", unidade.getTelefone(), "Telefone") ) }}
+                {{ forms.field("Celular", forms.fone("celular", unidade.getCelular(), "Celular") ) }}
+                {{ forms.field("Correio eletrônico", forms.text("email", unidade.getEmail(), "Correio eletrônico") ) }}
+                {{ forms.field("Site", forms.text("site", unidade.getSite(), "Site") ) }}
+{#                {{ forms.field("Incluir no organograma", forms.radio("exibir_organograma", rowsExibirOrganograma, exibirOrganograma, 'h')) }}
+                {{ forms.field("A qual unidade se reporta", forms.select("unidade_reporta_se", rowsUnidadeReportaSe, unidadeReportaSe, "Selecione")) }}#}
+                {{ forms.hidden("id", unidade.getId()) }}
+                {{ forms.hidden("ordem", unidade.getOrdem()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

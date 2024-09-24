@@ -1,0 +1,78 @@
+{% macro breadCrumbs(bread, site, funcionalidade,pagina) %}
+    <ol class="breadcrumb">
+        <li><a href="{{ base_link }}">Página inicial</a></li>
+        
+        {% if site != null and site.id != 1 %}
+            <li>
+                <a href="{{ route() }}">{{ site.nome }}</a>
+            </li>
+        {% endif %}
+        
+        {%if pagina != null and bread.getSite.getId != 1 %}
+            <li>
+                <a href="{{ route() }}">{{ bread.getSite.getNome }}</a>
+            </li>
+        {% endif %}
+        
+        {% if bread.getVinculoPai.getVinculoPai != null %}
+            <li>
+                {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                </a>
+                {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                </a>
+                {% else %}
+                {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                {% endif %}
+            </li>
+        {% endif %}
+        
+        {% if bread.getVinculoPai != null %}
+            <li>
+            {% if not bread.getVinculoPai.getUrlExterna is empty %}
+            <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                {{ bread.getVinculoPai.getTitulo }}
+            </a>
+            {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+            <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                {{ bread.getVinculoPai.getTitulo }}
+            </a>
+            {% else %}
+            {{ bread.getVinculoPai.getTitulo }}
+            {% endif %}
+            </li>
+        {% endif %}
+        
+        
+        
+        {% if bread != null %}
+            {% if pagina != null %}
+                {% if not bread.getUrlExterna is empty %}
+                   <li class="active">
+                      <a href="{{ bread.getUrlExterna }}">
+                        {{ bread.getTitulo }}
+                    </a></li>
+                {% elseif not generateUrl(bread) is empty %}
+                    <li class="active">
+                        <a href="{{ generateUrl(bread) }}">
+                        {{ bread.getTitulo }}
+                    </a></li>
+                {% endif %}
+            {% else %}
+                <li class="active">{{ bread.getTitulo }}</li>
+            {% endif %}
+        {% else %}
+            <li class="active">{{ funcionalidade }}</li>
+        {% endif %}
+        
+        
+        <!-- {% if pagina != null %}
+            <li class="active">{{ pagina.getTitulo() }}</li>
+        {% endif %} -->
+        
+        
+    </ol>
+{% endmacro %}

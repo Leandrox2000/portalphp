@@ -1,0 +1,53 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+        {{ permissoes['BANNE_INSERIR'] ? buttons.iconButton("Inserir novo", "gerenciadorBanner/form", "no_icon", "green") : ""}}
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+        <div class="subcontent">
+            {# {{ tables.table([
+                    tables.head([
+                            tables.columnHeader([
+                                    permissoes['GERBANN_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon") : "",
+                                    permissoes['GERBANN_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon") : "",
+                                    permissoes['GERBANN_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon") : "",
+                                    permissoes['GERBANN_ORDENAR'] ? buttons.iconButton("Salvar posicionamento", "javascript:salvarPosicionamento()", "no_icon") : "",
+                            ] | join, "50%"),
+                            tables.columnHeader([
+                                    fields.select("site", sites, ""),
+                                    fields.select("categoria", categorias, ""),
+                                    fields.select("status", status, "", "Todos os Status"),
+                            ] | join, "50%")
+                        ])
+                    ] | join,
+            "fakeTable") }}  #}
+            {{ tables.table([
+                tables.head([
+                    tables.columnHeader(fields.checkboxHeader()),
+                    tables.columnHeader([
+                                    permissoes['BANNE_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon") : "",
+                                    permissoes['BANNE_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon") : "",
+                                    permissoes['BANNE_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon") : "",
+                                    permissoes['BANNE_ORDENAR'] ? buttons.iconButton("Salvar posicionamento", "javascript:salvarPosicionamento()", "no_icon") : "",
+                                    fields.select("site", sites, ""),
+                                    fields.select("categoria", categorias, ""),
+                            ] | join, "80%"),
+                            tables.columnHeader("","10%"),
+                    tables.columnHeader([
+                                    fields.select("status", status, "", "Todos os Status"),
+                            ] | join, "10%")
+                ])
+            ] | join, "gerenciadorBanners") }}
+        </div>
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

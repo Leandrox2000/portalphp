@@ -1,0 +1,10 @@
+{% macro add(title, link, selected) %}
+        <li {{ selected ? "class='current'" : "" }} ><a href="{{ link }}">{{ title }}</a></li>
+{% endmacro %}
+
+
+{% macro content(content) %}
+        <ul class="hornav">
+            {{ content|raw }}
+        </ul>
+{% endmacro %}

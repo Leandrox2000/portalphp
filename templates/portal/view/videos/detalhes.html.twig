@@ -1,0 +1,126 @@
+{% import "fields.html.twig" as forms %}
+
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %} 
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %} 
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>                    
+
+    </div>
+    <div class="titulo-menu-subsite" >
+        <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+               {{ redes | raw}}
+            </div>
+</div> 
+{% endif %}
+<section id="master" role="main">
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if site != null and site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('videos') }}">{{ bread.getTitulo }}</a></li>
+                {% else %}
+                    <li><a href="{{ route('videos') }}">Videos</a></li>
+                {% endif %}
+                <li class="active">{{ result.getNome() }}</li>
+            </ol>
+        </div>
+        <div class="row">
+            <h2>Vídeos</h2>							
+        </div>
+        <div class="row">
+            <iframe width="870" height="540" src="{{ youtube(result.getLink()) }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="row">
+            <p class="text-justify" style="margin-top: 15px;">{{ result.getResumo() | nl2br }}<p>
+        </div>
+        {% if videoRelacionados | length > 0 %}
+            <div class="row">
+                <div class="box-cinza">
+                    <h3>Vídeos relacionados</h3>
+                    {% for video in videoRelacionados %}
+                        <ul class="lista-galeria-vertical2 {{ (loop.last) ? 'last' : null }}">
+                            <li class="lista-galeria-vertical2-imagem"><img src="http://i1.ytimg.com/vi/{{ youtubeKey(video.getLink()) }}/mqdefault.jpg" alt="fototeca"></li>
+                            <li class="lista-galeria-vertical2-titulo"><h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4></li>
+                        </ul>                
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% for video in videoPatrimonio %}
+                {% if loop.first %}
+                    <div class="row">
+                        <div class="box-cinza">
+                        <h3>Vídeos do patrimônio</h3>
+                    {% endif %}
+                    <ul class="lista-galeria-vertical2 {{ (loop.last) ? 'last' : null }}">
+                        <li class="lista-galeria-vertical2-imagem"><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}"><img src="http://i1.ytimg.com/vi/{{ youtubeKey(video.getLink()) }}/mqdefault.jpg" alt="fototeca"></a></li>
+                        <li class="lista-galeria-vertical2-titulo"><h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4></li>
+                    </ul>                
+            {% if loop.index % 5 == 0 %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-cinza">
+            {% endif %}
+            {% if loop.last %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </article>
+</section>

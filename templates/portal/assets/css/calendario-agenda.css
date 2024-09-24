@@ -1,0 +1,109 @@
+.calendario-agenda{ 
+}
+
+.calendario-agenda .ui-datepicker-calendar .selected a {
+    
+    background-color: #e6e6e6;
+    
+}
+
+.calendario-agenda .ui-datepicker-today {
+    
+    font-weight: bold;
+    
+}
+
+
+    .calendario-agenda .ui-datepicker-header{
+            width: 210px;
+            height: 35px;
+            margin: auto;
+            position: relative;
+
+            text-align: center;
+        }
+
+        .calendario-agenda .ui-datepicker-header .ui-datepicker-prev,
+        .calendario-agenda .ui-datepicker-header .ui-datepicker-next{
+            width: 7px;
+            height: 14px;
+            display: inline-block;
+            overflow: hidden;
+            position: absolute;
+            top: 8px;
+            left: 0;
+            background: url("../img/seta-esq-calendario.png") no-repeat;
+            cursor: pointer;
+
+            text-indent: -999px;
+        }
+
+        .calendario-agenda .ui-datepicker-header .ui-datepicker-next{
+            left: 197px;
+            background: url("../img/seta-dir-calendario.png") no-repeat;
+        }
+
+        .calendario-agenda .ui-datepicker-header .ui-datepicker-title{
+            width: 190px;
+            position: absolute;
+            top: 0;
+            left: 7px;
+
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            color: #590108;
+        }
+
+    .calendario-agenda .ui-datepicker-calendar{
+       /* padding: 25px 110px;*/
+        margin-top: 10px;
+        display: inline-block;  
+        /*border-width: 1px 0;
+        border-style: solid;
+        border-color: #ddd;*/
+    }       
+
+        .calendario-agenda .ui-datepicker-calendar th,
+        .calendario-agenda .ui-datepicker-calendar td{
+            padding: 5px 10px;
+            background: none;
+
+            text-align: center;
+        }
+
+        .calendario-agenda .ui-datepicker-calendar th{
+            font-size: 17px;
+            text-transform: uppercase;
+            color: #989495;
+        }
+
+        .calendario-agenda .ui-datepicker-calendar .ui-state-default, 
+        .calendario-agenda .ui-datepicker-calendar .ui-widget-content .ui-state-default, 
+        .calendario-agenda .ui-datepicker-calendar .ui-widget-header .ui-state-default{
+            width: 100%;
+            display: inline-block;
+            padding: 10px;
+
+            font-size: 17px;
+            color: #8a191d;
+        }
+
+        .calendario-agenda .ui-datepicker-calendar td.ui-datepicker-other-month a{
+            color: #bdbdbd;
+        }
+
+        .calendario-agenda .ui-datepicker-calendar .ui-state-highlight,
+        .calendario-agenda .ui-datepicker-calendar .ui-widget-content .ui-state-highlight,
+        .calendario-agenda .ui-datepicker-calendar .ui-widget-header .ui-state-highlight{
+            border-radius: 5px;
+            background: #e5e3e3;
+        }
+
+        .calendario-agenda .ui-datepicker-calendar .ui-state-active,
+        .calendario-agenda .ui-datepicker-calendar .ui-state-active .ui-widget-content .ui-state-active,
+        .calendario-agenda .ui-datepicker-calendar .ui-state-active .ui-widget-header .ui-state-active{
+            border-radius: 5px;
+            background: #e6a800;
+        }

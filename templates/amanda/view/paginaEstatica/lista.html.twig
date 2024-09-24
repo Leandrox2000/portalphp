@@ -1,0 +1,40 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{titlePage}}</h1>
+        {{ permissoes['PAGIN_INSERIR'] ? buttons.iconButton("Inserir novo", "paginaEstatica/form", "no_icon", "green") : ""}}
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+        <div class="subcontent">
+            {{ tables.table(
+                            [
+                            tables.head([
+                                            tables.columnHeader(fields.checkboxHeader()),
+                                            tables.columnHeader([
+                                                                permissoes['PAGIN_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon publicar") : "",
+                                                                permissoes['PAGIN_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon despublicar") : "",
+                                                                permissoes['PAGIN_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon deletebutton") : "",
+                                                                "&nbsp;&nbsp;&nbsp;&nbsp; Data ", 
+                                                                fields.date("data_inicial", "", "", ""),
+                                                                "&nbsp;&nbsp;", 
+                                                                fields.date("data_final", "", "", ""),
+                                                                fields.select("site", sites, "", "Meus subsites"),
+                                                            ]|join, "70%"),
+                                            tables.columnHeader(fields.select("status", status, "", "Todos os status")),
+                                            tables.columnHeader()
+                                        ])
+                            ]|join,
+                    "paginas") }}
+
+        </div>
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

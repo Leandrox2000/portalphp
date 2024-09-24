@@ -1,0 +1,27 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">
+                
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="publicacaoIntroducao/salvar" method="{{ method }}">
+                {{ forms.field("Texto introdutório", forms.richText("conteudo", introducao.getConteudo()) ) }}
+                {{ forms.hidden("id", introducao.getId()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

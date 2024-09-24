@@ -1,0 +1,316 @@
+{% if pre_visualizacao_bg or preVisualizacao %}
+<script type="text/javascript">
+    alert("ATENÇÃO - Você está visualizando uma versão de testes. Para que seja visualizado no Portal é necessário publicar a página no CMS");
+</script>
+{% endif %}
+
+<section id="banner">            
+    <div class="cycle-slideshow" 
+         data-cycle-fx="fade"
+         data-cycle-timeout="6000"
+         data-cycle-speed="600"
+         data-cycle-pause-on-hover="true"
+         data-cycle-overlay-template="<div class='cycle-overlay2'>{% verbatim  %}{{title}}{{desc}}{% endverbatim %}</div>"
+         data-cycle-pager="#custom-pager"
+         data-cycle-pager-template="<a href='#'>{% verbatim  %}{{slideNum}}{% endverbatim  %}</a>"
+         data-cycle-prev="#prev-slider"
+         data-cycle-next="#next-slider"
+         data-cycle-log="false">
+
+                {% if banners.destaque_home|length > 0 %}
+                {% for banner in banners.destaque_home %}
+        <img
+            src="{{ base_link }}image.php?w=1215&h=400&src={{ imgCompletePath(banner.getImagem()) }}"
+                    {% if banner.getTemLink == 1 %}
+            data-cycle-title="<a href='{{ banner.getUrlCompleta() }}' {{ (banner.getAbrirEm() == 'n') ? 'target=\'_blank\'' : '' }}>
+            <div class='title-slider'>{{ banner.getNome() }}</div><div class='barra-slider'><hr></hr></div>"
+            data-cycle-desc="<div class='subtitle-slider'>{{ banner.getDescricao() }}</div></a>"
+                   {% else %}
+            data-cycle-title="<div class='title-slider'>{{ banner.getNome() }}</div><div class='barra-slider'><hr></hr></div>"
+            data-cycle-desc="<div class='subtitle-slider'>{{ banner.getDescricao() }}</div>"
+                   {% endif %}
+            alt="{{ banner.getImagem().getLegenda() }}"
+            {% if banner.getImagem().getCredito() is not empty %}
+                title="{{ banner.getImagem().getCredito() }}"
+            {% else %}
+                title="{{ banner.getImagem().getLegenda() }}"
+            {% endif %}
+            width="100%"
+        >
+                {% endfor %}
+                {% else %}
+        <img src="{{ base_link }}templates/portal/assets/img/slider-1.jpg" 
+             data-cycle-title="<div class='title-slider'>Cidade de Ouro Preto</div><div class='barra-slider'><hr></hr></div>"
+             data-cycle-desc="<div class='subtitle-slider'>Estado de Minas Gerais</div>"
+             alt="Slide 1" title="Slide 1"
+             />
+
+        <img src="{{ base_link }}templates/portal/assets/img/slider-2.jpg" 
+             data-cycle-title="<div class='title-slider'>Cidade de Porto Alegre</div><div class='barra-slider'><hr></hr></div>"
+             data-cycle-desc="<div class='subtitle-slider'>Estado de Rio Grande do Sul</div>"
+             alt="Slide 2" title="Slide 2"
+             />
+                {% endif %}
+
+        <div class="cycle-overlay"></div>                    
+                {#<ul id="nav-slider">
+                    <li>
+                        <a href="#" id="prev-slider">Slide Anterior</a> 
+                    </li>
+                    <li>
+                        <a href="#" id="next-slider">Próximo Slide</a>
+                    </li>
+                </ul>#}
+        <div id="custom-pager"></div>
+
+    </div>
+</section>
+
+<section class="container">
+    
+              
+   <section class="box box-red patrimonio-cultural-brasileiro">
+        <div class="row box-noticias-home">
+             <div class="title-bg">
+                 <div class="title-border">
+                     <h2 class="tit-noticias">Instituto do Patrimônio Histórico e Artístico Nacional</h2>
+                 </div>
+             </div>
+             <div class="row">
+                  <ul class="noticias-home">
+                        {% set contador = 0 %}
+                        {% for noticiaHome in noticiasHome %}
+                        {% set contador = contador + 1  %}
+                        <li {% if contador == 4 %} style="margin-right: 0; " {% endif %} >
+                            <a href="{{ route('noticias/detalhes/' ~ noticiaHome.getId() ~ '/' ~ noticiaHome.getSlug()) }}">
+                                <div class="image-box">
+                                    <img
+                                        src="{{ base_link }}image.php?w=225&h=149&src={{ imgCompletePath(noticiaHome.getImagem()) }}" 
+                                        alt="{{ noticiaHome.getImagem().getNome() }}" 
+                                         {% if noticiaHome.getImagem().getCredito() is not empty %}
+                                                title="{{ [noticiaHome.getImagem().getLegenda(), noticiaHome.getImagem().getCredito()] | join(' Foto: ') }}"
+                                         {% else %}
+                                            title="{{ noticiaHome.getImagem().getLegenda() }}"
+                                         {% endif %}
+
+                                    >
+                                </div>
+                                <div class="title-box"><h3>{{ noticiaHome.getLabel() }}</h3></div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+             </div>
+
+             <aside class="box box-total-red" role="complementary">
+                 <div class="row clearfix">
+                     <div class="agenda agenda-home">
+                         <div class="title-bg">
+                             <div class="title-border">
+                                 <h2>Agenda de Eventos</h2>
+                             </div>
+                         </div>
+                         <ul class="list-agenda-home">
+                                 {% if eventos|length > 0 %}
+                                     {% for evento in eventos %}
+                             <li {{ (loop.first) ? 'class="first"' : '' }} {{ (loop.last) ? 'class="last"' : '' }}>
+                                 <span class="date"><strong>{{ evento.getPeriodoInicial().format('j') }}</strong>{{ strftime('%b', evento.getPeriodoInicial().getTimestamp())|capitalize }}</span>
+                                 <a href="{{ base_link }}agendaEventos/detalhes/{{ evento.getId() }}/{{ slugify(evento.getTitulo()) }}" title="agenda">{{ evento.getTitulo() }}</a>
+                             </li>
+                                     {% endfor %}
+                             <a href="{{ base_link }}agendaEventos" class="other-agenda">outros eventos</a>
+                                 {% else %}
+                             <li class="last">Nenhum evento disponível.</li>
+                                 {% endif %}
+                         </ul>
+                     </div>
+
+                     <div class="news">
+                         <div class="title-bg">
+                             <div class="title-border">
+                                 <h2>Notícias</h2>
+                             </div>
+                         </div>
+                         <ul class="list-news-home">
+                                 {% if noticias|length > 0 %}
+                                     {% for noticia in noticias %}
+                             <li {{ (loop.first) ? 'class="first"' : '' }} {{ (loop.last) ? 'class="last"' : '' }}>
+                                 <span class="date">
+                                             {# {{ strftime('%A', noticia.getDataInicial().getTimestamp())|capitalize }} | #}
+                                             {{ noticia.getDataInicial().format('d.m.Y') }}
+                                 </span>
+                                 <a href="{{ base_link }}noticias/detalhes/{{ noticia.getId() }}/{{ noticia.getSlug() }}">
+                                     <strong>{{ noticia.getTitulo() }}</strong>
+                                 </a>
+                             </li>
+                                     {% endfor %}
+                             <a href="{{ base_link }}noticias" class="other-news">outras notícias</a>
+                                 {% else %}
+                             <li class="last">Nenhuma notícia disponível.</li>
+                                 {% endif %}
+                         </ul>
+                     </div>
+                 </div>
+             </aside>
+         </div>
+    </section>   
+                         
+    {{ bannersComunicacaoHome | raw }}            
+                
+    {% if banners.livros|length > 0 or banners.unidades_descentralizadas|length > 0 %}
+    <section class="box box-red patrimonio-cultural-brasileiro" role="main">
+                {% if banners.livros|length > 0 %}
+        <div class="row box-acoesPreservacao">
+            <div class="title-bg">
+                <div class="title-border">
+                    <h2 class="tit-patromonio">Ações de Preservação e Salvaguarda</h2>
+                </div>
+            </div>
+            <ul class="patrimonios clearfix">
+                        {% for banner in banners.livros %}
+                        {% if loop.index%4 == 0 %}
+                <li class="col-mr0">
+                        {% else %}
+                <li class="cols">
+                        {% endif %}
+
+                            {% if banner.getTemLink() == 1 %}
+                    <a href="{{ banner.getUrlCompleta() }}" {{ (banner.getAbrirEm() == 'n') ? 'target="_blank"' : '' }} title="{{ banner.getImagem().getCredito() }}">
+                            {% endif %}
+                        <div class="image-box">
+                            <img src="{{ base_link }}image.php?w=225&h=149&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" />
+                        </div>
+                        <div class="title-box">
+                            <h3>{{ banner.getNome() }}</h3>
+                        </div>
+                            {% if banner.getTemLink() == 1 %}
+                    </a>
+                            {% endif %}
+                </li>
+                        {% endfor %}
+            </ul>
+        </div>
+                {% endif %}
+
+                {% if banners.unidades_descentralizadas|length > 0 %}
+        <div class="row box-unidadesEspeciais">
+            <div class="title-bg">
+                <div class="title-border">
+                    <h2 class="tit-unidadesEspeciais">Unidades Especiais</h2>
+                </div>
+            </div>
+                    {#
+                    <div class="carousel-red"
+                        data-cycle-fx="carousel"
+                        data-cycle-timeout="0"
+                        data-cycle-next="#next-carousel-red"
+                        data-cycle-prev="#prev-carousel-red"
+                        data-cycle-carousel-visible="{{ (banners.unidades_descentralizadas|length >= 5) ? 5 : banners.unidades_descentralizadas|length }}"
+                        data-allow-wrap="false"
+                        data-cycle-slides="> .title-box, > .title-box"
+                        data-cycle-log="false"
+                    >#}
+            <ul class="unidades-especiais clearfix">
+                        {% for banner in banners.unidades_descentralizadas %}
+                        {% if loop.index % 5 == 0 %}
+                <li class="col-mr0">
+                        {% else %}
+                <li class="cols">
+                        {% endif %}
+                        {% if banner.getTemLink() == 1 %}
+                    <a href="{{ banner.getUrlCompleta() }}" {{ (banner.getAbrirEm() == 'n') ? 'target="_blank"' : '' }}>
+                        <div class="image-box">
+                            <img
+                                src="{{ base_link }}image.php?w=175&h=100&src={{ imgCompletePath(banner.getImagem()) }}" 
+                                alt="{{ banner.getImagem().getLegenda() }}" 
+                                {% if banner.getImagem().getCredito() is not empty %}
+                                    title="{{ banner.getImagem().getCredito() }}"
+                                {% else %}
+                                    title="{{ banner.getImagem().getLegenda() }}"
+                                {% endif %}
+                                
+                            >
+                        </div>
+                        <div class="title-box"><h3>{{ banner.getNome() }}</h3></div>
+                    </a>
+                        {% else %}
+                    <div class="image-box">
+                        <img 
+                            src="{{ base_link }}image.php?w=175&h=100&src={{ imgCompletePath(banner.getImagem()) }}" 
+                            alt="{{ banner.getImagem().getLegenda() }}"
+                            {% if banner.getImagem().getCredito() is not empty %}
+                                title="{{ banner.getImagem().getCredito() }}"
+                            {% else %}
+                                title="{{ banner.getImagem().getLegenda() }}"
+                            {% endif %}
+                        >
+                    </div>
+                    <div class="title-box"><h3>{{ banner.getNome() }}</h3></div>
+                        {% endif %}
+                </li>
+                        {% endfor %}
+            </ul>
+                    {#
+                    </div>
+                    #}
+                    {#
+                        {% if banners.unidades_descentralizadas|length > 5 %}
+                        <ul class="nav-carousel-red">
+                            <li>
+                                <a href="#" id="prev-carousel-red" title="Anterior">Anterior</a>
+                            </li>
+                            <li>
+                                <a href="#" id="next-carousel-red" title="Próximo">Próximo</a>
+                            </li>
+                        </ul>
+                        {% endif %}
+                    #}
+        </div>
+                {% endif %}
+    </section>
+            {% endif %}
+
+
+            {#{% include 'box-banners.html.twig' %}#}
+  
+
+            {% include 'box-banners-rodape.html.twig' with {'bannersRodape' : banners.divulgacao} %}
+
+                {#
+                {% if banners.divulgacao|length > 0 %}
+                <div class="row border-yellow">
+                    <div class="carousel-yellow"
+                        data-cycle-fx="carousel"
+                        data-cycle-timeout="0"
+                        data-cycle-next="#next-carousel-yellow"
+                        data-cycle-prev="#prev-carousel-yellow"
+                        data-cycle-carousel-visible="{{ (banners.divulgacao|length >= 4) ? 4 : banners.divulgacao|length }}"
+                        data-allow-wrap="false"
+                        data-cycle-slides="> a, > img"
+                        data-cycle-log="false"
+                    >
+                        {% for banner in banners.divulgacao %}
+                        {% if banner.getTemLink() == 1 %}
+                        <a href="{{ banner.getUrlCompleta() }}" {{ (banner.getAbrirEm() == 'n') ? 'target="_blank"' : '' }}>
+                            <img src="{{ base_link }}image.php?w=215&h=80&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" />
+                        </a>
+                        {% else %}
+                        <img src="{{ base_link }}image.php?w=215&h=80&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" />
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+
+                    {% if banners.divulgacao|length > 4 %}
+                    <ul class="nav-carousel-yellow">
+                        <li>
+                            <a href="#" id="prev-carousel-yellow" title="Anterior">Anterior</a>
+                        </li>
+                        <li>
+                            <a href="#" id="next-carousel-yellow" title="Próximo">Próximo</a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+                {% endif %}
+                #}
+</section>

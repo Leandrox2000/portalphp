@@ -1,0 +1,54 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+        {{ permissoes['EDITA_INSERIR'] ? buttons.iconButton("Inserir novo", "edital/form", "no_icon", "green") : "" }}
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {{ tables.table(
+                            [
+                            tables.head([
+                                            tables.columnHeader(fields.checkboxHeader()),
+                                            tables.columnHeader([
+                                                                permissoes['EDITA_PUBLI']   ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon") : "",
+                                                                permissoes['EDITA_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon") : "",
+                                                                permissoes['EDITA_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon") : "",
+                                                                "&nbsp;&nbsp; Data ", 
+                                                                fields.date("dataInicial", "", "", ""),
+                                                                "&nbsp;", 
+                                                                fields.date("dataFinal", "", "", ""), "&nbsp;&nbsp;",
+                                                                fields.select("categoriasFiltro", categorias, "", "Todas as Categorias"),
+                                                                "<div class='filtroSelect'> ", [
+                                                                    "&nbsp;&nbsp;",
+                                                                    fields.select("statusEdital", statusEdital, "", "Todos os Status"),
+                                                                    "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",    
+                                                                    fields.select("site", sites, "", "Meus subsites"),
+                                                                ]|join,
+                                                                "</div>"
+                                                                
+                                            ]|join, "90%"),
+                                            tables.columnHeader([
+                                                            
+                                                            fields.select("status", status, "", "Todos os Status"),
+                                                            
+
+                                            ]|join, "10%")
+                                        ])
+                            ]|join,
+                    "editais") }}
+
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

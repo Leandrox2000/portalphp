@@ -1,0 +1,63 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Conselheiros") }}
+        </div>
+        <div class="row">
+            <h2>Conselheiros</h2>
+        </div>
+        <div class="row">
+            <h3 class="fs24">Membros</h3>
+            <ul class="membros">
+
+                 {% if results | length > 0 %}
+                    {% set cont = 0 %}
+                    {% for result in results %}
+                        {% if cont % 2 == 0 %}
+                            <li class="membros-col membros-col1">
+                                 <span class="nivel">
+                                    {{ result.getTipo() == 'E' ? 'Titular' : '' }}
+                                    {{ result.getTipo() == 'S' ? 'Suplente' : '' }}
+                                 </span>
+                                <span class="nome">{{ result.getNome() }}</span>
+                                <span class="cargo">{{ result.getInstituicao() }}</span>
+                            </li>                            
+                            {% set cont = cont+1 %}
+
+                        {% else %}
+                             <li class="membros-col membros-col2">
+                                 <span class="nivel">
+                                    {{ result.getTipo() == 'E' ? 'Titular' : '' }}
+                                    {{ result.getTipo() == 'S' ? 'Suplente' : '' }}
+                                 </span>
+                                <span class="nome">{{ result.getNome() }}</span>
+                                <span class="cargo">{{ result.getInstituicao() }}</span>
+                            </li>                            
+                            {% set cont = cont+1 %}
+                        {% endif %}
+{#                        <hr style="border-bottom: 1px solid #000;">#}
+                    {% endfor %}
+                {% else %}
+                    <p>Nenhum registro encontrado.</p>
+                {% endif %}
+
+            </ul>
+        </div>       
+    </article>
+
+    {% if results | length > 0 %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }} 
+                    <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</section>
+

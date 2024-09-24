@@ -1,0 +1,59 @@
+{% if bold %}
+    <strong>{{ bold.data|raw }}</strong>
+{% endif %}
+
+{% if italic %}
+    <em>{{ italic.data|raw }}</em>
+{% endif %}
+
+{% if link %}
+    <a {% for attr, value in link.attrs %} {{ attr }}="{{ value }}" {% endfor %} >{{ link.data|raw }}</a>
+{% endif %}
+
+
+{% if h1 %}
+    <h1
+        {% for attr, value in h1.attrs %}
+            {{ attr }}="{{ value }}"
+        {% endfor %}
+        >{{ h1.data|raw }}</h1>
+{% endif %}
+
+{% if h2 %}
+    <h2
+        {% for attr, value in h2.attrs %}
+            {{ attr }}="{{ value }}"
+        {% endfor %}
+        >{{ h2.data|raw }}</h2>
+{% endif %}
+
+{% if h3 %}
+    <h3
+        {% for attr, value in h3.attrs %}
+            {{ attr }}="{{ value }}"
+        {% endfor %}
+        >{{ h3.data|raw }}</h3>
+{% endif %}
+
+{% if h4 %}
+    <h4 {% for attr, value in h4.attrs %} {{ attr }}="{{ value }}" {% endfor %}>
+        {{ h4.data|raw }}
+    </h4>
+{% endif %}
+
+{% if img %}
+    <img src="{{ img.data }}" {% for attr, value in img.attrs %} {{ attr }}="{{ value }}" {% endfor %} />
+{% endif %}
+
+
+{% if div %}
+    <div {% for attr, value in div.attrs %} {{ attr }}="{{ value }}" {% endfor %}>
+        {{ div.data|raw }}
+    </div>
+{% endif %}
+
+{% if span %}
+    <span {% for attr, value in span.attrs %} {{ attr }}="{{ value }}" {% endfor %}>
+        {{ span.data|raw }}
+    </span>
+{% endif %}

@@ -1,0 +1,84 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="publicacao/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                        forms.date("dataInicial", publicacao.getDataInicial() ? publicacao.getDataInicial().format('d/m/Y') : data.format('d/m/Y') , "Data Inicial", "date periodo"), 
+                        forms.time("horaInicial", publicacao.getDataInicial() ? publicacao.getDataInicial().format('H:i') : hora.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                ] | join ) }}
+
+                {{ forms.field("Data e Hora Despublicação:", [
+                        forms.date("dataFinal", publicacao.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                        forms.time("horaFinal", publicacao.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                ] | join ) }}
+
+                {{ forms.field("Tipo de Publicação:",
+                        '<input value="1" type="checkbox" id="check-tipo-livraria" name="tipo_livraria"'
+                        ~ ( publicacao is null or publicacao.getTipoLivraria() ? ' checked="checked"' : '' ) ~ '>' ~
+                        '<label for="check-tipo-livraria">Livraria virtual</label>' ~
+
+                        '<div class="separacao"></div>' ~
+
+                        '<input value="1" type="checkbox" id="check-tipo-publicacao" name="tipo_publicacao"'
+                        ~ ( publicacao is null or publicacao.getTipoPublicacao() ? ' checked="checked"' : '' ) ~ '>' ~
+                        '<label for="check-tipo-publicacao">Publicações</label>' ~
+
+                        '<div class="error-message">&nbsp;</div>'
+                , "tipo-registro" ) }}
+
+                {{ forms.field("Título", forms.text("titulo", publicacao.getTitulo(), "Nome") ) }}
+                {{ forms.field("Autor", forms.text("autor", publicacao.getAutor(), "Autor") ) }}
+                {{ forms.field("Edição", forms.text("edicao", publicacao.getEdicao(), "Edição") )  }}
+                {{ forms.field("Nº Páginas", forms.number("paginas", publicacao.getPaginas(), 0, 10000000, 1, "number smallinput sonumero") ) }}
+                {{ forms.field("Categoria", [
+                        forms.select('categoria', categorias, publicacao.getCategoria(), "Selecione"), 
+                        permissoes['CADAS_CONSULT'] ? buttons.iconButton("Categorias", "javascript:abrirCategorias()", "no_icon") : ""
+                ] | join ) }}
+                {{ forms.field("Preço", forms.text("preco", publicacao.getPreco() ? publicacao.getPreco() : "", "Preço", "smallinput price-value") ) }}
+                {{ forms.field("Imagem", [
+                        buttons.iconButton("Selecionar", "javascript:abrirImagemRadio(0)", "no_icon"),
+                        '<div class="imgSelecionadas" id="imgSelecionadas">', imagem ,'</div>'
+                ] | join ) }}
+
+                {{ forms.hidden("imagemBanco", idImg) }}
+                {{ forms.field("Conteúdo", forms.richText("conteudo", publicacao.getConteudo()) ) }}
+
+                {{ forms.field("Arquivo", [
+                        forms.upload("arquivo", false, "Arquivo", publicacao.getArquivo() ? "none" ),
+                        publicacao.getArquivo() ? "<div id='divArquivo' class='photo'>
+                                                <a href='uploads/publicacao/" ~ publicacao.getArquivo() ~ "' target='_blank'>
+                                                    <img src='templates/amanda/assets/images/icons/blogperfume/Article/article 48.png'/>
+                                                </a>
+                                                <br/>
+                                                <a href='javascript:removerArquivo(" ~ publicacao.getId() ~ ")'>Excluir Arquivo</a>
+                                            </div>"
+                ] | join ) }}
+                {{ forms.hidden("arquivoNome", publicacao.getArquivo()) }}
+                {{ forms.hidden("arquivoAtual", publicacao.getArquivo()) }}
+                {{ forms.hidden("arquivoExcluido", "") }}
+                
+                
+                {{ forms.hidden("ordem", publicacao.getOrdem()) }}
+                {{ forms.hidden("id", publicacao.getId()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

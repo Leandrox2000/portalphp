@@ -1,0 +1,53 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Quem é quem") }}
+        </div>
+
+        <div class="row">
+            <h2>Quem é quem</h2>							
+        </div>
+        
+        <div class="row">
+
+            {% if results | length > 0 %}
+
+                <ul class="lista-dicionario">
+
+                    {% for result in results %}
+                    <li class="m0">
+                        <div {{ (not loop.last) ? 'style="border-bottom: 1px solid #ccc; padding-bottom: 10px;"' : null }}>
+                            <span>{{ result.getCargo().getLabel() }}</span>
+                            <h4> 
+                                <a href="{{ base_link ~ 'quemEQuem/detalhes/' ~ result.getId() ~ '/' ~ slugify(result.getNome()) }}">
+                                    {{ result.getNome() }}
+                                </a>
+                            </h4>
+                        </div>									
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+
+            <p>Nenhum registro encontrado.</p>
+
+            {% endif %}
+
+        </div>
+    </article>
+
+    {% if results | length > 0 %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination.render() | raw }}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</section>

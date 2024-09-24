@@ -1,0 +1,132 @@
+            
+<section id="master" role="main">                
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if site != null and site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('fototeca') }}">{{ bread.getTitulo }}</a></li>
+                {% else %}
+                    <li><a href="{{ route('fototeca') }}">Fototecas</a></li>
+                {% endif %}
+                <li class="active">{{ entity.getLabel() }}</li>
+            </ol>
+        </div>
+        <div class="row">
+            <h2 class="pull-left">{{ entity.getLabel() }}</h2>
+            <!--<a href="{{ route('fototeca') }}" class="voltar pull-right mt15">voltar</a>-->
+        </div>
+        <div class="row">
+            <div>
+                {{ entity.getDescricao()|raw }}
+            </div>
+            <div class="row">
+                <h3>Galeria de Imagens</h3>
+               {% for id in ordem %}
+                {% for galeria in entity.getGalerias() %}
+        			{% if id == galeria.getId() %}
+                    {% set imagens = galeria.getImagens() %}
+                <ul class="lista-galeria-horizontal">
+                    <li class="lista-galeria-horizontal-imagem">
+                        <a href="{{ route('galeria/detalhes/' ~ galeria.getId() ~ '?eFototeca=1') }}">
+                            <img 
+                                src="{{ base_link }}image.php?w=880&h=587&src={{ imgCompletePath(imagens[0]) }}" 
+                                alt="{{ imagens[0].getNome() }}" 
+                                class="title-creditos"
+                                {% if imagens[0].getCredito() is not empty %}
+                                    title="{{ ["", imagens[0].getCredito()] | join(' Foto: ') }}"
+                                {% endif %}
+                                title="{{ imagens[0].getCredito() }}"
+                                data-content="{{ imagens[0].getLegenda() }}" 
+                            >
+                        </a>
+                    </li>
+                    <li class="lista-galeria-horizontal-titulo">
+                        <h4>
+                            <a href="{{ route('galeria/detalhes/' ~ galeria.getId() ~ '?eFototeca=1') }}">{{ galeria.getLabel() }}</a>
+                        </h4>
+                    </li>
+                    <li class="lista-galeria-horizontal-texto">
+                        {{ galeria.getDescricao() | raw }}
+                    </li>
+                </ul>
+                {% endif %}
+                {% endfor %}
+               {% endfor %}
+            </div>
+        </div>
+    </article>
+    {% if relacionados|length > 0 %}
+    <div class="row">
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <h3>Fototecas Relacionadas</h3>
+                <div class="fototecas-relacionadas" style="">
+                    {% for relacionado in relacionados %}
+                        {% set galerias = relacionado.getGalerias() %}
+                        {% set imagens = galerias[0].getImagens() %}
+                    <ul class="lista-galeria-vertical">
+                        <li class="lista-galeria-vertical-imagem">
+                            <a href="{{ route('fototeca/detalhes/' ~ relacionado.getId()) }}">
+                                <img src="{{ base_link }}image.php?w=880&h=587&src={{ imgCompletePath(imagens[0]) }}" alt="{{ imagens[0].getLegenda() }}" title="{{ imagens[0].getCredito() }}">
+                            </a>
+                        </li>
+                        <li class="lista-galeria-vertical-titulo">
+                            <a href="{{ route('fototeca/detalhes/' ~ relacionado.getId()) }}"><h4>{{ relacionado.getNome() }}</h4></a>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row" style="margin-top: 18px; margin-bottom: 18px; margin-left: 19px;">
+        <div class="addthis_toolbox">
+            <div class="custom_images">
+                <div id="custom_span">
+                    <span>Compartilhar</span>
+                </div>
+                <a class="addthis_button_facebook"><img src="{{ base_link }}/templates/portal/assets/img/facebook_.png" border="0" alt="Facebook" title="Facebook" /></a>
+                <a class="addthis_button_twitter"><img src="{{ base_link }}/templates/portal/assets/img/twitter_.png" border="0" alt="Twitter" title="Twitter" /></a>
+                <a class="addthis_button_email"><img src="{{ base_link }}/templates/portal/assets/img/email_.png" border="0" style="height: 30px;" alt="Email" title="Email" /></a>
+                <a class="addthis_button_linkedin"><img src="{{ base_link }}/templates/portal/assets/img/linkedin_.png" style="height: 34px;" border="0" alt="Linkedin" title="Linkedin" /></a>
+            </div>
+        </div>
+    </div>
+</section>

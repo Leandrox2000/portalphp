@@ -1,0 +1,1 @@
+alter table tb_compromisso add column ds_observacoes varchar(500);

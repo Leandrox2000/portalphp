@@ -1,0 +1,12 @@
+<ul class="lista-comentarios">
+    {% for comentario in results %}
+    <li>
+        <span class="lista-comentarios-nome" title="{{ comentario.getDataInicial().format('d/m/Y') }}">
+            {{ comentario.getAutor() }}
+        </span>
+        <span class="lista-comentarios-comentario">
+            {{ comentario.getComentario() | nl2br }}
+        </span>
+    </li>
+    {% endfor %}
+</ul>

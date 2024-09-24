@@ -1,0 +1,70 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="boletimEletronico/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                                               forms.date("data_inicial", boletim.getDataInicial() ? boletim.getDataInicial().format('d/m/Y') : data.format('d/m/Y')  , "Data Inicial", "date periodo"),
+                                               forms.time("hora_inicial", boletim.getDataInicial() ? boletim.getDataInicial().format('H:i') : data.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                                            ]|join
+                              )
+                }}
+                {{ forms.field("Data e Hora Despublicação:", [
+                                              forms.date("data_final", boletim.getDataFinal().format('d/m/Y') , "Período final", "date periodo"),
+                                              forms.time("hora_final", boletim.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                                            ]|join
+                              )
+                }}
+                {{ forms.field("Edição", [
+                    forms.text("numero", boletim.getNumero(), "nº","edicao",10,null,4),
+                    " / ",
+                    forms.text("ano", boletim.getAno(), "ano","edicao",10,null,4)
+                ]|join
+                )
+                }}
+                {{ forms.field("Período", [
+                                               "Data ", forms.date("periodo_inicial", boletim.getPeriodoInicial().format('d/m/Y'), "Período inicial"),
+                                               "à ", forms.date("periodo_final", boletim.getPeriodoFinal().format('d/m/Y'), "Período final")
+                                            ]|join
+                              )
+                }}
+
+
+                {{ forms.field("Arquivo",
+                                        [
+                                            forms.upload("arquivo", false, "Arquivo", boletim.getArquivo() ? "none" ),
+                                            boletim.getArquivo() ? "<div id=\"#{boletim.getId()}\" class=\"photo\">
+                                                                    <a href=\"uploads/boletimeletronico/#{boletim.getArquivo()}\" target=\"_blank\">
+                                                                        <img src=\"uploads/boletimeletronico/icone.jpg\"/>
+                                                                    </a>
+                                                                    <br/>
+                                                                    <a href=\"javascript:removerImagem(#{boletim.getId()})\">Excluir Arquivo</a>
+                                                                </div>"
+                                        ]|join
+                                )
+                }}
+
+                {{ forms.hidden("arquivoNome", boletim.getArquivo()) }}
+                {{ forms.hidden("arquivoAtual", boletim.getArquivo()) }}
+                {{ forms.hidden("arquivoExcluido", "") }}
+
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+                {{ forms.hidden("id", boletim.getId()) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

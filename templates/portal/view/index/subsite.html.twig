@@ -1,0 +1,658 @@
+{% if preVisualizacao == true or pre_visualizacao == true %}
+<script>
+        jQuery(document).ready(function () {
+            //jQuery('body').attr('id', 'main');
+            alert("ATENÇÃO - Você está visualizando uma versão de testes. Para que seja visualizado no Portal é necessário publicar a página no CMS");
+      });
+</script>
+
+{% endif %}
+
+ <script>
+    jQuery(document).ready(function () {
+            
+    });
+
+    function setarVideoPrincipal(a) {
+        $('#videoPrincipal').attr("src",$('.video'+a).attr("data-src"));
+        $('#nomeVideo').html($('.video'+a).attr("data-nome"));
+    }
+
+</script>
+
+<section id="container2" role="main">
+    
+        <div class="menu-subsite">
+            <div class="menu-subsite-subsite">
+                {% if menu.subsite is not empty %}
+                    <!-- Link menu disable -->
+                    <!--a href="#"-->
+                {% endif %}
+                    
+                    <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+                
+                {% if menu.subsite is not empty %} 
+                    <!--/a-->
+                {% endif %}
+                <!-- Menu expandido disable -->
+                <div class="menu-expandido-subsite" >
+                    {{ menu.subsite | raw }}
+                </div>
+                
+            </div>
+            <div class="titulo-menu-subsite" >
+                
+                <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+            </div>
+            <div style="float:right; padding-right: 10px;" >
+               {{ redes | raw }}
+            </div>
+        </div>
+    
+    {% set teste = false %}
+       {% for key ,funcionalidade in render %}
+        
+        {% if loop.index == 2 %}
+            <section class="bem-vindo">
+                <div class="master-content" style="padding: 20px 40px 20px 37px">
+                    <h2>{{ subsite.getTitulo() }}</h2>
+                    <div >{{ subsite.getDescricao() | raw }}</div>
+                </div>
+            </section> 
+        {% endif %}
+        
+        
+        <!-- Banner Slider -->
+        {% if  key  == 'bannersSlider' %}
+            <div style="width:100%;">
+                <section class="box-noticias-subsites" style="width:100%;">
+                    <div class="box-noticias-subsites-content" style="width:100%;">
+                        <div style="width:100%;" class="noticias-subsites" 
+                             data-cycle-fx="scrollHorz" 
+                             data-cycle-timeout="6000"
+                             data-cycle-pause-on-hover="true"
+                             data-cycle-pager=".noticias-paginacao"
+                             data-cycle-overlay=".noticias-overlay"
+                             data-cycle-overlay-template="<h2>{% verbatim  %}{{title}}{% endverbatim %}</h2>{% verbatim  %}{{desc}}{% endverbatim %}"
+                             >
+                            
+                            {% if pre_visualizacao == true %}
+                                {% for banner in funcionalidade %}
+                                    <img width="1215" height="400" src="{{ base_link }}imageCrop.php?x1={{ banner.getX1() }}&x2={{ banner.getX2() }}&y1={{ banner.getY1() }}&y2={{ banner.getY2() }}&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getNome() }}" title="{{ banner.getImagem().getCredito() }}" 
+                                         data-cycle-title="{{ banner.getNome() }}"
+                                         data-cycle-desc="{{ banner.getDescricao() }}" >
+                                {% endfor %}
+                                
+                            {% else %}
+                                {% for slider in bannersSliderOrdem %}
+                                    {% for banner in funcionalidade %}
+                                            {% if  banner.getId() == slider.idSliderHome %}
+                                                    <img width="1215" height="400" src="{{ base_link }}imageCrop.php?x1={{ banner.getX1() }}&x2={{ banner.getX2() }}&y1={{ banner.getY1() }}&y2={{ banner.getY2() }}&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getNome() }}" title="{{ banner.getImagem().getCredito() }}" 
+                                                         data-cycle-title="{{ banner.getNome() }}"
+                                                         data-cycle-desc="{{ banner.getDescricao() }}"
+                                                         >
+                                            {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>	
+                        <div class="noticias-overlay"></div>			
+                        <div class="noticias-paginacao"></div>
+                    </div>  
+                </section>
+            </div>
+        {% endif %}
+        
+        <!-- noticias -->
+        {% if  key  == 'noticias' %}
+
+            <div class="box-white" style="padding-top: 0px;" >
+                <div class="box-destaques-noticias">
+                    
+                        {% if teste == false and loop.index >= 2%}
+                            <div class="row">
+                                <div class="title-bg">
+                                    <div class="title-border">
+                                        <h2>Notícias</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    
+            
+                     <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;">
+                            {% if teste == true or loop.first %}
+                                <div class="row box-agenda-subsites" style="width:1140px;">
+                                    <div class="agenda-subsites">
+                                        <h2 class="h2-subsite">Notícias</h2>
+                                    </div>
+                            {% elseif teste == false and loop.index >= 2%}
+                                {% set teste = true %}    
+                                <div class="row" style="width:1140px;">
+                            {% else %}
+                                <div class="row" style="width:1140px;">
+                            {% endif %}
+                            
+                            <!-- Notícias -->
+                            <div style="padding-left:0px;">
+                            {% if funcionalidade | length >= 1 %}
+                                {% set cont = 1 %}
+                                {% for noticia in funcionalidade %}
+                                    {% set cont = cont == 4 ? 1 : cont %}
+                                    <div style="width: 380px;margin: 10px 0 0px;" class="destaques-noticias-col destaques-noticias-col{{ cont }}">
+                                        <a href="{{ route('noticias/detalhes/' ~ noticia.getId() ~ '/' ~ noticia.getSlug()) }}"><img src="{{ base_link }}image.php?w=305&h=196&src={{ imgCompletePath(noticia.getImagem()) }}" alt="{{ noticia.getTitulo() }}" title="{{ banner.getImagem().getCredito() }}"></a>
+                                        <div style="width: 305px; ">
+                                            <h2>
+                                                <a href="{{ route('noticias/detalhes/' ~ noticia.getId() ~ '/' ~ noticia.getSlug()) }}">
+                                                    {{ noticia.getTitulo() }}
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    {% set cont = cont + 1 %}
+                                {% endfor %}
+                            </div>
+                                <div class="mais">
+                                    <a href="{{ route('noticias') }}">outras notícias ></a>
+                                </div>
+                            {% endif %}
+                            <!-- /Notícias -->
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        <!-- videos -->
+        {% if  key  == 'videos' %}
+            
+            <div class="box-white" style="padding-top: 2px;">
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Vídeos</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;">
+                            <!-- videos -->
+                            
+                                {% if teste == true or loop.first %}
+                                    <div class="row box-agenda-subsites" style="width:1140px;">
+
+                                        <div class="agenda-subsites">
+                                            <h2 class="h2-subsite">Vídeos</h2>
+                                        </div>
+                                {% elseif teste == false and loop.index >= 2%}
+                                    {% set teste = true %}    
+                                    <div class="row" style="width:1140px">
+                                {% else %}
+                                    <div class="row" style="width:1140px">
+                                {% endif %}
+                                        <div class="video-primary">
+                                            {% for video in funcionalidade%}
+                                                {% if loop.first %}
+                                                    <div id="nomeVideo">
+                                                        {{ video.getNome() }} 
+                                                    </div>
+                                                    <a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">
+                                                        <iframe id="videoPrincipal" width="700px" height="435px" src="{{ youtube(video.getLink())|replace({'autoplay=1': 'autoplay=0'}) }}" frameborder="0" allowfullscreen></iframe>
+                                                    </a>
+                                                    <!--<h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4>-->
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                        <div class="video-second" style="width:300px;">
+
+                                            {% for video in funcionalidade %}
+                                                <ul class="lista-galeria-horizontal">
+                                                    <li class="lista-galeria-horizontal-imagem">
+                                                        <!--<a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">-->
+                                                        <a href="javascript:setarVideoPrincipal('{{ video.getId() }}');"  class="video{{ video.getId() }}" data-nome="{{video.getNome()}}" data-src="{{ youtube(video.getLink()) }}" >
+                                                           <img src="http://i1.ytimg.com/vi/{{ youtubeKey(video.getLink()) }}/mqdefault.jpg" alt="fototeca">
+                                                        </a>
+                                                    </li>
+                                                    <li class="lista-galeria-horizontal-texto">
+                                                        <!-- <h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4>-->
+                                                        <h4>
+                                                            <a href="javascript:setarVideoPrincipal('{{ video.getId() }}');" class="video{{ video.getId() }}" data-src="{{ youtube(video.getLink()) }}"  >
+                                                                {{ video.getNome() }}
+                                                            </a>
+                                                        </h4>
+                                                    </li>
+                                                </ul>
+                                            {% endfor %}
+
+                                        </div>
+                                        <div class="mais">
+                                            <a href="{{ route('videos') }}">outros vídeos ></a>
+                                        </div>
+                                    </div>
+
+                                   
+                            
+                        </div>
+                    </div>
+                </div>           
+            </div>
+        {% endif %}
+        {{ asd }}
+        
+         {% if  key  == 'galeria' %}
+            <div class="box-white" style="padding-top: 2px;">
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Galerias</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;">
+                            <!-- Galeria -->
+                                
+
+                                    {% if teste == true or loop.first %}
+                                        <div class="row box-agenda-subsites" style="width:1140px;">
+
+                                            <div class="agenda-subsites">
+                                                <h2 class="h2-subsite">Galerias</h2>
+                                            </div>
+                                    {% elseif teste == false and loop.index >= 2%}
+                                        {% set teste = true %}    
+                                        <div class="row" style="width:1140px;">
+                                    {% else %}
+                                        <div class="row" style="width:1140px;">
+                                    {% endif %}
+                                    
+                                    {% set cont = 1 %}
+                                    <ul class="list-master-galeria" >
+                                    {% for galeria in funcionalidade %}
+                                        {% if cont < 4 %}
+                                            <li>
+                                                <ul>
+                                                    <a href="{{ route('galeria/detalhes/' ~ galeria.getId() ~ '/' ~ slugify( galeria.getNome() )) }}">
+                                                    {% for imagem in galeria.getImagens() %}
+                                                        {% if loop.first %}
+                                                              <li>
+                                                                  <img style="margin-bottom: 17px;" src="{{ base_link }}image.php?w=305&h=196&src={{ imgCompletePath(imagem) }}"  title="{{ banner.getImagem().getCredito() }}">
+                                                              </li>
+                                                        {% endif %} 
+                                                    {% endfor %}
+                                                    <li>
+                                                        <div style="width: 305px; ">
+                                                            <span style="margin-bottom: 0;font-family: 'Trebuchet MS', Helvetica, sans-serif;font-weight: 700;font-size: 1.04em;color: #8a191d;">{{ galeria.getTitulo() }} </span>
+                                                        </div>
+                                                    </li>
+                                                    </a>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                        {% set cont = cont + 1 %}
+                                    {% endfor %}
+                                            </ul>
+                                            
+                                            <div class="mais">
+                                                <a href="{{ route('galeria') }}">outras galerias ></a>
+                                            </div>
+                                        </div>
+                                    
+                                <!-- /Galeria -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}   
+        
+        
+        
+         {% if  key  == 'edital' %}
+            
+            <div class="box-white" style="padding-top: 2px;">
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Editais</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;"> 
+                            <!-- edital -->
+                                
+                                            {% if teste == true or loop.first %}
+                                                <div class="row box-agenda-subsites" style="width:1140px;">
+                                                    <div class="agenda-subsites">
+                                                        <h2 class="h2-subsite">Editais</h2>
+                                                    </div>
+                                            {% elseif teste == false and loop.index >= 2%}
+                                                {% set teste = true %}    
+                                                <div class="row" style="width:1140px">
+                                            {% else %}
+                                                <div class="row" style="width:1140px">
+                                            {% endif %}
+                                            
+
+                                            <ul class="list-master-edital" >
+                                            {% for edital in funcionalidade %}
+                                                <li>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{{ base_link }}{{ subsite.getSigla | lower}}/editais/detalhes/{{ edital.getId()}}">
+                                                                <span>{{ edital.getNome() }}</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <label class="edital-label-pequeno">CATEGORIA:</label> 
+                                                            {{ edital.getCategoria() }}
+                                                        </li>
+                                                        <li> 
+                                                            <label class="edital-label-pequeno">SITUAÇÃO:</label>
+                                                            {{ edital.getStatus() }} 
+                                                        </li>
+                                                        <li >
+                                                           {{ edital.getConteudo() }} 
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                            <div class="mais">
+                                                <a href="{{ route('editais') }}">outros editais ></a>
+                                            </div>
+                                        </div>
+                                <!-- /Editais -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        
+        
+        {% if  key  == 'legislacao' %}
+            <div class="box-white" style="padding-top: 2px;">
+                
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Legislação</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                
+                    <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;">
+                            <!-- legislacao -->
+                                            {% if teste == true or loop.first %}
+                                        <div class="row box-agenda-subsites" style="width:1140px;">
+
+                                            <div class="agenda-subsites">
+                                                <h2 class="h2-subsite">Legislação</h2>
+                                            </div>
+                                    {% elseif teste == false and loop.index >= 2%}
+                                        {% set teste = true %}    
+                                        <div class="row" style="width:1140px;">
+                                    {% else %}
+                                        <div class="row" style="width:1140px;">
+                                    {% endif %}
+                                            <ul class="list-master-galeria" >
+                                            {% for legislacao in funcionalidade %}
+                                                <li style="width: 380px;">
+                                                    <ul>
+                                                        <a href="{{ base_link }}uploads/legislacao/{{ legislacao.getArquivo() }}" target="_blank">
+                                                            <li style="height: 44px">
+                                                                <div style="width: 305px; ">
+                                                                    <span style="text-align: justify;margin-bottom: 0;font-family: 'Trebuchet MS', Helvetica, sans-serif;font-weight: 700;font-size: 1.04em;color: #8a191d;">{{ legislacao.getTitulo() }} </span>
+                                                                </div>
+                                                            </li>
+                                                        </a>
+                                                        <li style="width: 305px;">
+                                                            <div>
+                                                                <p style="text-align: justify;">{{ legislacao.getDescricao() | striptags | truncatetext(210) | raw }} </span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                            <div class="mais">
+                                                <a href="{{ route('legislacao') }}">visite a página Legislação ></a>
+                                            </div>
+                                        </div>
+                                <!-- /Legislação -->
+                        </div>
+                    </div>
+                </div>                                
+            </div>
+        {% endif %}
+        
+        
+        {% if  key  == 'eventos' %}
+            
+            <div class="box-white" style="padding-top: 2px;">
+                
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Agenda</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="box-destaques-noticias">
+                        <div class="row">
+                            <div class="master-content clearfix" style="padding-top: 35px;">
+                                <!-- Eventos -->
+                                    
+                                        {% if teste == true or loop.first %}
+                                            <div class="row box-agenda-subsites" style="width:1140px;">
+                                                <div class="agenda-subsites">
+                                                    <h2 class="h2-subsite">Agenda</h2>
+                                                </div>
+                                        {% elseif teste == false and loop.index >= 2%}
+                                            {% set teste = true %}    
+                                            <div class="row" style="width:1140px">
+                                        {% else %}
+                                            <div class="row" style="width:1140px">
+                                        {% endif %}
+                                        
+                                        
+                                        
+                                        {% set cont = 1 %}
+                                        {% set break = false %}
+                                        {% for evento in funcionalidade if not break %}
+                                            {% set cont = cont == 4 ? 1 : cont %}
+                                            {% if cont == 1 %}
+                                                <ul class="list-agenda-subsites clearfix">
+                                                {% endif %}                            
+                                                <li class="col col{{ cont }}">
+                                                    <ul>
+                                                        <a href="{{ route('agendaEventos/detalhes/' ~ evento.getId() ~ '/' ~ slugify(evento.getTitulo()) ) }}">
+                                                            <li class="data">
+                                                                <span>{{ evento.getPeriodoInicial().format('j') }}</span>{{ strftime('%b', evento.getPeriodoInicial().getTimestamp()) }}
+                                                            </li>
+                                                            <li class="txt">
+
+                                                                {{ evento.getTitulo() }}
+
+                                                            </li>
+                                                        </a>
+                                                    </ul>
+                                                </li>
+                                                {% if cont == 3 %}
+                                                    {% set break = true %}
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+                                                {% set cont = cont + 1 %}
+                                        {% endfor %}
+                                
+                                
+                                {% if funcionalidade | length < 3 %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                                <!-- /Eventos -->
+                                <div class="mais" style="padding-right: 20px;">
+                                    <a href="{{ route('agendaEventos') }}">outras datas ></a>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
+               </div>      
+            </div>
+        
+        {% endif %}
+        
+        
+        {% if  key  == 'conteudosEstaticos' %}
+            
+            <div class="box-white" style="padding-top: 2px;">
+                <div class="box-destaques-noticias">
+                    {% if teste == false and loop.index >= 2%}
+                        <div class="row">
+                            <div class="title-bg">
+                                <div class="title-border">
+                                    <h2>Novas Páginas</h2>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="row">
+                        <div class="master-content clearfix" style="padding-top: 35px;">
+                                
+                                            {% if teste == true or loop.first  %}
+                                                <div class="row box-agenda-subsites" style="width:1140px;">
+                                                    <div class="agenda-subsites">
+                                                        <h2 class="h2-subsite">Novas Páginas</h2>
+                                                    </div>
+                                            {% elseif teste == false and loop.index >= 2%}
+                                                {% set teste = true %}    
+                                                <div class="row" style="width:1140px">
+                                            {% else %}
+                                                <div class="row" style="width:1140px">
+                                            {% endif %}
+                                            
+
+                                            <!-- style="padding-right:15px;" --> 
+                                            <ul class="list-master-novasPaginas" >
+                                            {% for paginas in funcionalidade %}
+                                                <li>
+                                                    <ul>
+                                                        <li>
+                                                            <a href="{{ base_link }}{{ subsite.getSigla | lower}}/pagina/detalhes/{{ paginas.getId()}}" >
+                                                                <span>{{ paginas.getTitulo() }} </span>
+                                                            </a>
+                                                        </li>
+                                                        <li >
+                                                           {{ paginas.getConteudo() }} 
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                            </ul>
+                                        </div>
+                                
+                                <!--<div class="mais" style="padding-right: 20px;">
+                                    <a href="{{ route('pagina') }}">Mais páginas></a>
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        {% endif %}
+        
+        
+        
+        
+     {% endfor %}
+  
+    
+    
+    
+    
+</section> 
+     
+     
+{#{% include 'box-banners.html.twig' %}#}
+{{ bannersComunicacao | raw }}
+
+<!--<aside class="box box-yellow" role="complementary">
+    <div class="row clearfix">
+        <div class="agenda">
+            <div class="title-bg">
+                <div class="title-border">
+                    <h2>Agenda de Eventos</h2>
+                </div>
+            </div>
+            <ul class="list-agenda">
+                    {% if eventos|length > 0 %}
+                        {% for evento in eventos %}
+                <li {{ (loop.first) ? 'class="first"' : '' }} {{ (loop.last) ? 'class="last"' : '' }}>
+                    <span class="date"><strong>{{ evento.getPeriodoInicial().format('j') }}</strong>{{ strftime('%b', evento.getPeriodoInicial().getTimestamp())|capitalize }}</span>
+                    <a href="{{ base_link }}agendaEventos/detalhes/{{ evento.getId() }}/{{ slugify(evento.getTitulo()) }}" title="agenda">{{ evento.getTitulo() }}</a>
+                </li>
+                        {% endfor %}
+                <a href="{{ base_link }}agendaEventos" class="other-agenda">outros eventos</a>
+                    {% else %}
+                <li class="last">Nenhum evento disponível.</li>
+                    {% endif %}
+            </ul>
+        </div>
+
+        <div class="news">
+            <div class="title-bg">
+                <div class="title-border">
+                    <h2>Notícias</h2>
+                </div>
+            </div>
+            <ul class="list-news">
+                    {% if noticias|length > 0 %}
+                        {% for noticia in noticias %}
+                <li {{ (loop.first) ? 'class="first"' : '' }} {{ (loop.last) ? 'class="last"' : '' }}>
+                    <span class="date">
+                                {# {{ strftime('%A', noticia.getDataInicial().getTimestamp())|capitalize }} | #}
+                                {{ noticia.getDataInicial().format('d.m.Y') }}
+                    </span>
+                    <a href="{{ base_link }}noticias/detalhes/{{ noticia.getId() }}/{{ noticia.getSlug() }}">
+                        <strong>{{ noticia.getTitulo() }}</strong>
+                    </a>
+                </li>
+                        {% endfor %}
+                <a href="{{ base_link }}noticias" class="other-news">outras notícias</a>
+                    {% else %}
+                <li class="last">Nenhuma notícia disponível.</li>
+                    {% endif %}
+            </ul>
+        </div>
+    </div>
+</aside>-->
+
+                    
+{% include 'box-banners-rodape.html.twig' with {'bannersRodape' : bannersDivulgacao} %}

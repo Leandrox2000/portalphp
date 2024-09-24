@@ -1,0 +1,36 @@
+{% if controller != 'index' %}
+
+{#{% include 'box-banners.html.twig' %}#}
+{{ bannersComunicacao | raw }}
+
+{% include 'box-banners-rodape.html.twig' with {'bannersRodape' : banners} %}
+
+{% endif %}
+
+<footer id="footer" class="box-red" role="contentinfo">
+
+    <div class="anjo">&nbsp;</div>
+
+    <div class="menu-footer box-red-strong">
+        <div class="clearfix">
+          {{ menu.principal_rodape | raw }}
+        </div>
+    </div>
+    <div class="ministerio-da-cultura clearfix">
+        <div class="ministerio-da-cultura-esq" id="formatEnderecoRodape">
+            {{ enderecoRodape.endereco | raw }}
+        </div>
+        <div class="ministerio-da-cultura-dir">
+            <ul>
+                {% for bannerRodape in bannersRodape %}
+                    <li class="governo-federal"><a href="{{ bannerRodape.getUrl() }}" target="_blank"><img src="{{ base_link }}image.php?w=204&h=60&src={{ imgCompletePath(bannerRodape.getImagem()) }}" alt="{{ bannerRodape.getNome() }}" title="{{ bannerRodape.getNome() }}" ></a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id="copyright" class="box-red-strong">
+        © Copyright 2014. IPHAN. Todos os direitos reservados
+    </div>
+</footer>
+
+

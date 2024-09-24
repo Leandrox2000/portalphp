@@ -1,0 +1,297 @@
+.contrast{color: #fff;}
+
+.contrast body{color: #fff}
+
+.contrast a:link,
+.contrast a:visited
+{color: #fff;}
+
+.contrast h2,
+.contrast h2 a,
+.contrast h3,
+.contrast h3 a,
+.contrast h4,
+.contrast h4 a
+{color: #fff;}
+
+.contrast .breadcrumb > .active,
+.contrast .breadcrumb > li + li:before
+{color: #fff;}
+
+.contrast #header,
+.contrast .box-noticias-subsites
+{background: #000;}
+
+.contrast .bts-accessibility ul li a{border-color: #666;}
+
+.contrast .bts-accessibility ul li a.increase-font{
+    background: url("../img/icon-accessibility-white.png") no-repeat 1px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat 1px 4px, 
+        linear-gradient(#666 0%, #333 100%) 0 0
+        ;
+}
+
+.contrast .bts-accessibility ul li a.acessibilidadeBotao{
+    background:
+        url("../img/acessibilidadeBotaoBranco.png") no-repeat -1px -1px,
+        linear-gradient(#666 0%, #333 100%) 0 0;
+}
+
+.contrast .bts-accessibility ul li a.decrease-font{
+    background: url("../img/icon-accessibility-white.png") no-repeat -25px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat -25px 4px, 
+        linear-gradient(#666 0%, #333 100%) 0 0
+        ;
+}
+
+.contrast .bts-accessibility ul li a.contrast{
+    background: url("../img/icon-accessibility-white.png") no-repeat -54px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat -54px 4px,
+        linear-gradient(#666 0%, #333 100%) 0 0
+        ;
+}
+
+.contrast .bts-accessibility ul li a.increase-font:hover{
+    background: url("../img/icon-accessibility-white.png") no-repeat 1px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat 1px 4px, 
+        linear-gradient(#333 0%, #666 100%) 0 0
+        ;
+}
+
+.contrast .bts-accessibility ul li a.acessibilidadeBotao:hover{
+    background:
+        url("../img/acessibilidadeBotaoBranco.png") no-repeat -1px -1px,
+        linear-gradient(#333 0%, #666 100%) 0 0;
+}
+
+.contrast .bts-accessibility ul li a.decrease-font:hover{
+    background: url("../img/icon-accessibility-white.png") no-repeat -25px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat -25px 4px, 
+        linear-gradient(#333 0%, #666 100%) 0 0
+        ;
+}
+
+.contrast .bts-accessibility ul li a.contrast:hover{
+    background: url("../img/icon-accessibility-white.png") no-repeat -54px 4px;
+    background: 
+        url("../img/icon-accessibility-white.png") no-repeat -54px 4px, 
+        linear-gradient(#333 0%, #666 100%) 0 0
+        ;
+}
+
+.contrast .bts-social li a{
+    background-image: url("../img/icon-social-white.png");
+}
+
+.contrast #menu-master { background: #000 }
+.contrast #menu-master { border-top: 2px solid #333; }
+.contrast ul.dropdown li{ background: #000; }
+.contrast ul.dropdown li a { border-right: 1px solid #333; }
+.contrast ul.dropdown li:last-child a { border: none !important; }
+.contrast ul.dropdown ul li { border-bottom: 1px solid #333; }
+.contrast ul.dropdown li.hover, 
+.contrast ul.dropdown li:hover { background: #333; }
+
+.contrast #banner { background: #000; }
+
+.contrast .cycle-overlay { background: url("../img/slider-overlay-black.png") no-repeat; }
+
+.contrast #custom-pager a { background: #000; }
+.contrast #custom-pager a.cycle-pager-active { background: #333; }
+
+.contrast .box-red,
+.contrast .box-orange,
+.contrast .box-yellow { background: #000; }
+
+.contrast .box-red .title-bg, 
+.contrast .box-red .title-bg h2 { background: #333; }
+
+.contrast .box-orange, 
+.contrast .box-orange .title-bg, 
+.contrast .box-orange .title-bg h2,
+.contrast .box-orange .title-border > a { background: #333; }
+
+.contrast .box-yellow .title-bg, 
+.contrast .box-yellow .title-bg h2 { background: #000; color: #fff; }
+
+.contrast .box-yellow .title-border { border-color: #fff; }
+
+.contrast .list-news li .date,
+.contrast .list-agenda li .date { color: #fff; }
+
+.contrast .list-news { border-color: #fff; }
+.contrast .list-news li,
+.contrast .list-agenda li { border-bottom-color:#fff; }
+
+.contrast .list-agenda li .date{border-right-color: #fff;}
+.contrast .border-yellow { border-top-color: #fff; }
+
+.contrast #prev-carousel-red, 
+.contrast #next-carousel-red, 
+.contrast #prev-carousel-yellow, 
+.contrast #next-carousel-yellow { background-image: url("../img/nav-carousel-white.png") !important }
+
+.contrast  #prev-carousel-red:hover, 
+.contrast  #prev-carousel-yellow:hover { background-position: 0 0 !important; }
+.contrast  #next-carousel-red:hover, 
+.contrast  #next-carousel-yellow:hover { background-position: -23px 0 !important; }
+
+.contrast #footer .anjo { background: url("../img/arte-anjo-white.jpg") no-repeat center center; }
+.contrast #footer .box-red-strong,
+.ie7 .contrast .menu-footer > div { background: #000; }
+.contrast #footer .ministerio-da-cultura { background: #333; }
+.contrast #footer .ministerio-da-cultura-esq { color:#fff; }
+
+.contrast .master-content{background: #000;}
+
+.contrast .fototeca-col p{color:#fff;}
+
+.contrast .fototeca-col .box-fototca,
+.contrast .box-destaque-categoria,
+.contrast .content-galeria #alt-caption
+{background: #333; border-color: #666;}
+
+.contrast .box-destaque-legislacao
+{background: none; border: none;}
+
+.contrast .box-cinza{background: #333;}
+
+.contrast #container{background: #333;}
+
+.contrast .box-links-rapidos,
+.contrast .box-links-rapidos .title-bg,
+.contrast .box-links-rapidos .title-bg .title-border h2,
+.contrast .boletim-do-patrimonio
+{background: #666;}
+
+.contrast .box-links-rapidos .title-bg .title-border{border-color: #666;}
+
+.contrast .btn-default{background: #333; border-color: #333;}
+
+.contrast ul.lista-galeria-horizontal li.lista-galeria-horizontal-texto a,
+.contrast ul.lista-galeria-vertical li.lista-galeria-vertical-texto a
+{color: #fff;}
+
+.contrast td, 
+.contrast th
+{background: #333; border-color: #000;}
+
+.contrast th{background: #333; color: #fff;}
+
+.contrast .content-galeria{background: #333;}
+
+.contrast .destaque{color: #fff;}
+
+.contrast .box-destaques-noticias .title-bg,
+.contrast .box-destaques-noticias .title-bg .title-border h2
+{background: #000;}
+
+.contrast .box-destaques-noticias .title-bg .title-border{border-color: #333;}
+
+.contrast .mais-noticias-destques li{border-color: #333;}
+
+.contrast .bem-vindo .master-content{background: #333;}
+.contrast .box-unidadesEspeciais { background: #000; }
+
+.contrast .box-banners { background: #333; }
+.contrast .box-banner-rodape  { background: #333; border-top-color: #fff; }
+.contrast .menu-footer nav ul li a.link-yellow { color: #fff; }
+.contrast #copyright { color: #fff; }
+.contrast .box-links-rapidos ul li a:link, .contrast .box-links-rapidos ul li a:visited { color: #fff; }
+.contrast .box-links-rapidos > h2 { border-left: 10px solid #000; }
+.contrast ul.lista-letras li a { background: #333; }
+.contrast ul.lista-letras li a:hover, .contrast ul.lista-letras li.active a { background: #fff; color: #000; }
+.contrast ul.pesquisa-bibliotecas li label { color: #fff; }
+.contrast .btn-yellow { background: #000; color: #fff; }
+
+.contrast .pagination > .active > a,
+.contrast .pagination > .active > span,
+.contrast .pagination > .active > a:hover,
+.contrast .pagination > .active > span:hover,
+.contrast .pagination > .active > a:focus,
+.contrast .pagination > .active > span:focus { color: #fff; background: #000; }
+
+.contrast ul.membros li .nivel { color: #fff; }
+.contrast ul.membros li .nome { color: #fff; }
+.contrast ul.lista-dicionario li span { color: #fff; }
+.contrast ul.noticias li .titulo,
+.contrast ul.noticias li .titulo a { color: #fff; }
+.contrast ul.noticias li .data,
+.contrast ul.mais-noticias li .data { color: #fff; }
+.contrast ul.mais-noticias li .titulo,
+.contrast ul.mais-noticias li .titulo a { color: #fff; }
+.contrast ul.pesquisa-geral input { background-color: #000; color: #fff; }
+
+.contrast .content-galeria #alt-caption,
+.contrast .content-galeria .alt-caption { border-top: 1px solid #fff; background: #333; border-left: #fff 12px solid; }
+.contrast .licitacao-convenio-contrato .cabecalho-info,
+.contrast .editais .cabecalho-info { background: #333; border-left: 12px #fff solid; }
+body.contrast { background-color: #252525 !important; background-image: none !important; }
+
+.contrast .box-noticias-subsites .box-noticias-subsites-content .noticias-overlay { background: #333; color: #fff; }
+.contrast .box-noticias-subsites .box-noticias-subsites-content .noticias-overlay a { color: #fff; }
+.contrast .box-noticias-subsites .box-noticias-subsites-content .noticias-overlay h2 { color: #fff; }
+.contrast .box-noticias-subsites .box-noticias-subsites-content .noticias-paginacao span.cycle-pager-active { color: #000; }
+
+.contrast .calendario-agenda .ui-datepicker-calendar .selected a { background: #333; color: #fff; }
+.contrast .calendario-agenda .ui-datepicker-calendar .ui-state-default,
+.contrast .calendario-agenda .ui-datepicker-calendar .ui-widget-content .ui-state-default,
+.contrast .calendario-agenda .ui-datepicker-calendar .ui-widget-header .ui-state-default { color: #fff; }
+.contrast .calendario-agenda .ui-datepicker-header .ui-datepicker-title { color: #fff; }
+
+.contrast .content-galeria ul#nav-galeria li#prev-galeria a,
+.contrast .content-galeria ul.nav-galeria li.prev-galeria a {
+    background: none;
+    border-color: transparent #ffffff transparent transparent;
+    border-style: solid;
+    border-width: 8px 13.9px 8px 0;
+    display: block;
+    width: 0px;
+    height: 0px;
+}
+.contrast .content-galeria ul#nav-galeria li#next-galeria a,
+.contrast .content-galeria ul.nav-galeria li.next-galeria a {
+    background-image: none;
+    border-color: transparent #ffffff transparent #ffffff;
+    border-style: solid;
+    border-width: 8px 0 8px 13.9px;
+    display: block;
+    width: 0px;
+    height: 0px;
+}
+.contrast .box-links-rapidos { border: none; }
+.contrast .box-fototca:after { background: url("../img/icon-arrow-white.png") no-repeat; }
+
+.contrast .boletim-eletronico-cadastre label {
+    color: #fff;
+}
+
+.contrast .boletim-eletronico-cadastre form {
+    background-color: #333;
+}
+
+.contrast ul.accordion.boletim li {
+    background-color: #333;
+    border-bottom: 1px solid #252525;
+}
+
+.contrast ul.accordion.boletim li.first h3 {
+background: url("../img/arrow-accordion.png") no-repeat 15px 50% #333;
+}
+
+.contrast ul.lista-boletim li {
+    background-color: #666 !important;
+}
+
+.contrast ul.lista-boletim h4 {
+    color: #fff;
+}
+
+.contrast ul.links-rapidos li:before {
+    color: #fff;
+}

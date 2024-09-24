@@ -1,0 +1,69 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Atas do Conselho Consultivo do Patrimônio Cultural") }}
+        </div>
+
+        <div class="row">
+            <h2>Atas do Conselho Consultivo do Patrimônio Cultural</h2>							
+        </div>
+        <div class="row">
+            <form action="{{ base_link }}atasConselho" method="get" id="form-atas">
+                <ul class="pesquisa-atas">
+                    <li class="pesquisa-atas-local">
+                        {{ forms.select_id('data', datas, data, 'Selecione o ano') }}
+                    </li>
+                   
+                    {#<li class="pesquisa-atas-btBuscar">
+                        <input type="submit" value="buscar" class="btn btn-yellow">
+                    </li>#}
+                </ul>
+            </form>
+        </div>       
+       
+        <div class="row">
+            
+        {% if results | length > 0 %}
+
+            {% for result in results %}
+
+                <ul class="lista-atas">
+
+                        <ul class="lista-atas">
+                            <li>
+                                <div>
+{#                                    <span>{{ result.getCategoria().getNome() }}</span>
+#}                                  
+                                   <a href="{{ base_link ~ 'uploads/atas/' ~ result.getArquivo() }}" target="_blank">
+                                       <b>{{ result.getNome() }}</b>{{ ' - ' ~ result.getDataReuniao().format("d/m/Y") }}
+                                   </a>
+                                </div>									
+                                </li>
+                        </ul>
+                </ul>
+            {% endfor %}
+
+            {% else %}
+
+            <p>Nenhum registro encontrado.</p>
+
+            {% endif %}
+
+        </div>
+    </article>
+
+    {% if results | length > 0 and noFilter == false %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</section>

@@ -1,0 +1,65 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread) }}
+        </div>
+        <div class="row">
+            <h2 class="pull-left" style="margin-bottom: 40px;">Endereços do Iphan</h2>
+            <form action="{{ route('unidade') }}" method="get" id="filtro-fototeca">
+                <input name="pesquisa" type="text" id="pesquisa" placeholder="Pesquisar" style="margin-left: 88px;margin-top: 4px;" value="{{ pesquisa }}">
+                <input style="" type="submit" value="buscar" class="btn btn-contato pull-right" />
+            </form>
+        </div>
+        <div class="row">
+            {% for unidade in unidade %}
+                <table class="tableUnidade">
+                    <tr>
+                        <td colspan="2" class="tableUnidadeNome">{{ unidade.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 350px;">{{ unidade.endereco }}, {{ unidade.numero }}{{ unidade.complemento }}</td>
+                        <td>Telefone: {{ unidade.telefone }}</td>
+                    </tr>
+                    <tr>
+                        <td>Bairro: {{ unidade.bairro }}</td>
+                        {% if unidade.celular %}
+                            <td>Celular: {{ unidade.celular }}</td>
+                        {% elseif unidade.email and unidade.celular == '' %}
+                            <td>E-mail: {{ unidade.email }}</td>
+                        {% elseif unidade.site and unidade.celular == '' and unidade.email == '' %}
+                            <td>Site: {{ unidade.site }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>CEP: {{ unidade.cep }}</td>
+                        {% if unidade.email and unidade.celular %}
+                            <td>E-mail: {{ unidade.email and unidade.celular }}</td>
+                        {% elseif unidade.site and unidade.celular %}
+                            <td>Site: {{ unidade.site }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>{{ unidade.cidade }}, {{ unidade.estado }}</td>
+                        {% if unidade.site and unidade.celular and unidade.email %}
+                            <td>Site: {{ unidade.site }}</td>
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endfor %}
+        </div>
+        {% if results|length > 0 %}
+            <div class="row">
+                <div class="box-cinza">
+                    <div class="box-cinza-margem">
+                        <div class="paginacao">
+                            {{ pagination | raw }}
+                            <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </article>					
+</section>

@@ -1,0 +1,29 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">Selecionar vídeos</h1>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper imagens">
+    <div class="subcontent">
+        {{ tables.table([
+            tables.head([
+                tables.columnHeader('<input type="checkbox" value="" class="checkall" /> '),
+                tables.columnHeader([
+                    buttons.iconButton("Novo vídeo", "javascript:videosModalObject.nova()", "no_icon Nova imagem"),
+                    buttons.iconButton("Atualizar Lista", "javascript:videosModalObject.atualizar()", "no_icon Atualizar Lista"),
+                ] | join, "100%"),
+            ])
+        ] | join, "videosRelacionadosModal") }}
+
+        <form id="frm" class="stdform stdform2"  >
+            {{  buttons.iconButton("Escolher e fechar", "javascript:videosModalObject.escolherFechar()", "no_icon")  }}
+            {{  buttons.iconButton("Fechar", "javascript:videosModalObject.fechar()", "no_icon")  }}
+        </form>
+
+    </div>
+</div><!--contentwrapper-->
+{#    <br clear="all" />#}
+

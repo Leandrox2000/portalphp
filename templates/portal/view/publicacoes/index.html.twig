@@ -1,0 +1,48 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Publicações") }}
+        </div>
+
+        <div class="row">
+            <h2>Publicações</h2>							
+        </div>
+
+        <div class="row mb50">
+            <form action="{{ base_link }}publicacoes/lista" method="get" id="form-publicacoes">
+
+                <ul class="pesquisa-legislacao">
+                    <li class="pesquisa-legislacao-categoria">
+                        {{ forms.select_id('categoria', categorias, categoria, "Linhas editoriais e textos diversos") }}
+                    </li>
+                    <li class="pesquisa-legislacao-palavraChave">
+                        {{ forms.text('busca', busca, 'Digite uma palavra chave') }}
+                    </li>
+                    <li class="pesquisa-legislacao-btBuscar">
+                        <input type="submit" value="buscar" class="btn-btBusca" style="margin-left: 0px;">
+                    </li>
+                </ul>
+            </form>
+        </div>
+
+        <div class="row clear">
+            {{ introducao.getConteudo() | raw }}
+        </div>
+    </article>
+    <div class="row" style="margin-bottom: 18px; margin-left: 42px;">
+            <div class="addthis_toolbox">
+                <div class="custom_images">
+                    <div id="custom_span">
+                        <span>Compartilhar</span>
+                    </div>
+                    <a class="addthis_button_facebook"><img src="{{ base_link }}/templates/portal/assets/img/facebook_.png" border="0" alt="Facebook" title="Facebook" /></a>
+                    <a class="addthis_button_twitter"><img src="{{ base_link }}/templates/portal/assets/img/twitter_.png" border="0" alt="Twitter" title="Twitter" /></a>
+                    <a class="addthis_button_email"><img src="{{ base_link }}/templates/portal/assets/img/email_.png" border="0" style="height: 30px;" alt="Email" title="Email" /></a>
+                    <a class="addthis_button_linkedin"><img src="{{ base_link }}/templates/portal/assets/img/linkedin_.png" style="height: 34px;" border="0" alt="Linkedin" title="Linkedin" /></a>
+                    
+                </div>
+            </div>
+        </div>    
+</section>

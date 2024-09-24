@@ -1,0 +1,17 @@
+{% if editais is not empty %}
+    {% for edital in editais %}
+        <p>
+            <a href="{{ route('editais/detalhes/' ~ edital.getId() ~ '/' ~ slugify(edital.getNome())) }}">
+                <b>{{ edital.getNome() }}</b>
+            </a>
+        </p>
+    {% endfor %}
+    
+    {% if count > limit %}
+        <a href="#" class="alert-link" data-limit="{{limit + perpage}}">+ resultados</a>
+    {% endif %}
+{% else %}
+    <div class="alert alert-danger" role="alert">
+        Nenhum edital foi localizado
+    </div>
+{% endif %}

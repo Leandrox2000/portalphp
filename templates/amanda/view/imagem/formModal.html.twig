@@ -1,0 +1,71 @@
+{#{% import "fields.html.twig" as forms %}#}
+{#{% include 'imagem/form.html.twig' %}#}
+
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">                
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="imagem/salvar" method="{{ method }}">
+
+                {{ forms.field("Categoria", forms.select('categoria', categorias, imagem.getPasta().getCategoria(), "Selecione"))  }}
+                
+                {{ forms.field("Pasta", [
+                                                 forms.select('pasta', pastas, imagem.getPasta(), "Selecione"), 
+                                                 permissoes['CADAS_CONSULT'] ? buttons.iconButton("Pastas", "javascript:abrirPastas()", "no_icon") : ""
+                                            ]|join 
+                              )
+                }}
+                
+                {{ forms.field("Nome",      forms.text("nome", imagem.getNome(), "Nome") ) }}
+                {{ forms.field("Crédito",   forms.text("credito", imagem.getCredito(), "Crédito") ) }}
+                {{ forms.field("Legenda",   forms.text("legenda", imagem.getLegenda(), "Legenda") ) }}
+                {{ forms.field("Imagem",
+                                        [
+                                            forms.upload("imagem", false, "Imagem", imagem.getImagem() ? "none" ),
+                                            imagem.getImagem() ? "<ul class='imagelist' id='ulImagem#{imagem.getId()}'><li><img style='width: auto; height: auto;' id='imgCrop' src='uploads/ckfinder/images/#{caminhoAtual}#{imagem.getImagem()}' width='230px'/>\n<a class='btn btn3 btn_trash' href='javascript:removerImagem(#{imagem.getId()})'></a></li></ul>", 
+                                        ]|join
+                                ) 
+                }}
+
+                {{ forms.hidden("isModal", isModal) }}
+                {{ forms.hidden("imagemNome", imagem.getImagem()) }}
+                {{ forms.hidden("imagemAtual", imagem.getImagem()) }}
+                {{ forms.hidden("imagemExcluida") }}
+                {{ forms.hidden("caminhoAtual", caminhoAtual) }}
+                {{ forms.hidden("x1", "") }}
+                {{ forms.hidden("y1", "") }}
+                {{ forms.hidden("x2", "") }}
+                {{ forms.hidden("y2", "") }}
+                {{ forms.hidden("w", "") }}
+                {{ forms.hidden("h", "") }}
+                
+                {{
+                forms.field(
+                    "Palavras-chave",
+                    forms.textarea("palavrasChave", imagem.getPalavrasChave(), "Palavras-chave", "biginput", 5, null, 200) ~
+                    "<br>Insira as palavras-chave separadas por ponto e vírgula."
+                )
+                }}
+                
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:cancelarCallback()", "no_icon")]|join, true) }}
+                {{ forms.hidden("id", imagem.getId()) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->
+
+{{ forms.hidden("idsImagens", idsImgs) }}

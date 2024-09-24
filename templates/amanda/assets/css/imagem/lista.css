@@ -1,0 +1,10 @@
+.photo {
+    margin: 0;
+    float: left;
+}
+
+.linksImagem {
+    float: left;
+    margin-left: 15px;
+    padding: 5px 0;
+}

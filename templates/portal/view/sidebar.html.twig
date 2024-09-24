@@ -1,0 +1,49 @@
+<aside id="col-red" role="complementary">
+
+<article class="col-red-content">
+        <div class="box-map">
+          {% if bannersLateralDestaque|length > 0 %}
+            {% for bannerLateralDestaque in bannersLateralDestaque %}
+            <a href="{{ bannerLateralDestaque.getUrlCompletaSite() }}" {% if bannerLateralDestaque.getAbrirEm() == 'n' %} target="_blank"  {% endif %} >
+            <img src="{{ base_link }}image.php?w=260&h=200&src={{ imgCompletePath(bannerLateralDestaque.getImagem()) }}" alt=""></a>
+            
+            {% endfor %}
+          {% endif %}           
+        </div>
+
+        {% if menu.links_rapidos is not empty %}
+        <div class="box-links-rapidos">
+            <h2>Acesse</h2>
+            {{ menu.links_rapidos | raw }}
+        </div>
+        {% endif %}
+        {#
+        <div class="box-boletim-do-patrimonio">
+            <div class="boletim-do-patrimonio">
+                <h3>Boletim do Patrimônio</h3>
+                <p>Cadastre-se e receba novidades do IPHAN</p>
+                <form action="#">
+                    <input type="text" class="form-control" placeholder="Seu e-mail aqui....">
+                    <input type="button" class="btn btn-default pull-left" value="Cadastrar">
+                </form>
+                <a href="#">Descadastrar <br> meu e-mail</a>
+            </div>
+        </div> #}
+        <div class="box-banners-laterais">
+            {%  if bannersLateral|length > 0 %}
+                  {% for bannerLateral in bannersLateral %}
+                      {% if bannerLateral.getUrl() != "" %}
+                            <a href="{{ bannerLateral.getUrlCompleta() }}"  {% if bannerLateral.getAbrirEm() == 'n' %} target="_blank"  {% endif %} ><img src="{{ base_link }}image.php?w=260&h=146&src={{ imgCompletePath(bannerLateral.getImagem()) }}" alt="" ></a>
+                      {% else %}
+                            {% if subsite.getSede() ==  '1' %}
+                                <a href="{{ bannerLateral.getUrlCompleta() }}"  {% if bannerLateral.getAbrirEm() == 'n' %} target="_blank"  {% endif %} ><img src="{{ base_link }}image.php?w=260&h=146&src={{ imgCompletePath(bannerLateral.getImagem()) }}" alt="" ></a>
+                            {% else %}
+                                <a href="{{ bannerLateral.getUrlCompleta() }}"  {% if bannerLateral.getAbrirEm() == 'n' %} target="_blank"  {% endif %} ><img src="{{ base_link }}image.php?w=260&h=146&src={{ imgCompletePath(bannerLateral.getImagem()) }}" alt="" ></a>
+                            {% endif %}
+                      {% endif %}
+                  {% endfor %}
+            {% endif %}
+        </div>
+</article>
+
+</aside>

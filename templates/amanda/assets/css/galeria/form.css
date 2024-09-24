@@ -1,0 +1,12 @@
+.photo {
+    margin: 0;
+    float: left;
+}
+
+.imgSelecionadas {
+    margin-top: 5px;
+}
+
+.imgSelecionadas .photo{
+    margin: 5px;
+}

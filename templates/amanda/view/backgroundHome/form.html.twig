@@ -1,0 +1,44 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="backgroundHome/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                            forms.date("dataInicial", entity.getDataInicial() ? entity.getDataInicial().format('d/m/Y') : data.format('d/m/Y') , "Data Inicial", "date periodo"), 
+                            forms.time("horaInicial", entity.getDataInicial() ? entity.getDataInicial().format('H:i') : data.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                    ] | join )
+                }}
+                {{ forms.field("Data e Hora Despublicação:", [
+                            forms.date("dataFinal", entity.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                            forms.time("horaFinal", entity.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                    ] | join )
+                }}
+                {{ forms.field("Nome da imagem", forms.text("nome", entity.getNome(), "") ) }}
+                {{ forms.field("Imagem", [
+                    buttons.iconButton("Selecionar", "javascript:abrirImagemRadio(0)", "no_icon"),
+                    '<div class="imgSelecionadas" id="imgSelecionadas">', imagem ,'</div>'
+                    ] | join )
+                }}
+                {{ forms.hidden("imagemBanco", idImg) }}
+
+                {{ forms.hidden("id", entity.getId()) }}
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

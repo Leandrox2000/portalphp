@@ -1,0 +1,13 @@
+<aside class="box-banner-rodape" role="complementary">
+    <div class="row" align="center">
+        {% if bannersLaterais | length > 0 %}
+            {% for banner in bannersLaterais %}
+                {% if banner.getTemLink() == 1 %}
+                    <a href="{{ banner.getUrlCompleta() }}" {{ (banner.getAbrirEm() == 'n') ? 'target="_blank"' : '' }}"><img style="margin-left:25px;margin-right:25px;" src="{{ base_link }}image.php?w=215&h=80&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" ></a>
+                {% else %}
+                    <img style="margin-left:25px;margin-right:25px;" src="{{ base_link }}image.php?w=215&h=80&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" >
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</aside>

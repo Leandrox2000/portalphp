@@ -1,0 +1,37 @@
+<aside class="box-banners">
+    <div class="row">
+        <ul style="list-style-type: none;">
+            {% if bannersComunicacao | length > 0 %}
+                {% for banner in bannersComunicacao %}
+                    <li class="banner-livraria-virtual">
+                        {% if banner.getTemLink() == 1 %}
+                            <a href="{{ banner.getUrlCompleta() }}" {{ (banner.getAbrirEm() == 'n') ? 'target="_blank"' : '' }}"><img style="margin-left:25px;margin-right:25px;" src="{{ base_link }}image.php?w=370&h=92&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" ></a>
+                        {% else %}
+                            <img style="margin-left:25px;margin-right:25px;" src="{{ base_link }}image.php?w=370&h=92&src={{ imgCompletePath(banner.getImagem()) }}" alt="{{ banner.getImagem().getLegenda() }}" title="{{ banner.getImagem().getCredito() }}" >
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <div style="float:right; margin-right: 54px; ">
+            <ul style="list-style-type: none;">  
+                <li class="redes-sociais">
+                    <ul class="bts-social float-left">
+                        <li><a href="https://www.facebook.com/iphan.govbr" class="facebook" target="_blank">Link: facebook</a></li>
+                        <li><a href="https://twitter.com/IphanGovBr" class="twitter" target="_blank">Link: twitter</a></li>
+                        <li><a href="https://www.instagram.com/iphangovbr/" class="instagram" target="_blank">Link: instagram</a></li>
+                        <li><a href="https://www.youtube.com/user/iphangovbr" class="youtube" target="_blank">Link: youtube</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+
+            {#<li class="banner-livraria-virtual">
+               <a href="{{ base_link ~ 'livrariaVirtual' }}"><img style="margin-left: -90px;" src="{{ base_link }}templates/portal/assets/img/livraria-virtual.png" alt="Banner" title="Banner"></a>
+            </li>
+            <li class="banner-boletim-do-patrimonio">
+                <a href="{{ base_link ~ 'boletimEletronico' }}"><img src="{{ base_link }}templates/portal/assets/img/boletimPatrimonio.png" alt="Banner" title="Banner"></a>
+            </li> #}
+             

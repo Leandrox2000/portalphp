@@ -1,0 +1,101 @@
+{% import _self as table %}
+{% macro table(content, id) %}
+    <table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="{{ id }}">
+        {{ content|raw }}
+    </table>
+{% endmacro %}
+
+
+{% macro head(columns) %}
+    {% for index, value  in columns %}
+            <col {{ index == 0 ? "style=\"width: 1%;\"" : "" }}  class="con0">
+    {% endfor %}
+    <thead>
+        <tr>
+        {% for col in columns %}
+            {{ col|raw }}
+        {% endfor %}
+        </tr>
+    </thead>
+{% endmacro %}
+
+
+{% macro columnHeader(data, width, class) %}
+    <th width="{{ width }}" class="head1 {{ class }}">{{ data|raw }}</th>
+{% endmacro %}
+
+
+{% macro foot(columns) %}
+    <tfoot>
+        <tr>
+        {% for col in columns %}
+            {{ col|raw }}
+        {% endfor %}
+        </tr>
+    </tfoot>
+{% endmacro %}
+
+
+{% macro columnFooter(data, width, class) %}
+    <th style="width: {{ width|default('1') }}" class="head1 {{ class }}">{{ data }}</th>
+{% endmacro %}
+
+
+{% macro body(rows) %}
+    <tbody>
+        {% for row in rows %}
+            <tr class="highlight-mouse">
+                {% for col in row %}
+                    <td class="{{ col.class }}">{{ col.data|raw }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+{% endmacro %}
+
+    
+<table cellpadding="0" cellspacing="0" border="0" class="stdtable" id="{{ id }}">
+
+
+    {% if head|length > 0 %}
+        {% for index, value  in head %}
+                <col {{ index == 0 ? "style=\"width: 1%;\"" : "" }}  class="con0">
+        {% endfor %}
+    
+        <thead>
+            <tr>
+            {% for col in head %}
+                {{ table.columnHeader(col.data|raw, col.width, col.class) }}
+            {% endfor %}
+            </tr>
+        </thead>
+    {% endif %}
+    
+    {% if footer|length > 0 %}
+        <tfoot>
+            <tr>
+            {% for col in footer %}
+                <th style="width: {{ col.width }}" class="head1 {{ col.class }}">{{ col.data }}</th>
+            {% endfor %}
+            </tr>
+        </tfoot>
+    {% endif %}
+
+    
+    {% if body|length > 0 %}
+    
+        {{ table.body(body) }}
+    
+    <!--
+    <tbody>
+        {% for row in body %}
+            <tr class="highlight-mouse">
+                {% for col in row %}
+                    <td class="{{ col.class }}">{{ col.data|raw }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>-->
+    {% endif %}
+
+</table>

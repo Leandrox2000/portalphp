@@ -1,0 +1,222 @@
+<section id="master" role="main">
+    <article class="master-content licitacao-convenio-contrato">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if bread.site != null and bread.site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ bread.site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('licitacoesConveniosContratos') }}">{{ bread.getTitulo }}</a></li>
+                {% else %}
+                    <li><a href="{{ route('licitacoesConveniosContratos') }}">Licitações e Convênios</a></li>
+                {% endif %}
+                <li class="active"> {{ result.getCategoria() }}</li>
+                <li class="active"> {{ result.getLabel() }}</li>
+            </ol>
+        </div>
+
+        <div class="row" style="font-family:time new roman;">
+            <p  class="pull-left">
+                <h2>
+                    {{ result.getCategoria() }}
+                    <p class="h2LabelLicitacoesConvenios">
+                        {{ result.getLabel() }}
+                    </p>
+                    <p class="h2LabelLicitacoesConvenios">
+                    	{{ result.getStatus() }}
+                    </p>
+                </h2>
+            </p>
+                
+            
+            <!--<a class="voltar pull-right mt15 btn btn-yellow" href="{{ base_link ~ 'licitacoesConveniosContratos' }}">voltar</a>-->							
+        </div>
+
+        <div class="row">
+            <div class="dados">
+
+                <div class="dado">
+                    <div class="cabecalho-info">
+                        <p>Observações</p>
+                    </div>
+                    <div class="info">
+                        {{ result.getObservacoes() | raw }}
+                    </div>
+                </div>
+
+                <div class="dado">
+                    <div class="cabecalho-info">
+                        <p>Tipo</p>
+                    </div>
+                    <div class="info">
+                        {{ result.getTipo() }}
+                    </div>
+                </div>
+
+                <!-- <div class="dado">
+                    <div class="cabecalho-info">
+                         <p>Status</p>
+                    </div>
+                    <div class="info">
+                       {{ result.getStatus() }}
+                    </div>
+                </div> -->
+                
+                {% if categoriaFixa  %}
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Data publicação DOU</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getDataPublicacaoDou().format('d/m/Y') }}
+                        </div>
+                    </div>
+                
+                
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Data de abertura da proposta</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getDataAberturaProposta().format('d/m/Y \\à\\s H:i') }}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                {% if categoriaFixa %}
+                
+                    {% if result.getCategoria == 'Ata de registro de preços' or result.getCategoria == 'Contratos' %}
+                        <div class="dado">
+                            <div class="cabecalho-info">
+                                <p>Prazo de vigência</p>
+                            </div>
+                            <div class="info">
+                                {{ result.getDataVigenciaInicial().format('d/m/Y') }} até 
+                                {{ result.getDataVigenciaFinal().format('d/m/Y') }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                
+                {% if categoriaFixa  %}
+                    {% if result.getCategoria == 'Contratos' %}
+                        <div class="dado">
+                            <div class="cabecalho-info">
+                                <p>Contratada</p>
+                            </div>
+                            <div class="info">
+                                {{ result.getContratada() }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                
+                <div class="dado">
+                    <div class="cabecalho-info">
+                        <p>Objeto</p>
+                    </div>
+                    <div class="info">
+                        {{ result.getObjeto() }}
+                    </div>
+                </div>
+
+                {% if categoriaFixa  %}
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Nº Edital</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getEdital() }}
+                        </div>
+                    </div>
+
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Valor estimado</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getValorEstimado() }}
+                        </div>
+                    </div>
+
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>UASG</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getUasg() }}
+                        </div>
+                    </div>
+
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Ano</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getAno() }}
+                        </div>
+                    </div>
+
+                    <div class="dado">
+                        <div class="cabecalho-info">
+                            <p>Nº Processo</p>
+                        </div>
+                        <div class="info">
+                            {{ result.getProcesso() }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div> <!-- /.dados -->
+
+            <div class="arquivos">
+                <div class="dado">
+                    <div class="cabecalho-info">
+                       <p> Arquivos para download</p>
+                    </div>
+                    <div class="info">
+                        {% for arquivo in result.getArquivos() %}
+                            <a target="_blank" href="{{ base_link ~ 'uploads/licitacaoConvenioContrato/' ~ arquivo.getNome() }}">{{ arquivo.getNomeOriginal() }}</a><br>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div> <!-- /.arquivos -->
+            <h3 class="m0">{{ result.getNome() }}</h3>
+        </div>
+
+
+    </article>
+
+</section>

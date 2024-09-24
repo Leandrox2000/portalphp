@@ -1,0 +1,79 @@
+.agenda-dir-titulo {
+    float: left;
+    width: 18%;
+}
+
+.agenda-dir-descricao {
+    float: left;
+    width: 80%;
+}
+
+.agenda-direcao {
+    color: #5a5a5a;
+    font-size: 1.4em !important; 
+}
+
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+    width: 250px;
+}
+
+.calendario-agenda .ui-datepicker-calendar {
+    font-size: .9em !important; 
+}
+
+.calendario-agenda .ui-datepicker-calendar td.ui-datepicker-week-end, .calendario-agenda .ui-datepicker-calendar th.ui-datepicker-week-end {
+    padding: 1px 1px !important;
+}
+.calendario-agenda .ui-datepicker-calendar td > a, 
+.calendario-agenda .ui-datepicker-calendar td.ui-datepicker-week-end > a, 
+.calendario-agenda .ui-datepicker-calendar td > span, 
+.calendario-agenda .ui-datepicker-calendar td.ui-datepicker-week-end > span {
+    text-align: center;
+    font-weight: bold;
+}
+.calendario-agenda .ui-datepicker-calendar td, .calendario-agenda .ui-datepicker-calendar th {
+    padding: 1px 1px !important;
+}
+
+.calendario-agenda .ui-datepicker-prev {
+    top: 10px !important;
+    left: 2px !important;    
+    position: absolute !important;
+    top: 2px !important;
+    width: 1.8em !important;
+    height: 1.8em !important;
+}
+
+.calendario-agenda .ui-datepicker-next {    
+    right: 2px !important;    
+    position: absolute !important;
+    top: 2px !important;
+    width: 1.8em !important;
+    height: 1.8em !important;
+}
+
+.calendario-agenda .ui-datepicker-title {
+    font-size: 12px !important;
+}
+
+.calendario-agenda .ui-datepicker-calendar td a {
+    width: auto; 
+    height: auto; 
+    padding: .2em;
+    display: block; 
+}
+
+.calendario-agenda .ui-datepicker-calendar th, 
+.calendario-agenda .ui-datepicker-calendar .ui-state-default, 
+.calendario-agenda .ui-datepicker-calendar .ui-widget-content .ui-state-default, 
+.calendario-agenda .ui-datepicker-calendar .ui-widget-header .ui-state-default {
+     font-size: 11px; 
+}
+
+.calendario {
+    width: 275px;
+}
+
+.lista-agenda-local, .lista-agenda-texto {
+    margin-top: 5px !important;
+}

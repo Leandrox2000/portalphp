@@ -1,0 +1,102 @@
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %} 
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %} 
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>                    
+
+    </div>
+    <div class="titulo-menu-subsite" >
+       <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+        {{ redes | raw}}
+    </div>
+</div> 
+{% endif %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Agenda") }}
+        </div>
+        <div class="row">
+            <h2>Agenda de Eventos</h2>							
+        </div>
+        <div class="row">
+            <p>Clique na Agenda para ver o eventos.</p>
+            <div class="calendario-agenda"></div>
+        </div>
+        <div class="row">
+            <form action="{{ route('agendaEventos') }}" method="get" id="agenda-hidden">
+                <input type="hidden" name="data" value="">
+            </form>
+            
+            <script>
+                var eventosAgendaPorData = {{ marcado | raw }};
+            </script>
+
+            {% if results | length > 0 %}
+                <ul class="lista-agenda">
+
+                    {% for result in results %}
+                        <li>
+                            <div class="pull-left">
+                                <span class="lista-agenda-data">{{ result.getPeriodoInicial().format('d/m/Y') }}</span>
+                            </div>
+                            <div class="pull-right">
+                                <a href="{{ route( 'agendaEventos/detalhes/' ~ result.getId() ~ '/' ~ slugify(result.getLabel()) ) }}">
+                                    <h3 style="text-transform: none;">{{ result.getLabel() }}</h3>
+                                </a>
+                                <div class="lista-agenda-local">
+                                    <strong>Local:</strong> {{ result.getLocal() }}
+                                </div>
+                                <div class="lista-agenda-horario">
+                                    <strong>Horário:</strong>
+                                    {% if result.getPeriodoFinal().format('H') > result.getPeriodoInicial().format('H') %}
+                                        {{ result.getPeriodoInicial().format('H') }}h{{ result.getPeriodoInicial().format('i') }} às {{ result.getPeriodoFinal().format('H') }}h{{ result.getPeriodoFinal().format('i') }}
+                                    {% else %}
+                                        {{ result.getPeriodoInicial().format('H') }}h{{ result.getPeriodoInicial().format('i') }}
+                                    {% endif %}
+                                </div>
+                                <div class="lista-agenda-texto">
+                                    {{ result.getDescricao() | striptags | truncatetext(200) | raw }}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            {% else %}
+                <p>Nenhum registro encontrado.</p>
+            {% endif %}
+        </div>
+    </article>
+
+    {% if results | length > 0 %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                    <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</section>

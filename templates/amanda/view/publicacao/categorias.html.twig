@@ -1,0 +1,27 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">{{ titlePage|default('Categorias') }}</h1>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <div class="subcontent">
+        {% if permissoes['CADAS_SALVAR'] %}
+            {{ fields.field("Categoria", fields.text("nomeCategoria")) }}
+            {{ fields.field("Descrição da categoria", fields.textarea("descricaoCategoria")) }}
+            {{ fields.hidden("idCategoria") }}
+            {{ fields.hidden("acaoCategoria", "adicionar") }}
+            {{ buttons.iconButton("Salvar", "javascript:salvarCategoria()", "no_icon btn-salvar-cat") }}
+        {% endif %} 
+        <br clear="all" />
+        <br clear="all" />
+
+        {{ categorias|raw }}
+
+    </div>
+
+</div><!--contentwrapper-->
+
+<br clear="all" />

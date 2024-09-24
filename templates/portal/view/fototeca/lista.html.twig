@@ -1,0 +1,78 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">                
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Fototeca") }}
+        </div>
+        <div class="row">
+            <h2 class="pull-left">Fototecas</h2>
+            <form action="{{ route('fototeca') }}" method="get" id="filtro-fototeca">
+                {{ forms.select_id('categoria', categorias, categoria, "Selecione", null, null, 'pull-right') }}
+            </form>
+        </div>
+        <div class="row">
+            {% if results|length > 0 %}
+                {% for result in results %}
+                    {% set galerias = result.getGalerias() %}
+                    {% set imagens = galerias[0].getImagens() %}
+                    {% set colCount = (colCount != 3) ? colCount + 1 : 1 %}
+                    <div class="fototeca-col fototeca-col-{{ colCount }}">
+                        <a href="{{ route('fototeca/detalhes/' ~ result.getId() ~ '/' ~ slugify( result.getNome() )) }}">
+                            <img 
+                                class="box-img"
+                                src="{{ base_link }}image.php?w=250&h=166&src={{ imgCompletePath(imagens[0]) }}" 
+                                alt="{{ imagens[0].getNome() }}" 
+                                {% if imagens[0].getCredito() is not empty %}
+                                    title="{{ [imagens[0].getLegenda(), imagens[0].getCredito()] | join(' Foto: ') }}"
+                                {% else %}
+                                    title="{{ imagens[0].getLegenda() }}"
+                                {% endif %}
+                                data-content="{{ imagens[0].getLegenda() }}" 
+                            >
+                            <div class="box-fototca">
+                                <div class="borda">
+                                    <h3>{{ result.getNome() }}</h3>
+                                    <h4>{{ result.getCategoria().getLabel() }}</h4>
+                                </div>
+                            </div>
+                        </a>
+                        <div>
+                            <p align="justify">{{ result.getDescricao() | striptags | truncatetext(250) | raw }}</p>
+                        </div>
+                    </div>
+                    {% if colCount == 3 %}
+                        <div class="clear"></div>
+                    {% endif %}
+                {% endfor %}
+            {% else %} 
+                <p>Nenhum registro encontrado.</p>
+            {% endif %}
+        </div>
+    </article>
+
+    {% if results|length > 0 %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                    <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row" style="margin-bottom: 18px; margin-left: 39px;">
+        <div class="addthis_toolbox">
+            <div class="custom_images">
+                <div id="custom_span">
+                    <span>Compartilhar</span>
+                </div>
+                <a class="addthis_button_facebook"><img src="{{ base_link }}/templates/portal/assets/img/facebook_.png" border="0" alt="Facebook" title="Facebook" /></a>
+                <a class="addthis_button_twitter"><img src="{{ base_link }}/templates/portal/assets/img/twitter_.png" border="0" alt="Twitter" title="Twitter" /></a>
+                <a class="addthis_button_email"><img src="{{ base_link }}/templates/portal/assets/img/email_.png" border="0" style="height: 30px;" alt="Email" title="Email" /></a>
+                <a class="addthis_button_linkedin"><img src="{{ base_link }}/templates/portal/assets/img/linkedin_.png" style="height: 34px;" border="0" alt="Linkedin" title="Linkedin" /></a>
+            </div>
+        </div>
+    </div>
+</section>

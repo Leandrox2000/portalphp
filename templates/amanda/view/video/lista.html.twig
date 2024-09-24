@@ -1,0 +1,39 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{titlePage}}</h1>
+        {{ permissoes['VIDEO_INSERIR'] ? buttons.iconButton("Inserir novo", "video/form", "no_icon", "green") : "" }}
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+        <div class="subcontent">
+            {{ tables.table(
+                            [
+                            tables.head([
+                                            tables.columnHeader(fields.checkboxHeader()),
+                                            tables.columnHeader([
+                                                                permissoes['VIDEO_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon publicar") : "",
+                                                                permissoes['VIDEO_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon despublicar") : "",
+                                                                permissoes['VIDEO_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:void(0)", "no_icon deletebutton") : "",
+                                                                permissoes['VIDEO_ALTPOS'] ? buttons.iconButton("Salvar posicionamento", "javascript:salvarPosicionamentoVideo()", "no_icon") : "",
+                                                                "&nbsp;&nbsp;&nbsp;&nbsp; Data ", 
+                                                                fields.date("data_inicial", "", "", ""),
+                                                                "&nbsp;&nbsp;", 
+                                                                fields.date("data_final", "", "", ""), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                                                                fields.select("site", sites, "", "Meus subsites") 
+                                                            ]|join, "80%"),
+                                            tables.columnHeader(fields.select("status", status, "", "Todos os status"), "10%")
+                                        ])
+                            ]|join,
+                    "video") }}
+
+        </div>
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

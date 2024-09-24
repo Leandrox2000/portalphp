@@ -1,0 +1,4 @@
+/* Remove espaçamento desnecessário entre os botões */
+a.btn.btn_green.btn_no_icon.radius2.first {
+    margin: 0px;
+}

@@ -1,0 +1,36 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {{ 
+                tables.table([
+                    tables.head([
+                        tables.columnHeader(fields.checkboxHeader()),
+                        tables.columnHeader([
+                            permissoes['DIRET_PUBLI'] ? buttons.iconButton("Publicar", "javascript:alterarStatus(1)", "no_icon") : "",
+                            permissoes['DIRET_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon") : "",
+                            permissoes['DIRET_ALTPOS'] ? buttons.iconButton("Salvar posicionamento", "javascript:salvarPosicionamento()", "no_icon") : "",
+                        ] | join, "90%"),
+                        tables.columnHeader([
+                            fields.select("status", status, "", "Todos os Status"),
+                        ] | join, "10%")
+                    ]) ] | join,
+                "diretoria") 
+            }}
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

@@ -1,0 +1,41 @@
+<header id="header" role="banner">
+    <div id="header-left">
+        <a href="{{ base_link }}">
+            <h1>
+                <img src="{{ base_link }}templates/portal/assets/img/logo-iphan.png" alt="Logo" title="Logo"/>
+            </h1>
+        </a>
+    </div>
+    <div id="header-right">
+        <div class="row clearfix geral">
+            <div class="bts-accessibility float-left">
+                <ul class="clearfix">
+                    <li class="float-left">
+                        <a href="#" class="increase-font">aumentar fonte</a>
+                    </li>
+                    <li class="float-left">
+                        <a href="#" class="decrease-font">diminuir fonte</a>
+                    </li>
+                    <li class="float-left">
+                        <a href="#" class="contrast">contraste</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search float-left">
+                <form action="{{ base_link ~ 'busca' }}" method="get">
+                    <a id="linkPesquisa" onclick="return false" href="#pesquisa"><input type="search" name="search_query" placeholder="Pesquise aqui sobre o Iphan" accesskey="3" id="espacoPesquisa"></a>
+                    <input type="hidden" name="do_search" value="y">
+                    <a href="#buscar"><input type="submit" name="buscar" value="buscar"></a>
+                </form>
+            </div>
+        </div>
+        <div class="row clearfix menu-auxiliar">
+            <nav class="menu-header" role="menubar">
+                {{ menu.auxiliar | raw }}
+            </nav>
+        </div>
+    </div>
+    <div class="selo-mapa">
+        <a href="http://sicg.iphan.gov.br/sicg/pesquisarBem" target="_blank"><img src="{{ base_link }}templates/portal/assets/img/selo-mapa.png" alt="Mapa do Patrimônio Culrual do Brasil" title="Mapa do Patrimônio Culrual do Brasil"></a>
+    </div>
+</header>

@@ -1,0 +1,27 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="pageheader notab">
+    <h1 class="pagetitle">Selecionar Subsite</h1>
+</div><!--pageheader-->
+
+<div id="contentwrapper" class="contentwrapper">
+    <div class="subcontent">
+        {{ tables.table([
+            tables.head([
+                            tables.columnHeader(tipo == 'checkbox' ? fields.checkboxHeader() : "" ),
+                            tables.columnHeader("", "100%"),
+                        ])
+            ]|join, "subsites")
+        }}
+
+        <form id="frm" class="stdform stdform2"  >
+            {{  buttons.iconButton("Escolher e fechar", "javascript:escolherSubsiteFechar()", "no_icon")  }}
+            {{  buttons.iconButton("Fechar", "javascript:fechar()", "no_icon")  }}
+        </form>
+
+    </div>
+</div><!--contentwrapper-->
+<br clear="all" />
+

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ title }}</title>
+        <base href="{{ base_link }}" >
+        <link rel="stylesheet" href="{{ css_link }}/style.default.css" type="text/css" />
+        {% for style in styles %}
+        <link href="{{ css_link }}{{ style }}" type="text/css" rel="stylesheet" />
+        {% endfor %}
+        {% for script in scripts %}
+        <script src="{{ js_link }}{{ script }}" type="text/javascript"></script>
+        {% endfor %}
+        <script type="text/javascript" src="{{ js_link }}/custom/index.js"></script>
+        <!--[if IE 9]>
+            <link rel="stylesheet" media="screen" href="{{ css_link }}/style.ie9.css"/>
+        <![endif]-->
+        <!--[if IE 8]>
+            <link rel="stylesheet" media="screen" href="{{ css_link }}/style.ie8.css"/>
+        <![endif]-->
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+    </head>
+    <body class="loginpage">
+        <div class="loginbox">
+            <div class="loginboxinner">
+                <div class="loginheader">
+                    <div class="logologin"></div><!--logo-->
+                    <div class="descriptionlogin">CMS - GERENCIADOR PORTAL E INTRANET</div>
+                </div>
+                <!--<br clear="all" />--><br />
+                <div class="nousername">
+                    <div class="loginmsg"></div>
+                </div><!--nousername-->
+                <!--<div class="nopassword">
+                    <div class="loginmsg">The password you entered is incorrect.</div>
+                    <div class="loginf">
+                        <div class="thumb"><img alt="" src="images/thumbs/avatar1.png" /></div>
+                        <div class="userlogged">
+                            <h4></h4>
+                            <a href="index.html">Not <span></span>?</a> 
+                        </div>
+                    </div>
+                </div>-->
+                <form id="login" action="{{ base_link }}login/autenticar" method="post">
+                    <div class="username">
+                        <div class="usernameinner">
+                            <input type="text" name="username" id="username" />
+                        </div>
+                    </div>
+                    <div class="password">
+                        <div class="passwordinner">
+                            <input type="password" name="password" id="password" />
+                        </div>
+                    </div>
+                    <button id="enviar">Entrar</button>
+                    <!--
+                    <div class="keep"><input type="checkbox" /> Keep me logged in</div>
+                    -->
+                </form>
+                <!--<div class="esquecisenha"><a href="">Esqueci minha senha</a></div>-->
+            </div><!--loginboxinner-->
+        </div><!--loginbox-->
+    </body>
+</html>

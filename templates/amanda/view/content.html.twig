@@ -1,0 +1,14 @@
+    <body class="withvernav {{ (modal == true) ? 'modal-window' : '' }}">
+        <div class="bodywrapper">
+            
+            {% if modal != true %}
+            {{ top | raw }}
+            {{ menu | raw }}
+            {% endif %}
+            
+            {{ content | raw }}
+            
+        </div>
+        
+    </body>
+</html>

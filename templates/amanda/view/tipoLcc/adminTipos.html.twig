@@ -1,0 +1,28 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {% if permissoes['CADAS_SALVAR'] %}
+                {{ fields.text("novoTipo") }} {{ buttons.iconButton("Adicionar", "javascript:adicionarTipo()", "no_icon") }}
+            {% endif %} 
+            <br clear="all" />
+            <br clear="all" />
+            
+            {{ tipos|raw }}
+            
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

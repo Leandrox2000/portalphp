@@ -1,0 +1,43 @@
+{% import "fields.html.twig" as forms %}
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<style type="text/css">
+    
+    ul.accordion li{ background-color: transparent !important}
+    
+</style>
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Perguntas Frequentes") }}
+        </div>
+        <div class="row">
+            <h2>Perguntas Frequentes</h2>
+            <form action="{{ base_link }}perguntasFrequentes" method="get" id="filtro-perguntas" class="mb15">
+                {{ forms.select_id('categoria', categorias, paramCategoria, "Selecione a categoria", null, null) }}
+            </form>
+        </div>
+        {% if results |length > 0 %}
+            <div class="row">
+                <ul class="accordion">
+                    {% for result in results %}
+                        <li>
+                            <!--<h3>{{ "%02d" | format(loop.index) ~ '. ' ~ result.getPergunta() }}</h3>-->
+                            <!--<h3>{{ "%02d" | format(indicePaginacao) ~ '. ' ~ result.getPergunta() }}</h3>-->
+                            <h3>{{ result.getPergunta() }}</h3>
+                            <div>
+                                <p>{{ result.getResposta() | nl2br }}</p>
+                            </div>
+                        </li>
+                        {%  set indicePaginacao = indicePaginacao + 1 %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if results.getNbPages() > 1 %}
+                {{ pagination | raw }}
+            {% endif %}
+        {% else %}
+            <p>Nenhum registro encontrado.</p>
+        {% endif%}
+    </article>					
+</section>

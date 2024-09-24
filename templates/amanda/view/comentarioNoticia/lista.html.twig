@@ -1,0 +1,41 @@
+{% import "fields.html.twig" as fields %}
+{% import "table.html.twig" as tables %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">
+
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+        <br clear="all">
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            {{ tables.table([
+                    tables.head([
+                            tables.columnHeader(fields.checkboxHeader()),
+                            tables.columnHeader([
+                                    permissoes['COMENOT_PUBLI'] ? buttons.iconButton("Publicar comentário", "javascript:alterarStatus(1)", "no_icon") : "",
+                                    permissoes['COMENOT_NOPUBLI'] ? buttons.iconButton("Não publicar", "javascript:alterarStatus(0)", "no_icon despublicar") : "",
+                                    permissoes['COMENOT_EXCLUIR'] ? buttons.iconButton("Excluir", "javascript:excluir()", "no_icon") : "",
+                                    "&nbsp;&nbsp;&nbsp;&nbsp; Data ", 
+                                    fields.date("dataInicial", "", "", ""),
+                                    "&nbsp;&nbsp;", 
+                                    fields.date("dataFinal", "", "", ""), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+                            ] | join, "60%"),
+                            tables.columnHeader("Autor", "10%"),
+                            tables.columnHeader("E-mail", "10%"),
+                            tables.columnHeader("Data", "10%"),
+                            tables.columnHeader("Publicado", "10%"),
+                        ])
+                    ] | join,
+            "comentarioNoticia") }}
+        </div>
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div>

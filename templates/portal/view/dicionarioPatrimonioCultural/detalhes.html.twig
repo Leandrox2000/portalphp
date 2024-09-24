@@ -1,0 +1,75 @@
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="{{ base_link }}">Página inicial</a></li>
+                {% if site != null and site.id != 1 %}
+                    <li>
+                        <a href="{{ route() }}">{{ site.nome }}</a>
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread.getVinculoPai != null %}
+                    <li>
+                    {% if not bread.getVinculoPai.getUrlExterna is empty %}
+                    <a href="{{ bread.getVinculoPai.getUrlExterna }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% elseif not generateUrl(bread.getVinculoPai) is empty %}
+                    <a href="{{ generateUrl(bread.getVinculoPai) }}">
+                        {{ bread.getVinculoPai.getTitulo }}
+                    </a>
+                    {% else %}
+                    {{ bread.getVinculoPai.getTitulo }}
+                    {% endif %}
+                    </li>
+                {% endif %}
+                {% if bread != null %}
+                    <li><a href="{{ route('dicionarioPatrimonioCultural') }}">Dicionário Iphan de Patrimônio Cultural</a></li>
+                {% else %}
+                    <li><a href="{{ route('dicionarioPatrimonioCultural') }}">Dicionário Iphan de Patrimônio Cultural</a></li>
+                {% endif %}
+                <li class="active">{{ result.getCategoria().getNome()}}</li>
+            </ol>
+        </div>
+        <div class="row">
+            <h2 class="pull-left">Dicionário do Patrimônio Cultural</h2>
+            <!--<a class="voltar pull-right mt15 btn btn-yellow" href="{{ base_link ~ 'dicionarioPatrimonioCultural' }}">voltar</a>-->							
+        </div>
+        <div class="row">
+            <h3 class="m0" style="font-size: 24px;font-weight: 600;">{{ result.getTitulo() }}</h3>
+            <h3 class="m0" style="padding-top: 2px;padding-bottom: 2px;">{{ result.getCategoria().getNome() }}</h3>
+            <h3 class="m0">{{ result.getVerbete() }}</h3>
+        </div>
+        <div class="row" style="margin-top: 15px;">
+            <!-- <h3 style="font&#45;weight: 600;">Descrição</h3> -->
+            <p>{{ result.getDescricao() | raw }}</p>
+            {% if result.getColaborador() is not empty %}
+            <h3 style="font-weight: 600;">Enviado por</h3>
+            <p>{{ result.getColaborador() }}</p>
+            {% endif %}
+            {% if result.getLink() is not empty %}
+            <h3 style="font-weight: 600;">Link de fórum de discussão</h3>
+            <p>{{ result.getLink() }}</p>
+            {% endif %}
+            {% if result.getFichaTecnica() is not empty %}
+            <h3 style="font-weight: 600;">Ficha Técnica</h3>
+            <p>{{ result.getFichaTecnica() | raw }}</p>
+            {% endif %}
+        </div>
+    </article>
+</section>

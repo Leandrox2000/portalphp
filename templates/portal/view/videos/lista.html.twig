@@ -1,0 +1,104 @@
+{% import "fields.html.twig" as forms %}
+
+{% if subsite is not empty %}
+<div class="menu-subsite">
+    <div class="menu-subsite-subsite">
+        {% if menu.subsite is not empty %} 
+            <a href="#">
+        {% endif %}
+
+            <img src="{{ base_link }}templates/portal/assets/img/menu-subsite.jpg" alt="Menu" title="Menu" class="img-subsite" />
+
+        {% if menu.subsite is not empty %} 
+            </a>
+        {% endif %}
+
+        <div class="menu-expandido-subsite" >
+            {{ menu.subsite | raw }}
+        </div>                    
+
+    </div>
+    <div class="titulo-menu-subsite" >
+        <a href="{{ base_link }}{{ subsite.getSigla() | lower }} " >
+                <span style="padding-left: 10px;">
+                     {{ subsite.getNome() }} 
+                </span>
+                </a>
+    </div>
+    <div style="float:right; padding-right: 10px;" >
+        {{ redes | raw}}
+    </div>  
+</div>  
+{% endif %}
+
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Vídeos") }}
+        </div>
+        {% if result == 0 %}
+            <div class="row margin-top90">
+                <h2>Nenhum vídeo relacionado com este site!</h2>
+            </div>
+        {% else %}
+            <div class="row">
+                <h2>Vídeos</h2>							
+            </div>
+            <div class="row">
+                <iframe width="870" height="540" src="{{ youtube(result.getLink()) }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="row">
+                <p style="margin-top: 15px;">{{ result.getResumo() | nl2br }}<p>
+            </div>
+            {% if videoRelacionados | length > 0 %}
+                <div class="row">
+                    <div class="box-cinza">
+                        <h3>Vídeos relacionados</h3>
+                        {% for video in videoRelacionados %}
+                            <ul class="lista-galeria-vertical2 {{ (loop.last) ? 'last' : null }}">
+                                <li class="lista-galeria-vertical2-imagem"><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}"><img src="http://i1.ytimg.com/vi/{{ youtubeKey(video.getLink()) }}/mqdefault.jpg" alt="fototeca"></a></li>
+                                <li class="lista-galeria-vertical2-titulo"><h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4></li>
+                            </ul>                
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% for video in videoPatrimonio %}
+                {% if loop.first %}
+                    <div class="row">
+                        <div class="box-cinza">
+                        <h3>Vídeos do patrimônio</h3>
+                    {% endif %}
+                    <ul class="lista-galeria-vertical2 {{ (loop.last) ? 'last' : null }}">
+                        <li class="lista-galeria-vertical2-imagem"><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}"><img src="http://i1.ytimg.com/vi/{{ youtubeKey(video.getLink()) }}/mqdefault.jpg" alt="fototeca"></a></li>
+                        <li class="lista-galeria-vertical2-titulo"><h4><a href="{{ route('videos/detalhes/' ~ video.getId() ~ '/' ~ slugify(video.getNome()) ) }}">{{ video.getNome() }}</a></h4></li>
+                    </ul>                
+            {% if loop.index % 5 == 0 %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="box-cinza">
+            {% endif %}
+            {% if loop.last %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+        {% if results|length > 0 %}
+            <div class="row">
+                <div class="box-cinza">
+                    <div class="box-cinza-margem">
+                        <div class="paginacao">
+                            {{ pagination | raw }}
+                            <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                            <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </article>
+</section>

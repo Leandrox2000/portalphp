@@ -1,0 +1,63 @@
+{% import "fields.html.twig" as forms %}
+{% import "tabs.html.twig" as tabs %}
+{% import "buttons.html.twig" as buttons %}
+
+
+<div class="centercontent">                
+    <div class="pageheader notab">
+        <h1 class="pagetitle">{{ titlePage }}</h1>
+    </div><!--pageheader-->
+
+    <div id="contentwrapper" class="contentwrapper">
+
+        <div class="subcontent">
+            <form id="frm" class="stdform stdform2" action="sliderHome/salvar" method="{{ method }}">
+                {{ forms.field("Data e Hora Cadastro/Publicação:", [
+                                               forms.date("data_inicial", slider.getDataInicial() ? slider.getDataInicial().format('d/m/Y') : data.format('d/m/Y'), "Data Inicial", "date periodo"), 
+                                               forms.time("hora_inicial", slider.getDataInicial() ? slider.getDataInicial().format('H:i') : data.format('H:i'), "Hora inicial", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+
+                {{ forms.field("Data e Hora Despublicação:", [
+                                              forms.date("data_final", slider.getDataFinal().format('d/m/Y') , "Período final", "date periodo"), 
+                                              forms.time("hora_final", slider.getDataFinal().format('H:i') , "Hora final", "hora smallinput periodo")
+                                            ]|join 
+                              )
+                }}
+
+                {{ forms.field("Nome: ", forms.text("nome", slider.getNome(), "Nome") ) }}
+
+
+                {{ forms.field("Imagem", [
+                                                buttons.iconButton("Imagens", "javascript:abrirImagemRadio(0)", "no_icon"),
+                                                '<div class="imgSelecionadas" id="imgSelecionadas">', imagem , '</div>'
+                                            ]|join 
+                              )
+                }}
+                {{ forms.hidden("x1", slider.getX1()) }}
+                {{ forms.hidden("y1", slider.getY1()) }}
+                {{ forms.hidden("x2", slider.getX2()) }}
+                {{ forms.hidden("y2", slider.getY2()) }}
+                {{ forms.hidden("w", slider.getW()) }}
+                {{ forms.hidden("h", slider.getH()) }}
+
+                {{ forms.hidden("imagemBanco", idImg) }}
+                {{ forms.field("Descrição", forms.richText("descricao", slider.getDescricao()) ) }}
+
+                
+
+                {{ forms.field("Sites", forms.selectMultiple("sites", sites, slider.getSites(), "Sites", 10) ) }}
+
+                {{ forms.hidden("id", slider.getId()) }}
+
+                {{ forms.break([buttons.submit(), buttons.iconButton("Cancelar", "javascript:history.back()", "no_icon")]|join, true) }}
+            </form>
+        </div>
+
+
+    </div><!--contentwrapper-->
+
+    <br clear="all" />
+
+</div><!-- centercontent -->

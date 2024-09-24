@@ -1,0 +1,51 @@
+
+<h1>Formulário de Contato</h1>
+
+<table>
+    {% if assunto is not empty %}
+        <tr>
+            <td><strong>Assunto:</strong></td>
+            <td>{{ assunto }}</td>
+        </tr>
+    {% endif %}
+
+    {% if nome is not empty %}
+        <tr>
+            <td><strong>Nome:</strong></td>
+            <td>{{ nome }}</td>
+        </tr>
+    {% endif %}
+
+    <tr>
+        <td><strong>Mensagem:</strong></td>
+        <td>{{ mensagem }}</td>
+    </tr>
+
+    {% if email is not empty %}
+        <tr>
+            <td><strong>E-mail:</strong></td>
+            <td>{{ email}}</td>
+        </tr>
+    {% endif %}
+
+    {% if telefone is not empty %}
+        <tr>
+            <td><strong>Telefone:</strong></td>
+            <td>{{ telefone }}</td>
+        </tr>
+    {% endif %}
+
+    {% if cidade is not empty %}
+        <tr>
+            <td><strong>Cidade:</strong></td>
+            <td>{{ cidade }}</td>
+        </tr>
+    {% endif %}
+
+    {% if estado is not empty %}
+        <tr>
+            <td><strong>Estado:</strong></td>
+            <td>{{ estado }}</td>
+        </tr>
+    {% endif %}
+</table>

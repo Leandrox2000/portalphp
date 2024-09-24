@@ -1,0 +1,154 @@
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+{% import "fields.html.twig" as forms %}
+<style type="text/css">
+    
+div.border-red{ padding:6px 10px; border-left:12px solid #590108; display:block; border-radius:2px }
+form#boletim-cadastro p, label, div{ color:#590108 }
+form#boletim-cadastro label.error{ margin-left:0px; margin-top:5px }
+    
+</style>
+<section id="master" role="main">				
+    <article class="master-content">
+
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Boletim Eletrônico") }}
+        </div>
+
+        <div class="row">
+            <h2>Boletim Eletrônico</h2>							
+        </div>
+             
+        <div class="row">
+            <form action="{{ base_link }}boletimEletronico" method="GET" id="boletim-form-search">
+                <div class="col-lg-5" style="height:50px">
+                    <div style="height:15px"></div>
+                    <input type="text" name="dataInicial" class="datepicker" maxlength="10" style="width:100%" placeholder="Pesquise por data" value="{{ dataInicial }}" />
+                </div>
+                <div class="col-lg-5" style="height:50px">
+                    
+                    <div style="height:15px"></div>
+                    <input type="text" id="numero" name="numero" style="width:100%;" patern="[0-9]{1,4}\/[0-9]{4}+$"
+                           maxlength="9" placeholder="Pesquise por edição (número/ano)" value="{{ numero }}"
+                           title="Exemplos: 1/2014, 98/2018, 100/2019" />
+                </div>
+                <div class="col-lg-2" style="height:50px">
+                    <input type="submit" value="buscar" class="input-search inline" style="margin-top:10px"> 
+                </div>
+            </form>
+            <div class="fix"></div>
+        </div>
+        <div class="row" style="height:50px"></div>
+
+        {% if paginaAtual == 1 or paginaAtual is empty %}
+            {% if results | length > 0 %}
+                {% for result in results | slice(0, 1) %}
+                    <div class="row">
+                        <iframe src="{{ base_link ~ 'uploads/boletimeletronico/' ~ result.getArquivo() }}#zoom=scale" width="100%" height="1300" style="border: none;"></iframe>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <ul class="lista-boletim-destaque">
+                            <li>
+                                <h4><span>Edição {{ result.getNumero() }}</span></h4>
+                                <a href="{{ base_link }}uploads/boletimeletronico/{{ result.getArquivo() }}" target="_blank" class="pdf">
+                                    Download da edição
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="row">
+                    <p>Nenhum registro encontrado.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+                        
+        <section>				
+            <article>
+                <form action="{{ base_link ~ 'boletimEletronico/cadastro' }}" method="post" id="boletim-cadastro" novalidate="novalidate">
+                    <div class="panel panel-default">
+                        <div class="panel-body border-red">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <label style="color:#590108; padding-top:5px">Cadastre-se e receba o Boletim Eletrônico</label>
+                                </div>
+                                <div class="col-lg-5">
+                                    <input type="text" id="email" style="width:100%; background-color:#E5E4E4" name="email" placeholder="Digite seu e-mail" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <input type="submit" class="btn" value="enviar" style="background-color:#FFFFFF">
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <span class="message">&nbsp;</span>
+                </form> 
+            </article>
+        </section>
+        
+                        
+        {% set start = paginaAtual > 1 ? 0 : 1 %}                
+                        
+        {% if results | length > start %}   
+            <div class="row">
+                <br />
+                <h2>Edições anteriores</h2>
+                <p>Clique no nome da edição para fazer o download</p>
+                <br/>
+            </div>
+
+            <div class="panel-group" role="tablist" aria-multiselectable="true">
+
+                {% if paginaAtual >= 2 %}
+
+                    <!-- pega todos os elementos a partir da segunda página -->
+                    {% for result in results %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <p class="panel-title">
+                                    <em>
+                                        <a href="{{ base_link }}uploads/boletimeletronico/{{ result.getArquivo() }}" target="_blank">
+                                            Edição n&ordm; {{ result.getNumero() }}/{{ result.getAno() }} - {{ result.getDataInicial().format('d/m/Y') }}
+                                        </a>
+                                    </em>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                {% else %}
+                    <!-- o slice ignora o primeiro elemento (destaque) -->
+                    {% for result in results | slice(1, (results | length) - 1) %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <p class="panel-title">
+                                    <em>
+                                        <a href="{{ base_link }}uploads/boletimeletronico/{{ result.getArquivo() }}" target="_blank">
+                                            Edição n&ordm; {{ result.getNumero() }}/{{ result.getAno() }} - {{ result.getDataInicial().format('d/m/Y') }}
+                                        </a>
+                                    </em>
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>    
+        {% endif %}
+
+    </article>
+
+    {% if results | length > start %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                    <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+</section>

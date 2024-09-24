@@ -1,0 +1,317 @@
+<div class="vernav2 iconmenu">
+    <ul>
+	
+        {% if 
+            permissoes['SUBSIT_CONSULT'] or 
+            permissoes['BGPORT_CONSULT'] or 
+            permissoes['MENUS_CONSULT'] or 
+            permissoes['GERBANN_CONSULT'] or 
+            permissoes['GERAGEND_CONSULT'] or 
+            permissoes['ENDEREC_CONSULT'] 
+        %}
+            <li {% if (controller == 'subsite') 
+                      or (controller == 'backgroundHome' )
+                      or (controller == 'menu'  )
+                      or (controller == 'gerenciadorAgenda'  )
+                      or (controller == 'enderecoRodape'  )
+                %} class="current" {% endif %} >
+                
+                <a href="#adminsub" class="editor">Administradores</a>
+                <span class="arrow"></span>
+                <ul id="adminsub">
+                    {% if permissoes['GERAGEND_CONSULT'] %}
+                        <li {% if controller == 'gerenciadorAgenda' %} class="current" {% endif %} ><a href="gerenciadorAgenda" >Gerenciador de Agenda</a></li>
+                    {% endif %}
+                    
+                    {% if permissoes['SUBSIT_CONSULT'] %}
+                        <li {% if controller == 'subsite' %} class="current" {% endif %} ><a href="subsite" >Cadastro subsites</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BGPORT_CONSULT'] %}
+                        <li {% if controller == 'backgroundHome'  %} class="current" {% endif %} ><a href="backgroundHome">Gerenciamento de background do Portal</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BANNE_CONSULT'] %}
+                        <li {% if controller == 'gerenciadorBanner' %} class="current" {% endif %} ><a href="gerenciadorBanner" >Gerenciador de Banners</a></li>
+                    {% endif %}
+
+                    {% if permissoes['MENUS_CONSULT'] %}
+                        <li {% if controller == 'menu' %} class="current" {% endif %} ><a href="menu">Gerenciamento de menu</a></li>
+                    {% endif %}
+                    {% if permissoes['ENDEREC_CONSULT'] %}
+                        <li {% if controller == 'enderecoRodape' %} class="current" {% endif %} ><a href="enderecoRodape">Endereços do Rodapé</a></li>
+                    {% endif %}
+
+                </ul>
+            </li>
+        {% endif %}
+        
+        {% if 
+            permissoes['ATAS_CONSULT'] or 
+            permissoes['BANNE_CONSULT'] or 
+            permissoes['BIBLIO_CONSULT'] or 
+            permissoes['BIBLIPHA_CONSULT'] or 
+            permissoes['MEMBR_CONSULT'] or  
+            permissoes['COMPR_CONSULT'] or  
+            permissoes['DESTA_CONSULT'] or  
+            permissoes['DICIO_CONSULT'] or 
+            permissoes['FUNCI_CONSULT'] or 
+            permissoes['LEGIS_CONSULT'] or 
+            permissoes['LICIT_CONSULT'] or 
+            permissoes['IMAGE_CONSULT'] or 
+            permissoes['BIPHAN_CONSULT'] or 
+            permissoes['FOTOT_CONSULT'] or 
+            permissoes['PUBLI_CONSULT'] 
+        %}
+            <li 
+                {% if    (controller == 'ataConselho' ) 
+                      or (controller == 'bibliografia') 
+                      or (controller == 'biblioteca' ) 
+                      or (controller == 'conselheiro' ) 
+                      or (controller == 'dicionarioPatrimonioCultural' and acao != 'adminCategorias' )  
+                      or (controller == 'diretoria' )  
+                      or (controller == 'compromisso' )  
+                      or (controller == 'funcionario' and acao != 'adminCargos' and acao != 'adminVinculos') 
+                      or (controller == 'legislacao' and acao != 'adminCategorias' ) 
+                      or (controller == 'fototeca' and acao != 'adminCategorias') 
+                      or (controller == 'licitacaoConvenioContrato' ) 
+                      or (controller == 'imagem' ) 
+                      or (controller == 'publicacao' and acao != 'adminCategorias') 
+                 %} class="current" {% endif %} >
+                
+                <a href="#portalsub" class="editor">Portal</a>
+                <span class="arrow"></span>
+                <ul id="portalsub">
+                    {% if permissoes['ATAS_CONSULT'] %}
+                        <li {% if controller == 'ataConselho' %} class="current" {% endif %} ><a href="ataConselho">Atas do Conselho</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BIBLIO_CONSULT'] %}
+                        <li {% if controller == 'bibliografia' %} class="current" {% endif %} ><a href="bibliografia">Bibliografia</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BIPHAN_CONSULT'] %}
+                        <li {% if controller == 'biblioteca'  %} class="current" {% endif %} ><a href="biblioteca">Bibliotecas do IPHAN</a></li>
+                    {% endif %}
+
+                    {% if permissoes['MEMBR_CONSULT'] %}
+                        <li {% if controller == 'conselheiro'  %}class="current" {% endif %} ><a href="conselheiro">Conselheiros</a></li>
+                    {% endif %}
+                    
+                    {% if permissoes['COMPR_CONSULT'] %}
+                        <li {% if controller == 'compromisso'  %}class="current" {% endif %} ><a href="compromisso">Cadastro de Compromisso</a></li>
+                    {% endif %}
+
+                    {% if permissoes['DICIO_CONSULT'] %}
+                        <li {% if controller == 'dicionarioPatrimonioCultural' and acao != 'adminCategorias' %}class="current" {% endif %}><a href="dicionarioPatrimonioCultural">Dicionário do Patrimônio</a></li>
+                    {% endif %}
+                    
+                    {% if permissoes['DIRET_CONSULT'] %}
+                        <li {% if controller == 'diretoria' and acao != 'adminCategorias' %}class="current" {% endif %}><a href="diretoria">Diretoria</a></li>
+                    {% endif %}
+                    
+                    {% if permissoes['FOTOT_CONSULT'] %}
+                        <li {% if controller == 'fototeca' and acao != 'adminCategorias' %} class="current" {% endif %} ><a href="fototeca">Fototecas</a></li>
+                    {% endif %}                    
+
+                    {% if permissoes['FUNCI_CONSULT'] %}
+                        <li {% if controller == 'funcionario' and acao != 'adminVinculos' and acao != 'adminCargos' %} class="current" {% endif %}><a href="funcionario">Funcionários</a></li>
+                    {% endif %}
+                    
+                    {% if permissoes['IMAGE_CONSULT'] %}
+                        <li {% if controller == 'imagem'  %} class="current" {% endif %} ><a href="imagem">Imagens</a></li>
+                    {% endif %}
+
+                    {% if permissoes['LEGIS_CONSULT'] %}
+                        <li {% if controller == 'legislacao' and acao != 'adminCategorias' %} class="current" {% endif %} ><a href="legislacao">Legislação</a></li>
+                    {% endif %}
+
+                    {% if permissoes['LICIT_CONSULT'] %}
+                        <li {% if controller == 'licitacaoConvenioContrato' %} class="current" {% endif %} ><a href="licitacaoConvenioContrato">Licitações, Convênios e Contratos</a></li>
+                    {% endif %}
+
+                    {% if permissoes['PUBLI_CONSULT'] %}
+                        <li {% if controller == 'publicacao'  and acao != 'adminCategorias' %} class="current" {% endif %} ><a href="publicacao">Publicações</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+            
+        {% if permissoes['DESTSUB_CONSULT'] %}
+            <li {% if controller == 'sliderHome'  %} class="current" {% endif %} >
+                <a href="#subsitessub" class="editor">Subsites</a>
+                <span class="arrow"></span>
+                <ul id="subsitessub">
+                    {% if permissoes['DESTSUB_CONSULT'] %}
+                        <li {% if controller == 'sliderHome'  %} class="current" {% endif %}><a href="sliderHome">Destaques</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+        
+        {% if 
+            permissoes['PAGIN_CONSULT'] or 
+            permissoes['EDITA_CONSULT'] or 
+            permissoes['FOTOT_CONSULT'] or 
+            permissoes['GALER_CONSULT'] or 
+            permissoes['VIDEO_CONSULT']
+        %}
+           <li {% if     (controller == 'paginaEstatica' ) 
+                      or (controller == 'edital' and acao != 'adminCategorias' and acao != 'adminStatus' ) 
+                      or (controller == 'galeria' ) 
+                      or (controller == 'video' ) 
+                %} class="current" {% endif %} >
+                <a href="#conteudogeralsub" class="editor">Conteúdo Geral</a>
+                <span class="arrow"></span>
+                <ul id="conteudogeralsub">
+                    {% if permissoes['PAGIN_CONSULT'] %}
+                        <li {% if controller == 'paginaEstatica' %} class="current" {% endif %} ><a href="paginaEstatica">Novas páginas</a></li>
+                    {% endif %}
+
+                    {% if permissoes['EDITA_CONSULT'] %}
+                        <li {% if controller == 'edital' and acao != 'adminCategorias' and acao != 'adminStatus' %} class="current" {% endif %} ><a href="edital">Editais</a></li>
+                    {% endif %}
+
+                    {% if permissoes['GALER_CONSULT'] %}
+                        <li {% if controller == 'galeria'  %} class="current" {% endif %} ><a href="galeria">Galerias</a></li>
+                    {% endif %}
+
+
+                    {% if permissoes['VIDEO_CONSULT'] %}
+                        <li {% if controller == 'video'  %} class="current" {% endif %} ><a href="video">Vídeos</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+        
+       {% if permissoes['AGEND_CONSULT'] or permissoes['BANCO_CONSULT'] or permissoes['BOLELET_CONSULT'] or permissoes['COMENOT_CONSULT'] or permissoes['COMENOT_CONSULT'] or permissoes['LOGO_CONSULT'] or permissoes['NOTIC_CONSULT'] or permissoes['PERGU_CONSULT'] %}
+             <li {% if  
+                           (controller == 'agenda' )
+                        or (controller == 'emailBoletim' )
+                        or (controller == 'boletimEletronico' )
+                        or (controller == 'comentarioNoticia' )
+                        or (controller == 'noticia' )
+                        or (controller == 'pergunta'and acao != 'adminCategorias')
+                 %} class="current" {% endif %} >
+                <a href="#comunicacaosub" class="editor">Comunicação</a>
+                <span class="arrow"></span>
+                <ul id="comunicacaosub">
+                    {% if permissoes['AGEND_CONSULT'] %}
+                        <li {% if controller == 'agenda'  %} class="current" {% endif %} ><a href="agenda">Agenda de Eventos</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BANCO_CONSULT'] %}
+                        <li {% if controller == 'emailBoletim' %} class="current" {% endif %} ><a href="emailBoletim">Banco de emails</a></li>
+                    {% endif %}
+
+                    {% if permissoes['BOLELET_CONSULT'] %}
+                        <li {% if controller == 'boletimEletronico'  %} class="current" {% endif %} ><a href="boletimEletronico">Boletim eletrônico</a></li>
+                    {% endif %}
+
+                    {% if permissoes['COMENOT_CONSULT'] %}
+                        <li {% if controller == 'comentarioNoticia'  %} class="current" {% endif %} ><a href="comentarioNoticia">Comentários de notícias</a></li>
+                    {% endif %}
+
+                    {% if permissoes['NOTIC_CONSULT'] %} 
+                        <li {% if controller == 'noticia'  %} class="current" {% endif %} ><a href="noticia">Notícias</a></li>
+                    {% endif %}
+
+                    {% if permissoes['PERGU_CONSULT'] %}
+                        <li {% if controller == 'pergunta' and acao != 'adminCategorias' %} class="current" {% endif %} ><a href="pergunta">Perguntas frequentes</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+        
+        {% if permissoes['CADAS_CONSULT'] or permissoes['UNIDA_CONSULT']%}    
+            <li {% if  (controller == 'funcionario' and acao == 'adminCargos') 
+                   or  (controller == 'ambitoLcc' and acao == 'adminAmbitos')
+                   or  (controller == 'dicionarioPatrimonioCultural' and acao == 'adminCategorias') 
+                   or  (controller == 'edital' and acao == 'adminCategorias') 
+                   or  (controller == 'fototeca' and acao == 'adminCategorias') 
+                   or  (controller == 'categoriaLcc' and acao == 'adminCategorias') 
+                   or  (controller == 'legislacao' and acao == 'adminCategorias') 
+                   or  (controller == 'categoriaLcc' and acao == 'adminCategorias')
+                   or  (controller == 'pergunta' and acao == 'adminCategorias')
+                   or  (controller == 'pergunta' and acao == 'adminCategorias') 
+                   or  (controller == 'publicacao' and acao == 'adminCategorias') 
+                   or  (controller == 'edital' and acao == 'adminStatus') 
+                   or  (controller == 'statusLcc' and acao == 'adminStatus') 
+                   or  (controller == 'ambitoLcc' and acao == 'adminAmbitos')
+                   or  (controller == 'funcionario' and acao == 'adminVinculos') 
+                   or  (controller == 'tipoLcc' and acao == 'adminTipos') 
+                   or  (controller == 'imagemPasta' and acao == 'pastas') 
+                   or  controller == 'unidade'
+
+            %} class="current" {% endif %} >
+                
+                <a href="#cadastrossub" class="editor">Cadastros</a>
+                <span class="arrow"></span>
+                <ul id="cadastrossub">
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'imagemPasta' and acao == 'pastas' %} class="current" {% endif %} ><a href="imagemPasta/pastas">Pastas de imagens</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'ambitoLcc' and acao == 'adminAmbitos' %} class="current" {% endif %} ><a href="ambitoLcc/adminAmbitos">Âmbitos licitação</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'funcionario' and acao == 'adminCargos' %} class="current" {% endif %} ><a href="funcionario/adminCargos">Cargo/Função</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'edital'  and acao == 'adminCategorias'  %} class="current" {% endif %} ><a href="edital/adminCategorias">Categoria Editais</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'fototeca' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="fototeca/adminCategorias">Categoria fototeca</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'dicionarioPatrimonioCultural' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="dicionarioPatrimonioCultural/adminCategorias">Categoria de verbete</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'legislacao' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="legislacao/adminCategorias">Categoria Legislação</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'categoriaLcc' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="categoriaLcc/adminCategorias">Categoria Licitações</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'pergunta' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="pergunta/adminCategorias">Categoria Perguntas Frequentes</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'publicacao' and acao == 'adminCategorias' %} class="current" {% endif %} ><a href="publicacao/adminCategorias">Categoria Publicações</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'edital' and acao == 'adminStatus' %} class="current" {% endif %} ><a href="edital/adminStatus">Status editais</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'statusLcc' and acao == 'adminStatus' %} class="current" {% endif %} ><a href="statusLcc/adminStatus">Status licitações</a></li>
+                    {% endif %}
+                        
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'tipoLcc' and acao == 'adminTipos' %} class="current" {% endif %} ><a href="tipoLcc/adminTipos">Tipo de categoria Licitações</a></li>
+                    {% endif %}
+
+                    {% if permissoes['CADAS_CONSULT'] %}
+                        <li {% if controller == 'funcionario' and acao == 'adminVinculos' %} class="current" {% endif %} ><a href="funcionario/adminVinculos">Vínculo funcionários</a></li>
+                    {% endif %}
+
+                    {% if permissoes['UNIDA_CONSULT'] %}
+                        <li {% if controller == 'unidade' %} class="current" {% endif %} ><a href="unidade">Unidades</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        {% endif %}
+        
+    </ul>
+    <a class="togglemenu"></a>
+    <br /><br />
+</div><!--leftmenu-->

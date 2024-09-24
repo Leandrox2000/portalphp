@@ -1,0 +1,233 @@
+{% import _self as fields %}
+
+{# HIDDEN #}
+{% macro hidden(name, value) %}
+<input type="hidden" name="{{ name }}" id="{{ name }}" value="{{ value|e }}" />
+{% endmacro %}
+{# HIDDEN #}
+
+{# TEXT #}
+{% macro text(name, value, placeholder, class, size, disabled) %}
+<input type="text" class="{{ class|default('smallinput') }}" title="{{ placeholder }}" placeholder="{{ placeholder }}" name="{{ name }}" id="{{ name }}" value="{{ value|e }}" size="{{ size }}" {{class|default('smallinput') }}  {{ disabled }} />
+{% endmacro %}
+{# TEXT #}
+
+{# TEXTAREA #}
+{% macro textarea(name, value, placeholder, class, size, disabled, maxlength = '') %}
+<textarea name="{{ name }}" id="{{ name }}" class="{{ class|default('smallinput') }}" title="{{ placeholder }}" placeholder="{{ placeholder }}"  rows="{{ size }}" {{ disabled }}  maxlength="{{ maxlength }}">{{ value }}</textarea>
+{% endmacro %}
+{# TEXTAREA #}
+
+{#PASSWORD #}
+{% macro pass(name, size, placeholder, class) %}
+    <input type="password" class="{{ class|default('smallinput') }}" id="{{ name }}" name="{{ name }}" title="{{ placeholder }}" placeholder="{{ placeholder }}" size="{{ size }}" />
+{% endmacro %}
+{# PASSWORD #}
+
+{# UPLOAD #}
+{% macro upload(name, multiple, placeholder, display) %}
+    <input type="file" style="display:{{ display|default('block') }}" {{ multiple ? "multiple" }} id="{{ name }}" name="{{ name }}{{ multiple ? "[]" : "" }}" title="{{ placeholder }}" placeholder="{{ placeholder }}" />
+    <div style="display:none;" class="progress Progress{{ name }}">
+         <div class="bar2">
+             <div style="width: 0%;" class="value redbar">0%</div>
+         </div>
+     </div>
+{% endmacro %}
+{# UPLOAD #}
+
+{# DATE #}
+{% macro date(name, value, placeholder, class, disabled) %}
+    <input type="text" class="{{ class|default('date') }}" id="{{ name }}" name="{{ name }}"  title="{{ placeholder }}" placeholder="{{ placeholder }}" value="{{ value }}" {{ disabled }} />
+{% endmacro %}
+{# DATE #}
+
+{# TIME #}
+{% macro time(name, value, placeholder, class, disabled) %}
+    <input type="text" class="{{ class|default('hora smallinput') }}" title="{{ placeholder }}" placeholder="{{ placeholder }}" name="{{ name }}" id="{{ name }}" value="{{ value }}" {{ disabled }} />
+{% endmacro %}
+{# TIME #}
+
+{# TELEFONE #}
+{% macro fone(name, value, placeholder, class) %}
+    <input type="text" class="{{ class|default('telefone') }}" id="{{ name }}" name="{{ name }}"  title="{{ placeholder }}" placeholder="{{ placeholder }}" value="{{ value }}" />
+{% endmacro %}
+{# TELEFONE #}
+
+{# NUMBER #}
+{% macro number(name, value, min, max, step, class) %}
+    <input type="text" id="{{ name }}" name="{{ name }}" value="{{ value }}" min="{{ min|default(0) }}" max="{{ max|default(100) }}" step="{{ step|default(1) }}" class="{{ class|default('number') }}"   title="{{ placeholder }}" placeholder="{{ placeholder }}"  />
+{% endmacro %}
+{# NUMBER #}
+
+{# CHECKBOX #}
+{% macro multipleCheckbox(name, rows, rowsSelected, direction = 'v') %}
+    {% for row in rows %}
+    <input type="checkbox" name="{{ name }}[]" id="{{ name }}_{{ loop.index }}" {{ row.getId() in rowsSelected ? "checked" : "" }} value="{{ row.getId() }}" /> 
+    <label for="{{ name }}_{{ loop.index }}">
+        {{ row.getLabel() }}
+    </label>
+    {% if direction == 'v' %} 
+        <br />
+    {% elseif direction == 'h' %} 
+        <div class="separacao"></div>
+    {% endif %} 
+        
+    {% endfor %}
+{% endmacro %}
+{# CHECKBOX #}
+
+{# RADIO #}
+{% macro radio(name, rows, selected, direction = 'v') %}
+    {% for row in rows %}
+    
+    <input type="radio" name="{{ name }}" id="{{ name }}_{{ loop.index }}" value="{{ row.getId() }}" {{ row.getId()==selected ? "checked" : "" }} /> 
+    
+    <label for="{{ name }}_{{ loop.index }}">
+        {{ row.getLabel() }}
+    </label>
+    
+        {% if direction == 'v' %}
+            <br />
+        {% elseif direction == 'h' %}
+            <div class="separacao"></div>
+        {% endif %}
+        
+    {% endfor %}
+{% endmacro %}
+{# RADIO #}
+
+{# SELECT #}
+{% macro select_id(name, rows, selected, default, id, size, class='default-class', title='') %}
+    <select id="{{ id|default(name) }}" name="{{ name }}" size="{{ size }}" class="{{ class }}" title="{{ title }}">
+    
+    {% if default  %}
+        <option value="" >{{ default }}</option> 
+    {% endif  %}
+    {% for row in rows %}
+        <option value="{{ row.getId() }}" {{ selected==row.getId() ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT #}
+
+{# SELECT #}
+{% macro select(name, rows, selected, default, id, size) %}
+    <select id="{{ id|default(name) }}" name="{{ name }}" size="{{ size }}">
+    
+    {% if default  %}
+        <option value="" >{{ default }}</option> 
+    {% endif  %}
+    {% for row in rows %}
+        <option value="{{ row.getId() }}" {{ selected==row ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT #}
+
+{# SELECT #}
+{% macro select_value(name, rows, selected, default, id) %}
+    <select id="{{ id|default(name) }}" name="{{ name }}">
+    
+    {% if default  %}
+        <option value="" >{{ default }}</option> 
+    {% endif  %}
+    {% for row in rows %}
+        <option value="{{ row.getId() }}" {{ (row.getLabel()|lower)==selected ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT #}
+
+{# SELECT #}
+{% macro selectChosen(name, rows, selected, default) %}
+    <select data-placeholder="{{ default }}" class="chzn-select" id="{{ name }}" name="{{ name }}">
+    
+    {% if default  %}
+        <option value="" ></option> 
+    {% endif  %}
+    {% for row in rows %}
+        <option value="{{ row.getId() }}" {{ selected==row or row.getId()==selected ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT #}
+
+{# SELECT #}
+{% macro selectMultiple(name, rows, selected, placeholder, size, by_id = false) %}
+    <select multiple="multiple" id="{{ name }}" name="{{ name }}[]" size="{{ size }}">
+    
+    {% for row in rows %}
+        {% if by_id == true %}
+        <option value="{{ row.getId() }}" {{ row.getId() in selected ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+        {% else %}
+        <option value="{{ row.getId() }}" {{ row in selected ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+        {% endif %}
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT 
+
+{# SELECT #}
+{% macro selectMultipleChosen(name, rows, selected, placeholder) %}
+    <select data-placeholder="{{ placeholder }}" multiple="multiple" style="width:400px;" class="chzn-select" id="{{ name }}" name="{{ name }}[]">
+    
+    {% for row in rows %}
+        <option value="{{ row.getId() }}" {{ row in selected ? "selected" : "" }} >{{ row.getLabel() }}</option> 
+    {% endfor %}
+    
+    </select>
+{% endmacro %}
+{# SELECT #}
+
+{% macro field(label, input, class = 'ffield', extra = '') %}
+        <div class="par {{ class }}" {{ extra|raw }}>
+            <label>{{ label|default('&nbsp;') }}</label>
+            <div class="field">
+                {{ input|default('&nbsp;')|raw }}
+            </div>
+        </div>
+{% endmacro %}
+
+{% macro break(text, indent) %}
+        <div class="par">
+            {% if indent %}
+            <label>&nbsp;</label>
+            {% endif %}
+            <div class="break">
+                {{ text|default('&nbsp;')|raw }}
+            </div>
+
+        </div>
+{% endmacro %}
+
+{% macro checkboxHeader() %}
+    <input type="checkbox" class="checkall" /> 
+{% endmacro %}
+
+{% macro checkbox(id, value, checked, label) %}
+    <input type="checkbox" name="{{ id }}[]" id="{{ id }}" {{ checked ? "checked" : "" }} value="{{ value }}" /> 
+    {% if label %}
+        <label for="{{ id }}">
+            {{ label }}
+        </label>
+    {% endif %}
+{% endmacro %}
+
+{% if checkbox %}
+    {{ fields.checkbox(checkbox.id, checkbox.value, checkbox.checked, checkbox.label) }}
+{% endif %}
+    
+{% if radio %}
+    {{ fields.checkbox(checkbox.id, checkbox.value, checkbox.checked, checkbox.label) }}
+{% endif %}
+
+{# TEXTAREA #}
+{% macro richText(name, value) %}
+    {{ _self.textarea(name, value, "", "ckeditor") }}
+{% endmacro %}
+{# TEXTAREA #}

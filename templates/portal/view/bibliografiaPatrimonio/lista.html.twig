@@ -1,0 +1,52 @@
+{% import "breadCrumbs.html.twig" as breadCrumbs %}
+<section id="master" role="main">				
+    <article class="master-content">
+        <div class="row">
+            {{ breadCrumbs.breadCrumbs(bread, site, "Bibliografia Geral do Patrimônio") }}
+        </div>
+        <div class="row">
+            <h2>Bibliografia Geral do Patrimônio</h2>							
+        </div>
+        <div class="row">
+            <h4>Pesquisar</h4>
+            <ul class="lista-letras clearfix">
+                {% set filtro_letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h',
+                'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w', 'x', 'y', 'z'] %}
+
+                {% for letra_filtro in filtro_letras %}
+                <li class="{{ (loop.first) ? 'first' : null }} {{ (loop.last) ? 'last' : null }} {{ (paramLetra == letra_filtro) ? 'active' : null }}">
+                    <a href="{{ base_link ~ 'bibliografiaPatrimonio?letra=' ~ letra_filtro }}">
+                        {{ letra_filtro }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="row">
+            {% if results | length > 0 %}
+                {% for result in results %}
+                    <ul class="lista-bibliografia">
+                        <li>
+                            {{ result.getConteudo() | raw }}
+                        </li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                <p>Nenhum registro encontrado.</p>
+            {% endif %}
+        </div>
+    </article>
+    {% if results | length > 0 %}
+        <div class="box-cinza">
+            <div class="box-cinza-margem">
+                <div class="paginacao">
+                    {{ pagination | raw }}
+                    <!-- Exibe a quantidade de registros (resultados + destaques) -->
+                    <p class="nregistros">Registros encontrados: {{ paginationObject.getNbResults() }}</p>
+                </div>
+            </div>
+        </div>
+    {%endif%}
+</section>
